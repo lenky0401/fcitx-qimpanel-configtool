@@ -3,10 +3,18 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <QString>
+#include <QVector>
 
 namespace Ui {
 class MainWindow;
 }
+
+struct SkinTypeEntry {
+    QString name;
+    QString absolutePath;
+};
+
 
 class MainWindow : public QDialog
 {
@@ -18,6 +26,17 @@ public:
     
 private:
     Ui::MainWindow *ui;
+    QString skinPath;
+    QList<SkinTypeEntry> allSkinType;
+
+private:
+    void searchAndSetSkin(QString skinType);
+    void loadMainConf();
+    void saveMainConf();
+
+private slots:
+    void sltOnPushButtonApply();
+    void sltOnPushButtonCancel();
 };
 
 #endif // MAINWINDOW_H
