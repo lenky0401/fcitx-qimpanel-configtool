@@ -35,12 +35,14 @@ private:
     void loadMainConf();
     void saveMainConf();
     void loadSkinPreview(QString skin);
+    void changeMainWindowSize();
 
 private slots:
     void sltOnPushButtonApply();
     void sltOnPushButtonCancel();
     void sltOnAllSkinItemDoubleClicked(QListWidgetItem *item);
     void sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void sltOnCurrentChanged(QWidget *tab);
 };
 
 #endif // MAINWINDOW_H

@@ -13,15 +13,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
 
     this->setWindowTitle(tr("Qimpanel Settings"));
-    this->setFixedSize(560, 360);
 
     loadMainConf();
+    changeMainWindowSize();
 
     connect(ui->pushButtonCancel, SIGNAL(clicked()), this, SLOT(sltOnPushButtonCancel()));
     connect(ui->pushButtonApply, SIGNAL(clicked()), this, SLOT(sltOnPushButtonApply()));
+
+    connect(ui->tabWidget, SIGNAL(currentChanged(QWidget *)), this, SLOT(sltOnCurrentChanged(QWidget *)));
+
     connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
     connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
@@ -31,6 +35,36 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::changeMainWindowSize()
+{
+    int y = 100;
+
+    if (ui->radioButtonVertical->isChecked()) {
+        this->setFixedSize(560, 360 + y);
+        ui->tabWidget->setFixedHeight(311 + y);
+
+        ui->widgetSkinPreview->setFixedHeight(121 + y);
+
+        ui->pushButtonCancel->setGeometry(360, 320 + y, 81, 31);
+        ui->pushButtonApply->setGeometry(450, 320 + y, 81, 31);
+
+    } else {
+        this->setFixedSize(560, 360);
+        ui->tabWidget->setFixedHeight(311);
+
+        ui->widgetSkinPreview->setFixedHeight(121);
+
+        ui->pushButtonCancel->setGeometry(360,320,81,31);
+        ui->pushButtonApply->setGeometry(450,320,81,31);
+    }
+}
+
+void MainWindow::sltOnCurrentChanged(QWidget *tab)
+{
+    if (tab == ui->tabSkinDesign)
+        changeMainWindowSize();
 }
 
 void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
