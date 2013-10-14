@@ -1,6 +1,10 @@
 
 #include <QDir>
 #include <QFileInfoList>
+#include <QDebug>
+#include <QListWidgetItem>
+#include <QDeclarativeView>
+#include <QHBoxLayout>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -12,17 +16,34 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowTitle(tr("Qimpanel Settings"));
-    this->setFixedSize(400, 300);
+    this->setFixedSize(560, 360);
 
     loadMainConf();
 
     connect(ui->pushButtonCancel, SIGNAL(clicked()), this, SLOT(sltOnPushButtonCancel()));
     connect(ui->pushButtonApply, SIGNAL(clicked()), this, SLOT(sltOnPushButtonApply()));
+    connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
+            this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
+    connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
+            this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
+{
+    qDebug() << item->text();
+}
+
+void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (previous)
+        qDebug() << previous->text() << current->text();
+    else
+        qDebug() << current->text();
 }
 
 void MainWindow::searchAndSetSkin(QString curtSkinType)
@@ -58,12 +79,23 @@ void MainWindow::searchAndSetSkin(QString curtSkinType)
                 idx = count;
 
             ui->comboBoxSkinType->addItem(entry.name);
+            ui->listWidgetAllSkin->addItem(entry.name);
 
             count ++;
         }
     }
 
+    ui->listWidgetAllSkin->setCurrentRow(0);
     ui->comboBoxSkinType->setCurrentIndex(idx);
+}
+
+void MainWindow::loadSkinPreview(QString skinType)
+{
+    QDeclarativeView *qmlView = new QDeclarativeView;
+    qmlView->setSource(QUrl("qrc:/main.qml"));
+
+    QHBoxLayout *layout = new QHBoxLayout(ui->widgetSkinPreview);
+    layout->addWidget(qmlView);
 }
 
 void MainWindow::loadMainConf()
@@ -80,6 +112,7 @@ void MainWindow::loadMainConf()
     ui->radioButtonVertical->setChecked(verticalList);
     ui->radioButtonHorizontal->setChecked(!verticalList);
     searchAndSetSkin(curtSkinType);
+    loadSkinPreview(curtSkinType);
 
     delete settings;
 }

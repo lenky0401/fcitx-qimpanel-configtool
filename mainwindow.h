@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QString>
 #include <QVector>
+#include <QListWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -33,10 +34,13 @@ private:
     void searchAndSetSkin(QString skinType);
     void loadMainConf();
     void saveMainConf();
+    void loadSkinPreview(QString skin);
 
 private slots:
     void sltOnPushButtonApply();
     void sltOnPushButtonCancel();
+    void sltOnAllSkinItemDoubleClicked(QListWidgetItem *item);
+    void sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 };
 
 #endif // MAINWINDOW_H

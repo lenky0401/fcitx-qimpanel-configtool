@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui declarative
 
 TARGET = fcitx-qimpanel-configtool
 
@@ -16,3 +16,4 @@ HEADERS += mainwindow.h
 
 FORMS += mainwindow.ui
 
+RESOURCES += main.qrc
