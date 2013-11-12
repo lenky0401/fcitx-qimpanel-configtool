@@ -2,125 +2,98 @@ import QtQuick 1.1
 
 Rectangle {
     id: mainWindow
+
     objectName: "mainWindowQml"
-    visible : mainModel.showTips || mainModel.showPreedit || mainModel.showLookupTable
+    visible : true
     border.color: "#0080FF"
     border.width: mainSkin.inputBackImg ? 0 : 1
     color: "transparent"
-    
     BorderImage {
-        visible : mainModel.showPreedit || mainModel.showLookupTable
-        anchors.fill: parent
+        id:borderInputBackImage
+        visible : true
+        anchors.fill: mainWindow
         border {
             left: mainSkin.marginLeft;
             top: mainSkin.marginTop;
             right: mainSkin.marginRight;
             bottom: mainSkin.marginBottom;
         }
-        horizontalTileMode: mainSkin.horizontalTileMode
-        verticalTileMode: mainSkin.verticalTileMode
         source: mainSkin.inputBackImg
-    }
-    
-    BorderImage {
-        visible : mainModel.showTips && !mainModel.showPreedit && !mainModel.showLookupTable
-        anchors.fill: parent
-        border {
-            left: 10;
-            top: 10;
-            right: 10;
-            bottom: 10;
-        }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
-        source: mainSkin.tipsImg
-    }
-    
-    Text {
-        x: 5
-        y: 3
-        id: "tipsString"
-        visible : mainModel.showTips
-        text: mainModel.tipsString
-        font.pointSize : mainSkin.fontSize
-        color: mainSkin.inputColor
-    }
-        
-    Text {
-        id: "inputString"
-        visible : mainModel.showPreedit
-        text: mainModel.inputString
-        font.pointSize : mainSkin.fontSize
-        color: mainSkin.inputColor
-    }
 
-    Row {    
-        id: "horizontal"
-        visible : mainModel.showLookupTable && mainModel.isHorizontal
+    }
+    
+
+    Text {
+        id: inputString
+            visible : true//mainModel.showPreedit
+        text: "cao zuo xi tong"
+        font.pointSize : mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
+        color: mainSkin.inputColor
+    }
+    Row {
+        id: horizontal
+        visible :mainModel.isHorizontal
         Repeater {
             model: mainModel.candidateWords
             Text {
-                id: "candidateWord"
-                text: "<font style='color:" + mainSkin.indexColor + "'>" + cddLabel + "</font>" + 
-                         "<font style='color:" + ((index == mainModel.highLight) ? mainSkin.firstCandColor : 
+                id: candidateWord
+                text: "<font style='color:" + mainSkin.indexColor + "'>" + cddLabel+ "</font>" +
+                         "<font style='color:" + ((index == 0) ? mainSkin.firstCandColor :
                             mainSkin.otherColor) + "'>" + cddText + "</font>" + "  "
                 font.pointSize : mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                            mainCtrl.selectCandidate(index)
-                    }
-                }
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: {
+//                            mainCtrl.selectCandidate(index)
+//                    }
+//                }
             }
         }
     }
-    
+
     Column {
-        id: "vertical"
-        visible : mainModel.showLookupTable && !mainModel.isHorizontal
-        
+        id: vertical
+        visible : !mainModel.isHorizontal
         Repeater {
             model: mainModel.candidateWords
             Text {
-                id: "candidateWord"
-                text: "<font style='color:" + mainSkin.indexColor + "'>" + cddLabel + "</font>" + 
-                         "<font style='color:" + ((index == mainModel.highLight) ? mainSkin.firstCandColor : 
+                id: candidateWordVertical
+                text: "<font style='color:" + mainSkin.indexColor + "'>" + cddLabel + "</font>" +
+                         "<font style='color:" + ((index == 0) ? mainSkin.firstCandColor :
                             mainSkin.otherColor) + "'>" + cddText + "</font>" + "  "
                 font.pointSize : mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                            mainCtrl.selectCandidate(index)
-                    }
-                }
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: {
+//                            mainCtrl.selectCandidate(index)
+//                    }
+//                }
             }
         }
     }
 
     Image {
-        id: "prev_page"
-        visible : mainModel.hasPrev || mainModel.hasNext
+        id: prev_page
         source: mainSkin.backArrowImg
-        opacity: mainModel.hasPrev ? 1 : 0.5
+        opacity: 0.5
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (mainModel.hasPrev)
-                    mainCtrl.getPrevPage()
+//                if (mainModel.hasPrev)
+//                    mainCtrl.getPrevPage()
             }
         }
     }
     
     Image {
-        id: "next_page"
-        visible : mainModel.hasPrev || mainModel.hasNext
+        id: next_page
         source: mainSkin.forwardArrowImg
-        opacity: mainModel.hasNext ? 1 : 0.5
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (mainModel.hasNext)
-                    mainCtrl.getNextPage()
+//                if (mainModel.hasNext)
+//                    mainCtrl.getNextPage()
             }
         }
     }
@@ -155,7 +128,6 @@ Rectangle {
     }
     
     Component.onCompleted: {
-    
         if (mainSkin.inputStringPosX == 0)
             mainSkin.inputStringPosX = mainSkin.marginLeft;
             
@@ -181,7 +153,7 @@ Rectangle {
             mainSkin.backArrowPosY = mainSkin.inputStringPosY;
             
         clearAllAnchors(prev_page);
-        setObjAbsolutePosition(prev_page, mainSkin.backArrowPosX, mainSkin.backArrowPosY);    
+        setObjAbsolutePosition(prev_page, mainSkin.backArrowPosX, mainSkin.backArrowPosY);
 
         if (mainSkin.forwardArrowPosX == 0)
             mainSkin.forwardArrowPosX = - next_page.width - 10;
@@ -195,36 +167,21 @@ Rectangle {
     }
     
     function max(x, y) { return x > y ? x : y; }
-    
+
+
     Connections {
-        target: mainModel
-        
-        onMainWindowSizeChanged: {
+        target: mainModel   
+        onQmlMainWindowSizeChanged: {
+
             var tmp;
             var width, width1;
-            var height, height1;
-            
-            if (mainModel.showTips && !mainModel.showPreedit && !mainModel.showLookupTable) {
-                mainWindow.width = tipsString.width + 10;
-                mainWindow.height = tipsString.height + 10;
-                
-                return;
-            }
+            var height, height1;           
 
             width = mainSkin.marginLeft;
             width1 = 0;
             height = mainSkin.marginTop;
             height1 = 0;
-
-            if (mainModel.showTips) {
-                tmp = tipsString.x + tipsString.width;
-                width = max(width, tmp);
-
-                tmp = tipsString.y + tipsString.height;
-                height = max(height, tmp);
-            }            
                 
-            if (mainModel.showPreedit) {
                 if (mainSkin.inputStringPosX > 0) {
                     tmp = inputString.x + inputString.width;
                     width = max(width, tmp);
@@ -238,31 +195,31 @@ Rectangle {
                 } else {
                     height1 = max(height1, -mainSkin.inputStringPosY);
                 }
-            }
-                
-            if (mainModel.showLookupTable) {
+
+
                 if (mainSkin.outputCandPosX > 0) {
                     if (mainModel.isHorizontal)
                         tmp = horizontal.x + horizontal.width;
                     else
                         tmp = vertical.x + vertical.width;
                     width = max(width, tmp);
+//                    console.log(width)
                 } else {
                     width1 = max(width1, -mainSkin.outputCandPosX);
                 }
-                
+
                 if (mainSkin.outputCandPosY > 0) {
                     if (mainModel.isHorizontal)
                         tmp = horizontal.y + horizontal.height;
                     else
                         tmp = vertical.y + vertical.height;
                     height = max(height, tmp);
+//                    console.log(height);
                 } else {
                     height1 = max(height1, -mainSkin.outputCandPosY);
                 }
-            }
             
-            if (mainModel.hasPrev || mainModel.hasNext) {
+            //if (mainModel.hasPrev || mainModel.hasNext) {
                 if (mainSkin.backArrowPosX > 0) {
                     tmp = prev_page.x + prev_page.width;
                     width = max(width, tmp);
@@ -290,10 +247,14 @@ Rectangle {
                 } else {
                     height1 = max(height1, -mainSkin.forwardArrowPosY);
                 }
-            }
+          //  }
             
             mainWindow.width = width + width1 + mainSkin.marginRight + mainSkin.adjustWidth;
             mainWindow.height = height + height1 + mainSkin.marginBottom + mainSkin.adjustHeight;
+//            console.log(width);
+//            console.log(height);
+//            console.log(width1);
+//            console.log(height1);
         }
-    }    
+    }
 }
