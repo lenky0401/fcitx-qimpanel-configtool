@@ -15,21 +15,25 @@ EditingSkinDialog::EditingSkinDialog(QSettings *pSettings,SkinFcitx *skinFcitx,
     ui(new Ui::EditingSkinDialog)
 {
     ui->setupUi(this);
-    qDebug()<<"111111111111111111111111111111";
-    this->setWindowTitle("skin/"+item->text()+"/fcitx_skin_edit.conf");
+    this->setWindowTitle("skin/"+item->text()+"/fcitx_skin.conf");
     mSettings = pSettings;
     mSkinFcitx = skinFcitx;
     mItem = item;
     ui->lineEditSkinAuthor->setText(mSkinFcitx->skinAuthor());
     ui->lineEditSkinVersion->setText(mSkinFcitx->skinVersion());
     loadMainConf();
-//    QHBoxLayout *layout = new QHBoxLayout;
-//    layout->setContentsMargins(0, 24, 0, 0);
-//    QScrollArea *scrollArea = new QScrollArea;
-//    scrollArea->setWidgetResizable(true);
-//    scrollArea->setWidget(ui->EditingSkinTabWidget);
-//    layout->addWidget(scrollArea);
-//    setLayout(layout);
+//    ui->scrollArea->setWidgetResizable(true);
+//    ui->scrollArea->setAutoFillBackground(true);
+
+//    QVBoxLayout *layout = new QVBoxLayout;
+//    QWidget *containWidget = new QWidget;
+//    layout->addWidget(ui->labelSkinAuthor);
+//    layout->addWidget(ui->labelSkinVersion);
+//    layout->addWidget(ui->lineEditSkinAuthor);
+//    layout->addWidget(ui->lineEditSkinVersion);
+//    containWidget->setLayout(layout);
+//    ui->scrollArea->setWidgetResizable(true);
+//    ui->scrollArea->setWidget(containWidget);
 }
 
 EditingSkinDialog::~EditingSkinDialog()

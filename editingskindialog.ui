@@ -6,20 +6,46 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>724</width>
+    <width>590</width>
     <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QPushButton" name="pushButton_ok">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>395</y>
+     <width>85</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确定&amp;O</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_cannel">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>395</y>
+     <width>85</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>取消&amp;C</string>
+   </property>
+  </widget>
   <widget class="QTabWidget" name="EditingSkinTabWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>721</width>
-     <height>351</height>
+     <width>571</width>
+     <height>331</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -36,22 +62,35 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>30</y>
-       <width>91</width>
-       <height>20</height>
+       <y>40</y>
+       <width>75</width>
+       <height>27</height>
       </rect>
      </property>
      <property name="text">
       <string>皮肤版本：</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lineEditSkinAuthor">
+     <property name="geometry">
+      <rect>
+       <x>112</x>
+       <y>74</y>
+       <width>110</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <widget class="QLineEdit" name="lineEditSkinVersion">
      <property name="geometry">
       <rect>
-       <x>131</x>
-       <y>27</y>
-       <width>110</width>
-       <height>28</height>
+       <x>111</x>
+       <y>40</y>
+       <width>112</width>
+       <height>27</height>
       </rect>
      </property>
      <property name="text">
@@ -61,27 +100,14 @@
     <widget class="QLabel" name="labelSkinAuthor">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>80</y>
-       <width>71</width>
-       <height>18</height>
+       <x>31</x>
+       <y>74</y>
+       <width>75</width>
+       <height>27</height>
       </rect>
      </property>
      <property name="text">
       <string>皮肤作者：</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditSkinAuthor">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>74</y>
-       <width>110</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
      </property>
     </widget>
    </widget>
@@ -112,7 +138,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="labelMenuFontSize">
+    <widget class="QLabel" name="labelCandFontSize">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -122,10 +148,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>菜单字体大小：</string>
+      <string>候选词字体大小：</string>
      </property>
     </widget>
-    <widget class="QSpinBox" name="spinBoxMenuFontSize">
+    <widget class="QSpinBox" name="spinBoxCandFontSize">
      <property name="geometry">
       <rect>
        <x>195</x>
@@ -135,7 +161,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="labelTipsColor">
+    <widget class="QLabel" name="labelInputColor">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -145,14 +171,92 @@
       </rect>
      </property>
      <property name="text">
-      <string>提示信息颜色：</string>
+      <string>输入字符串字体颜色：</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButtonTipsColor">
+    <widget class="QPushButton" name="pushButtonInputColor">
      <property name="geometry">
       <rect>
        <x>194</x>
        <y>130</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonIndexColor_2">
+     <property name="geometry">
+      <rect>
+       <x>207</x>
+       <y>180</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelCandIndexColor">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>186</y>
+       <width>191</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>候选词前数字标号字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelFirstCandColor">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>首候选词字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonFirstCandColor_2">
+     <property name="geometry">
+      <rect>
+       <x>203</x>
+       <y>224</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOtherCandColor">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>270</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>其他候选次字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonInputFontColor_3">
+     <property name="geometry">
+      <rect>
+       <x>203</x>
+       <y>264</y>
        <width>181</width>
        <height>28</height>
       </rect>
@@ -647,32 +751,6 @@
      </property>
     </widget>
    </widget>
-  </widget>
-  <widget class="QPushButton" name="pushButton_ok">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>380</y>
-     <width>99</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>确定&amp;O</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_cannel">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>380</y>
-     <width>99</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>取消&amp;C</string>
-   </property>
   </widget>
  </widget>
  <resources/>

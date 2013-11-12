@@ -40,7 +40,7 @@ Rectangle {
                 text: "<font style='color:" + mainSkin.indexColor + "'>" + cddLabel+ "</font>" +
                          "<font style='color:" + ((index == 0) ? mainSkin.firstCandColor :
                             mainSkin.otherColor) + "'>" + cddText + "</font>" + "  "
-                font.pointSize : mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
+                font.pointSize : mainSkin.fontSize//mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
 //                MouseArea {
 //                    anchors.fill: parent
 //                    onClicked: {
@@ -61,7 +61,7 @@ Rectangle {
                 text: "<font style='color:" + mainSkin.indexColor + "'>" + cddLabel + "</font>" +
                          "<font style='color:" + ((index == 0) ? mainSkin.firstCandColor :
                             mainSkin.otherColor) + "'>" + cddText + "</font>" + "  "
-                font.pointSize : mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
+                font.pointSize : mainSkin.fontSize//mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
 //                MouseArea {
 //                    anchors.fill: parent
 //                    onClicked: {

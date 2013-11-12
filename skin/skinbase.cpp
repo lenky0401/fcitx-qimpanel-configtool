@@ -292,21 +292,21 @@ void SkinBase::setFontSize(const int fontSize)
 {
     mFontSize = fontSize;
 //    qDebug()<<fontSize;
-//    qDebug()<<mFontSize;
+    qDebug()<<mFontSize;
 }
 
 int SkinBase::fontSize() const
 {
-    if (MainModel::self()->isHorizontal() || mFontSizeVertical == 0)
-    {
+//    if (MainModel::self()->isHorizontal() || mFontSizeVertical == 0)
+//    {
 //        qDebug()<<"mFontSize"<<mFontSize;
         return mFontSize;
-    }
-    else
-    {
-//        qDebug()<<"mFontSizeVertical"<<mFontSizeVertical;
-        return mFontSizeVertical;
-    }
+//    }
+//    else
+//    {
+////        qDebug()<<"mFontSizeVertical"<<mFontSizeVertical;
+//        return mFontSizeVertical;
+//    }
 }
 
 void SkinBase::setCandFontSize(const int candFontSize)
