@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditingSkinDialog</class>
+ <widget class="QDialog" name="EditingSkinDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>590</width>
+    <height>432</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="pushButton_ok">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>395</y>
+     <width>85</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确定&amp;O</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_cannel">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>395</y>
+     <width>85</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>取消&amp;C</string>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="EditingSkinTabWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>571</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <widget class="QWidget" name="skinInfo">
+    <attribute name="title">
+     <string>皮肤信息</string>
+    </attribute>
+    <widget class="QLabel" name="labelSkinVersion">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>75</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>皮肤版本：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSkinAuthor">
+     <property name="geometry">
+      <rect>
+       <x>112</x>
+       <y>74</y>
+       <width>110</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSkinVersion">
+     <property name="geometry">
+      <rect>
+       <x>111</x>
+       <y>40</y>
+       <width>112</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelSkinAuthor">
+     <property name="geometry">
+      <rect>
+       <x>31</x>
+       <y>74</y>
+       <width>75</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>皮肤作者：</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="skinFont">
+    <attribute name="title">
+     <string>皮肤字体</string>
+    </attribute>
+    <widget class="QLabel" name="labelIputFontSize">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>输入字体大小：</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxInputFontSize">
+     <property name="geometry">
+      <rect>
+       <x>194</x>
+       <y>36</y>
+       <width>181</width>
+       <height>30</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelCandFontSize">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>88</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>候选词字体大小：</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxCandFontSize">
+     <property name="geometry">
+      <rect>
+       <x>195</x>
+       <y>84</y>
+       <width>180</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelInputColor">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>136</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>输入字符串字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonInputColor">
+     <property name="geometry">
+      <rect>
+       <x>194</x>
+       <y>130</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonIndexColor_2">
+     <property name="geometry">
+      <rect>
+       <x>207</x>
+       <y>180</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelCandIndexColor">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>186</y>
+       <width>191</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>候选词前数字标号字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelFirstCandColor">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>首候选词字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonFirstCandColor_2">
+     <property name="geometry">
+      <rect>
+       <x>203</x>
+       <y>224</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOtherCandColor">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>270</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>其他候选次字体颜色：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonInputFontColor_3">
+     <property name="geometry">
+      <rect>
+       <x>203</x>
+       <y>264</y>
+       <width>181</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="skinMianWindowSetting">
+    <attribute name="title">
+     <string>皮肤主窗口设置</string>
+    </attribute>
+    <widget class="QLabel" name="label_mBackPicture">
+     <property name="geometry">
+      <rect>
+       <x>29</x>
+       <y>28</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>背景图片</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_mBackPicture">
+     <property name="geometry">
+      <rect>
+       <x>173</x>
+       <y>23</y>
+       <width>200</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_mLogoIcon">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>70</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>logo图标</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_mLogoIcon">
+     <property name="geometry">
+      <rect>
+       <x>173</x>
+       <y>65</y>
+       <width>200</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_mLeftMargin">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>113</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>左边距</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_mLeftMargin">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>109</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_mRightMargin">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>153</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_mRightMargin">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>157</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>右边距</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBo_mTopMargin">
+     <property name="geometry">
+      <rect>
+       <x>171</x>
+       <y>196</y>
+       <width>201</width>
+       <height>30</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_mTopMargin">
+     <property name="geometry">
+      <rect>
+       <x>31</x>
+       <y>200</y>
+       <width>141</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>上边距</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_mBottomMargin">
+     <property name="geometry">
+      <rect>
+       <x>29</x>
+       <y>247</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>下边距</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_mBottomMargin">
+     <property name="geometry">
+      <rect>
+       <x>169</x>
+       <y>243</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="skinInputSetting">
+    <attribute name="title">
+     <string>皮肤输入框设置</string>
+    </attribute>
+    <widget class="QLabel" name="label_iLeftMargin">
+     <property name="geometry">
+      <rect>
+       <x>47</x>
+       <y>65</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>左边距</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_iBottomMargin">
+     <property name="geometry">
+      <rect>
+       <x>46</x>
+       <y>199</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>下边距</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_iLeftMargin">
+     <property name="geometry">
+      <rect>
+       <x>187</x>
+       <y>61</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_iRightMargin">
+     <property name="geometry">
+      <rect>
+       <x>47</x>
+       <y>109</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>右边距</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_iBackPicture">
+     <property name="geometry">
+      <rect>
+       <x>188</x>
+       <y>19</y>
+       <width>200</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_iRightMargin">
+     <property name="geometry">
+      <rect>
+       <x>187</x>
+       <y>105</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_iBottomMargin">
+     <property name="geometry">
+      <rect>
+       <x>186</x>
+       <y>195</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_iBackPicture">
+     <property name="geometry">
+      <rect>
+       <x>46</x>
+       <y>24</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>背景图片</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_iTopMargin">
+     <property name="geometry">
+      <rect>
+       <x>48</x>
+       <y>152</y>
+       <width>141</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>上边距</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBo_iTopMargin">
+     <property name="geometry">
+      <rect>
+       <x>188</x>
+       <y>148</y>
+       <width>201</width>
+       <height>30</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="skinTrayIconSetting">
+    <attribute name="title">
+     <string>皮肤托盘图标设置</string>
+    </attribute>
+    <widget class="QLabel" name="labelActiveInputIcon">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>30</y>
+       <width>161</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string> 活动输入法图标</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditActiveInputIcon">
+     <property name="geometry">
+      <rect>
+       <x>204</x>
+       <y>25</y>
+       <width>241</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelInActiveInputIcon">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>79</y>
+       <width>161</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string> 非活动输入法图标</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditInActiveInputIcon">
+     <property name="geometry">
+      <rect>
+       <x>204</x>
+       <y>74</y>
+       <width>241</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="skinMenuSetting">
+    <attribute name="title">
+     <string>皮肤菜单设置</string>
+    </attribute>
+    <widget class="QSpinBox" name="spinBox_menuRightMargin">
+     <property name="geometry">
+      <rect>
+       <x>202</x>
+       <y>109</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_menuBottomMargin">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>203</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>下边距</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_menuBackPicture">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>28</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>背景图片</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_menuRightMargin">
+     <property name="geometry">
+      <rect>
+       <x>61</x>
+       <y>113</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>右边距</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBo_menuTopMargin">
+     <property name="geometry">
+      <rect>
+       <x>202</x>
+       <y>152</y>
+       <width>201</width>
+       <height>30</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_menuLeftMargin">
+     <property name="geometry">
+      <rect>
+       <x>61</x>
+       <y>69</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>左边距</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_menuBackPicture">
+     <property name="geometry">
+      <rect>
+       <x>202</x>
+       <y>23</y>
+       <width>200</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_menuBottomMargin">
+     <property name="geometry">
+      <rect>
+       <x>203</x>
+       <y>199</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_menuLeftMargin">
+     <property name="geometry">
+      <rect>
+       <x>202</x>
+       <y>65</y>
+       <width>201</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_menuTopMargin">
+     <property name="geometry">
+      <rect>
+       <x>62</x>
+       <y>156</y>
+       <width>141</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>上边距</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="keyboard">
+    <attribute name="title">
+     <string>键盘</string>
+    </attribute>
+    <widget class="QLabel" name="labelVirtualKeyboardPicture">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>30</y>
+       <width>161</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>虚拟键盘图片</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditVirtualKeyboardPicture">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>24</y>
+       <width>411</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelSoftKeyboardFontcolor">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>161</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>软件盘按键文字颜色</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSoftKeyboardFontcolor">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>64</y>
+       <width>411</width>
+       <height>28</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

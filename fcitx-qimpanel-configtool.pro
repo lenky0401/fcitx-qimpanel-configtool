@@ -8,12 +8,31 @@ QT       += core gui declarative
 
 TARGET = fcitx-qimpanel-configtool
 
+LIBS += -lfcitx-qt -lfcitx-config -lfcitx-utils
 
 SOURCES += main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    main_model.cpp \
+    skin/skinbase.cpp \
+    skin/skinfcitx.cpp \
+    candidate_word.cpp \
+    editingskindialog.cpp
 
-HEADERS += mainwindow.h
 
-FORMS += mainwindow.ui
+HEADERS += mainwindow.h \
+    main_model.h \
+    skin/skinbase.h \
+    kimpanelagenttype.h \
+    candidate_word.h \
+    editingskindialog.h \
+    skin/skinfcitx.h
 
-RESOURCES += main.qrc
+
+
+FORMS += mainwindow.ui \
+    editingskindialog.ui
+
+RESOURCES += \
+    main.qrc
+
+OTHER_FILES +=
