@@ -1,0 +1,368 @@
+/*
+ * Copyright (C) 2013 National University of Defense Technology(NUDT) & Kylin Ltd.
+ *
+ * Authors:
+ *  lenky gao    lenky0401@gmail.com/gaoqunkai@ubuntukylin.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <QDebug>
+#include "main_model.h"
+#include "candidate_word.h"
+
+MainModel* MainModel::mSelf = 0;
+
+MainModel* MainModel::self()
+{
+    if (!mSelf) {
+        mSelf = new MainModel;
+    }
+    return mSelf;
+}
+
+MainModel::MainModel()
+{
+
+}
+
+MainModel::~MainModel()
+{
+
+}
+
+void MainModel::resetData() {
+    setCandidateWords();
+    setInputString("");
+    setHasPrev(false);
+    setHasNext(false);
+    setInputStringCursorPos(-1);
+    setHighLight(-1);
+    //这个不属于焦点切换时需要重置的值
+    //setIsHorizontal(true);
+    setShowTips(false);
+    setShowPreedit(false);
+    setShowLookupTable(false);
+}
+
+void MainModel::setInputString(const QString inputString) {
+    mInputString = inputString;
+    emit inputStringChanged();
+}
+
+QString MainModel::inputString() const {
+    return mInputString;
+}
+
+void MainModel::setTipsString(const QString tipsString) {
+    mTipsString = tipsString;
+    emit tipsStringChanged();
+    emit qmlMainWindowSizeChanged();
+}
+
+QString MainModel::tipsString() const {
+    return mTipsString;
+}
+
+void MainModel::setInputStringCursorPos(int pos) {
+    setInputString(mInputString.insert(pos, QString("|")));
+}
+
+void candidateWordsPropAppend(QDeclarativeListProperty<CandidateWord>* prop, CandidateWord* value)
+{
+    Q_UNUSED(prop);
+    Q_UNUSED(value);
+    return; //Append not supported
+}
+
+int candidateWordsPropCount(QDeclarativeListProperty<CandidateWord>* prop)
+{
+    return static_cast<QList<CandidateWord*>*>(prop->data)->count();
+}
+
+CandidateWord* candidateWordsPropAt(QDeclarativeListProperty<CandidateWord>* prop, int index)
+{
+    return static_cast<QList<CandidateWord*>*>(prop->data)->at(index);
+}
+
+void MainModel::setCandidateWords() {
+    CandidateWord *candidate;
+    QStringList label;
+    QStringList text;
+    int i = 0;
+    switch (mCurrentCandidateWordNum) {
+    case 1:
+        label.append("1.");
+        text.append("操作系统");
+        break;
+    case 2:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        break;
+    case 3:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        break;
+    case 4:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        break;
+    case 5:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        label.append("5.");
+        text.append("操");
+        break;
+    case 6:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        label.append("5.");
+        text.append("操");
+        label.append("6.");
+        text.append("糙");
+        break;
+    case 7:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        label.append("5.");
+        text.append("操");
+        label.append("6.");
+        text.append("糙");
+        label.append("7.");
+        text.append("艹");
+        break;
+    case 8:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        label.append("5.");
+        text.append("操");
+        label.append("6.");
+        text.append("糙");
+        label.append("7.");
+        text.append("艹");
+        label.append("8.");
+        text.append("肏");
+        break;
+    case 9:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        label.append("5.");
+        text.append("操");
+        label.append("6.");
+        text.append("糙");
+        label.append("7.");
+        text.append("艹");
+        label.append("8.");
+        text.append("肏");
+        label.append("9.");
+        text.append("曹");
+        break;
+    case 10:
+        label.append("1.");
+        text.append("操作系统");
+        label.append("2.");
+        text.append("操作");
+        label.append("3.");
+        text.append("操做");
+        label.append("4.");
+        text.append("槽");
+        label.append("5.");
+        text.append("操");
+        label.append("6.");
+        text.append("糙");
+        label.append("7.");
+        text.append("艹");
+        label.append("8.");
+        text.append("肏");
+        label.append("9.");
+        text.append("曹");
+        label.append("0.");
+        text.append("草");
+        break;
+    default:
+        break;
+    }
+
+    qDeleteAll(mCandidateWords);
+    mCandidateWords.clear();
+//    QList<KimpanelLookupTable::Entry>::iterator iter;
+//    QList<KimpanelLookupTable::Entry> entries = lookup_table.entries;
+
+//    qDeleteAll(mCandidateWords);
+//    mCandidateWords.clear();
+//    for (iter = entries.begin(); iter != entries.end(); ++ iter) {
+//        if ((candidate = new (std::nothrow)CandidateWord) == NULL)
+//            break;
+
+//        candidate->setCddLabel(iter->label);
+//        candidate->setCddText(iter->text);
+//        mCandidateWords.append(candidate);
+//    }
+    for(i=0;i<label.length();i++)
+    {
+        if ((candidate = new (std::nothrow)CandidateWord) == NULL)
+            break;
+//        qDebug()<<label.at(i).toInt();
+//        qDebug()<<text.at(i);
+        candidate->setCddLabel(label.at(i));
+        candidate->setCddText(text.at(i));
+        mCandidateWords.append(candidate);
+
+    }
+//    setHasPrev(lookup_table.has_prev);
+//    setHasNext(lookup_table.has_next);
+
+    emit candidateWordsChanged();
+    emit qmlMainWindowSizeChanged();
+}
+
+QDeclarativeListProperty<CandidateWord> MainModel::candidateWords() {
+
+    return QDeclarativeListProperty<CandidateWord>(this, &mCandidateWords, &candidateWordsPropAppend,
+        &candidateWordsPropCount, &candidateWordsPropAt, 0);
+}
+
+void MainModel::setHasPrev(const bool hasPrev) {
+    mHasPrev = hasPrev;
+    emit hasPrevChanged();
+}
+
+bool MainModel::hasPrev() const {
+    return mHasPrev;
+}
+
+void MainModel::setHasNext(const bool hasNext) {
+    mHasNext = hasNext;
+    emit hasNextChanged();
+}
+
+bool MainModel::hasNext() const {
+    return mHasNext;
+}
+
+void MainModel::setHighLight(const int highLight) {
+    mHighLight = highLight;
+    emit highLightChanged();
+}
+
+int MainModel::highLight() const {
+    qDebug()<<"mHighLight"<<mHighLight;
+    return mHighLight;
+}
+
+void MainModel::setIsHorizontal(const bool isHorizontal) {
+    mIsHorizontal = isHorizontal;
+    emit isHorizontalChanged();
+    emit qmlMainWindowSizeChanged();
+}
+
+bool MainModel::isHorizontal() const {
+    return mIsHorizontal;
+}
+
+void MainModel::setShowTips(const bool showTips) {
+    mShowTips = showTips;
+    emit showTipsChanged();
+    emit qmlMainWindowSizeChanged();
+}
+
+bool MainModel::showTips() const {
+    return mShowTips;
+}
+
+void MainModel::setShowPreedit(const bool showPreedit) {
+    mShowPreedit = showPreedit;
+    emit showPreeditChanged();
+    emit qmlMainWindowSizeChanged();
+}
+
+bool MainModel::showPreedit() const {
+    return mShowPreedit;
+}
+
+void MainModel::setShowLookupTable(const bool showLookupTable) {
+    mShowLookupTable = showLookupTable;
+    emit showLookupTableChanged();
+    emit qmlMainWindowSizeChanged();
+}
+
+bool MainModel::showLookupTable() const {
+    return mShowLookupTable;
+}
+
+int MainModel::currentCandidateWordNum(int Num){
+    mCurrentCandidateWordNum = Num;
+    resetData();
+    emit qmlMainWindowSizeChanged();
+}
+
+void MainModel::emitSigMainWindowSizeChanged()
+{
+       emit qmlMainWindowSizeChanged();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
