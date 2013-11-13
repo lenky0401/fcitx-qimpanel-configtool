@@ -20,11 +20,21 @@ public:
     ~EditingSkinDialog();
     
 private slots:
-    void on_pushButtonTipsColor_released();
+    void on_pushButtonInputColor_released();
 
     void on_pushButton_ok_released();
 
     void on_pushButton_cannel_released();
+
+    void on_pushButtonIndexColor_released();
+
+    void on_pushButtonFirstCandColor_released();
+
+    void on_pushButtonOtherCandColor_released();
+
+    void on_pushButton_menuActiveColor_released();
+
+    void on_pushButton_menuLineColor_released();
 
 private:
     Ui::EditingSkinDialog *ui;

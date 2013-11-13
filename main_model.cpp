@@ -298,7 +298,7 @@ void MainModel::setHighLight(const int highLight) {
 }
 
 int MainModel::highLight() const {
-    qDebug()<<"mHighLight"<<mHighLight;
+//    qDebug()<<"mHighLight"<<mHighLight;
     return mHighLight;
 }
 

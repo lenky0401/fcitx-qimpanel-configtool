@@ -30,7 +30,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     int getWidgetSkinPreviewWidth;
     int getWidgetSkinPreviewHeight;
-    QSettings *pSettings;
+    QSettings *mSettings;
     ~MainWindow();
     
 private:

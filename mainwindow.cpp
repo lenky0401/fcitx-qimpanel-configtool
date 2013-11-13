@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qmlView = new QDeclarativeView;
     mSkinFcitx = new SkinFcitx;
     mMainModer = MainModel::self();
-    pSettings = new QSettings("fcitx-qimpanel", "main");
+    mSettings = new QSettings("fcitx-qimpanel", "main");
     mLayout = new QHBoxLayout(ui->widgetSkinPreview);
     this->setWindowTitle(tr("Qimpanel Settings"));
     loadMainConf();
@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    pSettings->sync();
-    if(pSettings!=NULL)
-        delete pSettings;
+    mSettings->sync();
+    if(mSettings!=NULL)
+        delete mSettings;
     delete ui;
 }
 
@@ -98,8 +98,8 @@ void MainWindow::sltOnCurrentChanged(QWidget *tab)
 
 void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 {
-//    qDebug()<<"MainWindow::"<<pSettings->value("CurtSkinType", "default").toString();
-    EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(pSettings,mSkinFcitx,item);
+//    qDebug()<<"MainWindow::"<<mSettings->value("CurtSkinType", "default").toString();
+    EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(mSettings,mSkinFcitx,item);
     editingSkinDialog->exec();
 //    qDebug() << item->text();
 }
@@ -179,12 +179,12 @@ void MainWindow::loadMainConf()
     int currentCandidateWord;
     int currentFontSize;
 
-    pSettings->beginGroup("base");
-    verticalList = pSettings->value("VerticalList", false).toBool();
-    curtSkinType = pSettings->value("CurtSkinType", "default").toString();
-    currentCandidateWord = pSettings->value("CurrentCandidateWord",5).toInt();
-    currentFontSize = pSettings->value("CurrentFontSize",13).toInt();
-    pSettings->endGroup();
+    mSettings->beginGroup("base");
+    verticalList = mSettings->value("VerticalList", false).toBool();
+    curtSkinType = mSettings->value("CurtSkinType", "default").toString();
+    currentCandidateWord = mSettings->value("CurrentCandidateWord",5).toInt();
+    currentFontSize = mSettings->value("CurrentFontSize",13).toInt();
+    mSettings->endGroup();
 
 
     ui->radioButtonVertical->setChecked(verticalList);
@@ -205,16 +205,16 @@ void MainWindow::saveMainConf()
     int currentCandidateWord;
     int currentFontSize;
 
-    pSettings->beginGroup("base");
+    mSettings->beginGroup("base");
     verticalList = ui->radioButtonVertical->isChecked();
     curtSkinType = ui->comboBoxSkinType->currentText();
     currentCandidateWord = ui->candidateWordSpinBox->value();
     currentFontSize = ui->fontSizeSpinBox->value();
 
-    pSettings->setValue("VerticalList", verticalList);
-    pSettings->setValue("CurtSkinType", curtSkinType);
-    pSettings->setValue("CurrentCandidateWord",currentCandidateWord);
-    pSettings->setValue("CurrentFontSize",currentFontSize);
+    mSettings->setValue("VerticalList", verticalList);
+    mSettings->setValue("CurtSkinType", curtSkinType);
+    mSettings->setValue("CurrentCandidateWord",currentCandidateWord);
+    mSettings->setValue("CurrentFontSize",currentFontSize);
 }
 
 void MainWindow::setSkinBase()
@@ -227,7 +227,6 @@ void MainWindow::setSkinBase()
        delete mSkinFcitx;
     mSkinFcitx = skin;
 
-    qmlRegisterType<CandidateWord>();//注册CandidateWord列表到qml
     qmlView->rootContext()->setContextProperty("mainSkin", mSkinFcitx);//把qt程序暴露到qml
     qmlView->setSource(QUrl("qrc:/new/prefix1/main.qml"));
     mLayout->addWidget(qmlView);

@@ -292,7 +292,7 @@ void SkinBase::setFontSize(const int fontSize)
 {
     mFontSize = fontSize;
 //    qDebug()<<fontSize;
-    qDebug()<<mFontSize;
+//    qDebug()<<mFontSize;
 }
 
 int SkinBase::fontSize() const
