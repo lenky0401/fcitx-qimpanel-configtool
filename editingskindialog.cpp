@@ -19,8 +19,6 @@ EditingSkinDialog::EditingSkinDialog(QSettings *pSettings,SkinFcitx *skinFcitx,
     mSettings = pSettings;
     mSkinFcitx = skinFcitx;
     mItem = item;
-    ui->lineEditSkinAuthor->setText(mSkinFcitx->skinAuthor());
-    ui->lineEditSkinVersion->setText(mSkinFcitx->skinVersion());
     loadMainConf();
 
 //    QVBoxLayout *layout = new QVBoxLayout;
@@ -43,9 +41,19 @@ EditingSkinDialog::~EditingSkinDialog()
 
 void EditingSkinDialog::loadMainConf()
 {
-    QSettings *settings = new QSettings("fcitx-qimpanel-skin-"+mItem->text(),"fcitx_skin");
-    settings->setIniCodec("UTF-8");
-    settings->setValue("1111111","22222");
+//    QSettings *settings = new QSettings("fcitx-qimpanel-skin-"+mItem->text(),"fcitx_skin");
+//    settings->setIniCodec("UTF-8");
+//    QString skinName;
+//    settings->beginGroup("SkinInfo");
+    ui->lineEditSkinAuthor->setText(mSkinFcitx->skinAuthor());
+    ui->lineEditSkinVersion->setText(mSkinFcitx->skinVersion());
+    ui->spinBoxInputFontSize->setValue(mSkinFcitx->fontSize());
+    ui->spinBoxCandFontSize->setValue(mSkinFcitx->candFontSize());
+    ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->inputColor()) +";border: none;" +"}");
+    ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->indexColor()) +";border: none;" +"}");
+    ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->firstCandColor()) +";border: none;" +"}");
+    ui->pushButtonOtherCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->otherColor()) +";border: none;" +"}");
+//    ui->lineEdit_iBackImg->setText();
 }
 
 void EditingSkinDialog::saveMainConf()
@@ -60,6 +68,7 @@ void EditingSkinDialog::on_pushButtonInputColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        qDebug()<<color;
         qDebug()<<str;
         ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
@@ -131,3 +140,11 @@ void EditingSkinDialog::on_pushButton_menuLineColor_released()
         ui->pushButton_menuLineColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
+
+QString EditingSkinDialog::colorToRGB(QColor color)
+{
+    QString str;
+    str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+    return str;
+}
+

@@ -51,11 +51,17 @@ bool SkinFcitx::loadSkin(const QString skinPath)
     QString line;
     QString key, value;
 
+    bool skinInfo = false;
+    bool skinMainBar = false;
+    bool skinTrayIcon = false;
+    bool skinMenu = false;
+    bool skinKeyboard = false;
+
     bool skinFont = false;
     bool skinInputBar = false;
     bool skinFontVertical = false;
     bool skinInputBarVertical = false;
-    bool skinInfo = false;
+
 
     QTextStream textStream(fcitxSkinConfFile.readAll());
     do {
@@ -67,6 +73,10 @@ bool SkinFcitx::loadSkin(const QString skinPath)
         if (line.at(0) == '[') {
             skinInfo = (line == "[SkinInfo]");
             skinFont = (line == "[SkinFont]");
+            skinMainBar = (line == "[SkinMainBar]");
+            skinTrayIcon = (line == "[SkinTrayIcon]");
+            skinMenu = (line == "[SkinMenu]");
+            skinKeyboard = (line == "[SkinKeyboard]");
             skinInputBar = (line == "[SkinInputBar]");
             skinFontVertical = (line == "[SkinFontVertical]");
             skinInputBarVertical = (line == "[SkinInputBarVertical]");
@@ -80,22 +90,79 @@ bool SkinFcitx::loadSkin(const QString skinPath)
         value = line.split('=').at(1);
         if (value.isEmpty())
             continue;
+
         if (skinInfo){
             if(key == "Name"){
                 setSkinName(value);
-//                qDebug()<<"skinfcitx::Name="<<value;
             }
-            if(key == "Version"){
+            else if(key == "Version"){
                 setSkinVersion(value);
-//                qDebug()<<"skinfcitx::Version="<<value;
             }
-            if(key == "Author")
+            else if(key == "Author")
             {
                 setSkinAuthor(value);
-//                qDebug()<<"skinfcitx::Author="<<value;
             }
         }
-        if (skinFont) {
+        else if(skinMainBar){
+            if (key == "BackImg"){
+                qDebug()<<value;
+            }
+            else if (key == "Logo"){
+                qDebug()<<value;
+            }
+            else if (key == "Eng"){
+                qDebug()<<value;
+            }
+            else if (key == "Active"){
+                qDebug()<<value;
+            }
+            else if (key == "MarginLeft"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "MarginRight"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "MarginTop"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "MarginBottom"){
+                qDebug()<<value.toInt();
+            }
+        }
+        else if (skinTrayIcon){
+            if (key == "Active"){
+                qDebug()<<value;
+            }
+            else if (key == "Inactive"){
+                qDebug()<<value;
+            }
+        }
+        else if (skinMenu){
+            if (key == "BackImg"){
+                qDebug()<<value;
+            }
+            else if (key == "MarginLeft"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "MarginRight"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "MarginTop"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "MarginBottom"){
+                qDebug()<<value.toInt();
+            }
+            else if (key == "ActiveColor")
+            {
+                qDebug()<<value2color(value);
+            }
+            else if (key == "LineColor")
+            {
+                qDebug()<<value2color(value);
+            }
+        }
+        else if (skinFont) {
             if (key == "FontSize") {
                 setFontSize(value.toInt());
 
@@ -195,7 +262,6 @@ bool SkinFcitx::loadSkin(const QString skinPath)
 
             } else if (key == "OtherColor") {
                 setOtherColorVertical(value2color(value));
-
             }
         } else if (skinInputBarVertical) {
             if (key == "BackImg") {

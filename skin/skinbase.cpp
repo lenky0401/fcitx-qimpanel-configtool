@@ -304,7 +304,7 @@ int SkinBase::fontSize() const
 //    }
 //    else
 //    {
-////        qDebug()<<"mFontSizeVertical"<<mFontSizeVertical;
+//        qDebug()<<"mFontSizeVertical"<<mFontSizeVertical;
 //        return mFontSizeVertical;
 //    }
 }
@@ -336,7 +336,9 @@ void SkinBase::setInputColor(const QColor inputColor)
 QColor SkinBase::inputColor() const
 {
     if (MainModel::self()->isHorizontal() || mInputColorVertical == Qt::color0)
+    {
         return mInputColor;
+    }
     else
         return mInputColorVertical;
 }

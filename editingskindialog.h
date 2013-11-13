@@ -45,6 +45,7 @@ private:
 private:
     void loadMainConf();
     void saveMainConf();
+    QString colorToRGB(QColor color);
 };
 
 #endif // EDITINGSKINDIALOG_H

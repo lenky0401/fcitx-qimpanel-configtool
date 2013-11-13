@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <property name="movable">
       <bool>false</bool>
@@ -291,7 +291,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_42">
            <item>
-            <widget class="QLabel" name="label_mBackPicture">
+            <widget class="QLabel" name="label_mBackImg">
              <property name="minimumSize">
               <size>
                <width>170</width>
@@ -310,7 +310,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_mBackPicture"/>
+            <widget class="QLineEdit" name="lineEdit_mBackImg"/>
            </item>
           </layout>
          </item>
@@ -521,7 +521,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-2</y>
+            <y>0</y>
             <width>557</width>
             <height>730</height>
            </rect>
