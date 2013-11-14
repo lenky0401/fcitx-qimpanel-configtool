@@ -8,6 +8,8 @@ build*/
 *.kate-swp
 *.orig
 tags
+Makefile
+*.o
 astyle.sh
 cscope.*
 *.part
