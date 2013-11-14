@@ -31,14 +31,57 @@
 class SkinBase : public QObject
 {
     Q_OBJECT
-
+    //SkinInfo
     Q_PROPERTY(QString skinName READ skinName WRITE setSkinName
         NOTIFY skinNameChanged)
     Q_PROPERTY(QString skinVersion READ skinVersion WRITE setSkinVersion
         NOTIFY skinVersionChanged)
     Q_PROPERTY(QString skinAuthor READ skinAuthor WRITE setSkinAuthor
         NOTIFY skinAuthorChanged)
+//    //SKinMainBar
+//    Q_PROPERTY(QString mainBarBackImg READ mainBarBackImg WRITE setMainBarBackImg
+//        NOTIFY mainBarBackImgChanged)
+//    Q_PROPERTY(QString mainBarLogo READ mainBarLogo WRITE setMainBarLogo
+//        NOTIFY mainBarLogoChanged)
+//    Q_PROPERTY(QString mainBarEng READ mainBarEng WRITE setMainBarEng
+//        NOTIFY mainBarEngChanged)
+//    Q_PROPERTY(QString mainBarActive READ mainBarActive WRITE setMainBarActive
+//        NOTIFY mainBarActiveChanged)
+//    Q_PROPERTY(int mainBarMarginLeft READ mainBarMarginLeft WRITE setMainBarMarginLeft
+//        NOTIFY mainBarMarginLeftChanged)
+//    Q_PROPERTY(int mainBarMarginRight READ mainBarMarginRight WRITE setMainBarMarginRight
+//        NOTIFY mainBarMarginRightChanged)
+//    Q_PROPERTY(int mainBarMarginTop READ mainBarMarginTop WRITE setMainBarMarginTop
+//        NOTIFY mainBarMarginTopChanged)
+//    Q_PROPERTY(int mainBarMarginBottom READ mainBarMarginBottom WRITE setMainBarMarginBottom
+//        NOTIFY mainBarMarginBottomChanged)
+//    //SkinTrayIcon
+//    Q_PROPERTY(QString trayIconActive READ trayIconActive WRITE setTrayIconActive
+//        NOTIFY trayIconActiveChanged)
+//    Q_PROPERTY(QString TrayIconInactive READ TrayIconInactive WRITE setTrayIconInactive
+//        NOTIFY TrayIconInactiveChanged)
+//    //SkinMenu
+//    Q_PROPERTY(QString menuBackImg READ menuBackImg WRITE setMenuBackImg
+//        NOTIFY menuBackImgChanged)
+//    Q_PROPERTY(int menuMarginLeft READ menuMarginLeft WRITE setMenuMarginLeft
+//        NOTIFY menuMarginLeftChanged)
+//    Q_PROPERTY(int menuMarginRight READ menuBarMarginRight WRITE setMenuMarginRight
+//        NOTIFY menuMarginRightChanged)
+//    Q_PROPERTY(int menuMarginTop READ menuMarginTop WRITE setMenuMarginTop
+//        NOTIFY menuMarginTopChanged)
+//    Q_PROPERTY(int menuMarginBottom READ menuMarginBottom WRITE setMenuMarginBottom
+//        NOTIFY menuMarginBottomChanged)
+//    Q_PROPERTY(QColor menuActiveColor READ menuActiveColor WRITE setMenuActiveColor
+//        NOTIFY menuActiveColorChanged)
+//    Q_PROPERTY(QColor menuLineColor READ menuLineColor WRITE setMenuLineColor
+//        NOTIFY menuLineColorChanged)
+//    //SkinKeyboard
+//    Q_PROPERTY(QString keyboardBackImg READ keyboardBackImg WRITE setKeyboardBackImg
+//        NOTIFY keyboardBackImgChanged)
+//    Q_PROPERTY(QColor keyboardKeyColor READ keyboardKeyColor WRITE setKeyboardKeyColor
+//        NOTIFY keyboardKeyColorChanged)
 
+    //SkinInputBar
     Q_PROPERTY(QString inputBackImg READ inputBackImg WRITE setInputBackImg
         NOTIFY inputBackImgChanged)
     Q_PROPERTY(QString tipsImg READ tipsImg WRITE setTipsImg
@@ -70,13 +113,14 @@ class SkinBase : public QObject
         NOTIFY otherColorChanged)
 
 public:
+    //SkinInfo
     void setSkinName(const QString skinName);
     QString skinName()const;
     void setSkinVersion(const QString skinVersion);
     QString skinVersion() const;
     void setSkinAuthor(const QString skinAuthor);
     QString skinAuthor() const;
-
+    //SkinInputBar
     void setInputBackImg(const QString inputBackImg);
     QString inputBackImg() const;
     void setTipsImg(const QString tipsImg);

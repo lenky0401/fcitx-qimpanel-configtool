@@ -15,10 +15,13 @@ EditingSkinDialog::EditingSkinDialog(QSettings *pSettings,SkinFcitx *skinFcitx,
     ui(new Ui::EditingSkinDialog)
 {
     ui->setupUi(this);
-    this->setWindowTitle("skin/"+item->text()+"/fcitx_skin.conf");
-    mSettings = pSettings;
     mSkinFcitx = skinFcitx;
     mItem = item;
+    this->setWindowTitle("skin/"+mItem->text()+"/fcitx_skin.conf");
+
+    mSettings = new QSettings("/usr/share/fcitx/skin/"+mItem->text() + "/fcitx_skin.conf",QSettings::IniFormat);
+    mSettings->setIniCodec("UTF-8");
+
     loadMainConf();
 
 //    QVBoxLayout *layout = new QVBoxLayout;
@@ -41,11 +44,11 @@ EditingSkinDialog::~EditingSkinDialog()
 
 void EditingSkinDialog::loadMainConf()
 {
-//    QSettings *settings = new QSettings("fcitx-qimpanel-skin-"+mItem->text(),"fcitx_skin");
-//    settings->setIniCodec("UTF-8");
-//    QString skinName;
-//    settings->beginGroup("SkinInfo");
-    ui->lineEditSkinAuthor->setText(mSkinFcitx->skinAuthor());
+    mSettings->beginGroup("SkinInfo");
+    mSettings->setValue("Version","111111");
+    QString temp = mSettings->value("Author").toString();
+
+    ui->lineEditSkinAuthor->setText(temp);
     ui->lineEditSkinVersion->setText(mSkinFcitx->skinVersion());
     ui->spinBoxInputFontSize->setValue(mSkinFcitx->fontSize());
     ui->spinBoxCandFontSize->setValue(mSkinFcitx->candFontSize());
@@ -58,7 +61,8 @@ void EditingSkinDialog::loadMainConf()
 
 void EditingSkinDialog::saveMainConf()
 {
-
+    mSettings->setPath(QSettings::IniFormat,QSettings::UserScope,"/home/wuxiaoyi");
+    mSettings->sync();
 }
 
 void EditingSkinDialog::on_pushButtonInputColor_released()
@@ -82,6 +86,7 @@ void EditingSkinDialog::on_pushButton_ok_released()
 
 void EditingSkinDialog::on_pushButton_cannel_released()
 {
+
     this->close();
 }
 

@@ -118,8 +118,8 @@ QColor SkinBase::value2color(const QString& value)
 void SkinBase::reloadSkin()
 {
     emit skinAuthorChanged();
-    emit skinName();
-    emit skinVersion();
+    emit skinNameChanged();
+    emit skinVersionChanged();
 
     emit inputBackImgChanged();
     emit tipsImgChanged();
