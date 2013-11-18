@@ -80,6 +80,7 @@ void EditingSkinDialog::loadMainConf()
     int forwardArrowY = mSettings->value("ForwardArrowY").toInt();
     int adjustWidth = mSettings->value("AdjustWidth").toInt();
     int adjustHeight = mSettings->value("AdjustHeight").toInt();
+    mSettings->endGroup();
 
     ui->lineEdit_iBackImg->setText(backImg);
     ui->lineEdit_iTipsImg->setText(tipsImg);
@@ -134,23 +135,65 @@ void EditingSkinDialog::saveMainConf()
 {
     mSettings->beginGroup("SkinFont");
     int fontSize = ui->spinBoxInputFontSize->value();
+    int candFontSize = ui->spinBoxCandFontSize->value();
+
     mSettings->setValue("FontSize",fontSize);
+    mSettings->setValue("CandFontSize",candFontSize);
+    mSettings->setValue("InputColor",inputColorConf);
+    mSettings->setValue("IndexColor",indexColorConf);
+    mSettings->setValue("FirstCandColor",firstCandColorConf);
+    mSettings->setValue("OtherColor",otherColorConf);
+    mSettings->endGroup();
+
+    mSettings->beginGroup("SkinInputBar");
+    QString backImg = ui->lineEdit_iBackImg->text();
+    QString tipsImg = ui->lineEdit_iTipsImg->text();
+    int marginLeft = ui->spinBox_iLeftMargin->value();
+    int marginRight = ui->spinBox_iRightMargin->value();
+    int marginTop = ui->spinBox_iTopMargin->value();
+    int marginBottom = ui->spinBox_iBottomMargin->value();
+    QString horizontalTileMode = ui->comboBox_iHorizontalTileMode->currentText();
+    QString verticalTileMode = ui->comboBox_iVerticalTileMode->currentText();
+    int inputStringPosX = ui->spinBox_iInputStringPosX->value();
+    int inputStringPosY = ui->spinBox_iInputStringPosY->value();
+    int outputCandPosX = ui->spinBox_iOutputCandPosX->value();
+    int outputCandPosY = ui->spinBox_iOutputCandPosY->value();
+    QString backArrow = ui->lineEdit_iBackArrow->text();
+    int backArrowX = ui->spinBox_iBackArrowX->value();
+    int backArrowY = ui->spinBox_iBackArrowY->value();
+    QString forwardArrow = ui->lineEdit_iForwardArrow->text();
+    int forwardArrowX = ui->spinBox_iForwardArrowX->value();
+    int forwardArrowY = ui->spinBox_iForwardArrowY->value();
+    int adjustWidth = ui->spinBox_iAdjustWidth->value();
+    int adjustHeight = ui->spinBox_iAdjustHeight->value();
+
+    mSettings->setValue("BackImg",backImg);
+    mSettings->setValue("TipsImg",tipsImg);
+    mSettings->setValue("MarginLeft",marginLeft);
+    mSettings->setValue("MarginRight",marginRight);
+    mSettings->setValue("MarginTop",marginTop);
+    mSettings->setValue("MarginBottom",marginBottom);
+    mSettings->setValue("horizontalTileMode",horizontalTileMode);
+    mSettings->setValue("vertacalTileMode",verticalTileMode);
+    mSettings->setValue("InputStringPosX",inputStringPosX);
+    mSettings->setValue("InputStringPosY",inputStringPosY);
+    mSettings->setValue("OutputCandPosX",outputCandPosX);
+    mSettings->setValue("OutputCandPosY",outputCandPosY);
+    mSettings->setValue("BackArrow",backArrow);
+    mSettings->setValue("BackArrowX",backArrowX);
+    mSettings->setValue("BackArrowY",backArrowY);
+    mSettings->setValue("ForwardArrow",forwardArrow);
+    mSettings->setValue("ForwardArrowX",forwardArrowX);
+    mSettings->setValue("ForwardArrowY",forwardArrowY);
+    mSettings->setValue("AdjustWidth",adjustWidth);
+    mSettings->setValue("AdjustHeight",adjustHeight);
+
+    mSettings->endGroup();
 
     mSettings->sync();
 }
 
-void EditingSkinDialog::on_pushButtonInputColor_released()
-{
-    QColorDialog::setCustomColor(0,QRgb(0x0000FF));
-    QColor color =  QColorDialog::getColor(QColor(0,0,255));
-    QString str;
-    if(color.isValid()){
-        str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        qDebug()<<color;
-        qDebug()<<str;
-        ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
-    }
-}
+
 
 void EditingSkinDialog::on_pushButton_ok_released()
 {
@@ -166,7 +209,17 @@ void EditingSkinDialog::on_pushButton_cannel_released()
     this->close();
 }
 
-
+void EditingSkinDialog::on_pushButtonInputColor_released()
+{
+    QColorDialog::setCustomColor(0,QRgb(0x0000FF));
+    QColor color =  QColorDialog::getColor(QColor(0,0,255));
+    QString str;
+    if(color.isValid()){
+        str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        inputColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
+        ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
+    }
+}
 void EditingSkinDialog::on_pushButtonIndexColor_released()
 {
     QColorDialog::setCustomColor(0,QRgb(0x0000FF));
@@ -174,6 +227,7 @@ void EditingSkinDialog::on_pushButtonIndexColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        indexColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -185,6 +239,7 @@ void EditingSkinDialog::on_pushButtonFirstCandColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        firstCandColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -196,6 +251,7 @@ void EditingSkinDialog::on_pushButtonOtherCandColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        otherColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonOtherCandColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -207,6 +263,7 @@ void EditingSkinDialog::on_pushButton_menuActiveColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        menuActiveColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButton_menuActiveColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -218,6 +275,7 @@ void EditingSkinDialog::on_pushButton_menuLineColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        menuLineColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButton_menuLineColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }

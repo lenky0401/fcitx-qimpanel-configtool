@@ -43,6 +43,12 @@ private:
     QListWidgetItem *mItem;
     int horizontalTileModeIndex;
     int verticalTileModeIndex;
+    QString inputColorConf;
+    QString indexColorConf;
+    QString firstCandColorConf;
+    QString otherColorConf;
+    QString menuActiveColorConf;
+    QString menuLineColorConf;
 
 private:
     void loadMainConf();
