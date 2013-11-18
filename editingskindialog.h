@@ -15,7 +15,7 @@ class EditingSkinDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit EditingSkinDialog(QSettings *pSettings,SkinFcitx *skinFcitx,QListWidgetItem *item
+    explicit EditingSkinDialog(QListWidgetItem *item
                                ,QWidget *parent = 0);
     ~EditingSkinDialog();
     
@@ -41,11 +41,15 @@ private:
     QSettings *mSettings;
     SkinFcitx *mSkinFcitx;
     QListWidgetItem *mItem;
+    int horizontalTileModeIndex;
+    int verticalTileModeIndex;
 
 private:
     void loadMainConf();
     void saveMainConf();
     QString colorToRGB(QColor color);
+    QColor value2color(const QString& value);
+    void copySkinConf();
 };
 
 #endif // EDITINGSKINDIALOG_H
