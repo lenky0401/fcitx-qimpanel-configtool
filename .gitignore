@@ -9,6 +9,7 @@ build*/
 *.orig
 tags
 Makefile
+fcitx-qimpanel-configtool
 *.o
 astyle.sh
 cscope.*

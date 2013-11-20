@@ -91,78 +91,78 @@ bool SkinFcitx::loadSkin(const QString skinPath)
         if (value.isEmpty())
             continue;
 
-        if (skinInfo){
-            if(key == "Name"){
-                setSkinName(value);
-            }
-            else if(key == "Version"){
-                setSkinVersion(value);
-            }
-            else if(key == "Author")
-            {
-                setSkinAuthor(value);
-            }
-        }
-        else if(skinMainBar){
-            if (key == "BackImg"){
-                qDebug()<<value;
-            }
-            else if (key == "Logo"){
-                qDebug()<<value;
-            }
-            else if (key == "Eng"){
-                qDebug()<<value;
-            }
-            else if (key == "Active"){
-                qDebug()<<value;
-            }
-            else if (key == "MarginLeft"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "MarginRight"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "MarginTop"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "MarginBottom"){
-                qDebug()<<value.toInt();
-            }
-        }
-        else if (skinTrayIcon){
-            if (key == "Active"){
-                qDebug()<<value;
-            }
-            else if (key == "Inactive"){
-                qDebug()<<value;
-            }
-        }
-        else if (skinMenu){
-            if (key == "BackImg"){
-                qDebug()<<value;
-            }
-            else if (key == "MarginLeft"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "MarginRight"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "MarginTop"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "MarginBottom"){
-                qDebug()<<value.toInt();
-            }
-            else if (key == "ActiveColor")
-            {
-                qDebug()<<value2color(value);
-            }
-            else if (key == "LineColor")
-            {
-                qDebug()<<value2color(value);
-            }
-        }
-        else if (skinFont) {
+//        if (skinInfo){
+//            if(key == "Name"){
+//                setSkinName(value);
+//            }
+//            else if(key == "Version"){
+//                setSkinVersion(value);
+//            }
+//            else if(key == "Author")
+//            {
+//                setSkinAuthor(value);
+//            }
+//        }
+//        else if(skinMainBar){
+//            if (key == "BackImg"){
+//                qDebug()<<value;
+//            }
+//            else if (key == "Logo"){
+//                qDebug()<<value;
+//            }
+//            else if (key == "Eng"){
+//                qDebug()<<value;
+//            }
+//            else if (key == "Active"){
+//                qDebug()<<value;
+//            }
+//            else if (key == "MarginLeft"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "MarginRight"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "MarginTop"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "MarginBottom"){
+//                qDebug()<<value.toInt();
+//            }
+//        }
+//        else if (skinTrayIcon){
+//            if (key == "Active"){
+//                qDebug()<<value;
+//            }
+//            else if (key == "Inactive"){
+//                qDebug()<<value;
+//            }
+//        }
+//        else if (skinMenu){
+//            if (key == "BackImg"){
+//                qDebug()<<value;
+//            }
+//            else if (key == "MarginLeft"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "MarginRight"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "MarginTop"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "MarginBottom"){
+//                qDebug()<<value.toInt();
+//            }
+//            else if (key == "ActiveColor")
+//            {
+//                qDebug()<<value2color(value);
+//            }
+//            else if (key == "LineColor")
+//            {
+//                qDebug()<<value2color(value);
+//            }
+//        }
+         if (skinFont) {
             if (key == "FontSize") {
                 setFontSize(value.toInt());
 

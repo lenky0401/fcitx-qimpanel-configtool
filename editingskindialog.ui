@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <property name="movable">
       <bool>false</bool>
@@ -521,7 +521,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-369</y>
             <width>557</width>
             <height>730</height>
            </rect>
@@ -656,7 +656,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iTopMargin"/>
+                 <widget class="QSpinBox" name="spinBox_iTopMargin"/>
                 </item>
                </layout>
               </item>
@@ -708,7 +708,23 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_iHorizontalTileMode"/>
+                 <widget class="QComboBox" name="comboBox_iHorizontalTileMode">
+                  <item>
+                   <property name="text">
+                    <string>Stretch</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Repeat</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Round</string>
+                   </property>
+                  </item>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -734,7 +750,23 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_iVerticalTileMode"/>
+                 <widget class="QComboBox" name="comboBox_iVerticalTileMode">
+                  <item>
+                   <property name="text">
+                    <string>Stretch</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Repeat</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Round</string>
+                   </property>
+                  </item>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -890,7 +922,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iBackArrowX"/>
+                 <widget class="QSpinBox" name="spinBox_iBackArrowX"/>
                 </item>
                </layout>
               </item>
@@ -916,7 +948,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iBackArrowY"/>
+                 <widget class="QSpinBox" name="spinBox_iBackArrowY"/>
                 </item>
                </layout>
               </item>
@@ -968,7 +1000,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iForwardArrowX"/>
+                 <widget class="QSpinBox" name="spinBox_iForwardArrowX"/>
                 </item>
                </layout>
               </item>
@@ -994,7 +1026,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iForwardArrowY"/>
+                 <widget class="QSpinBox" name="spinBox_iForwardArrowY"/>
                 </item>
                </layout>
               </item>
@@ -1020,7 +1052,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iAdjustWidth"/>
+                 <widget class="QSpinBox" name="spinBox_iAdjustWidth"/>
                 </item>
                </layout>
               </item>
@@ -1046,7 +1078,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBo_iAdjustHeight"/>
+                 <widget class="QSpinBox" name="spinBox_iAdjustHeight"/>
                 </item>
                </layout>
               </item>

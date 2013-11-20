@@ -4,32 +4,26 @@
 #include <QPainter>
 #include <QScrollArea>
 #include <QHBoxLayout>
+#include <QFile>
+#include <QMessageBox>
+#include <QDir>
+#include <QtNetwork/QHostInfo>
 
 #include "editingskindialog.h"
 #include "ui_editingskindialog.h"
 
-EditingSkinDialog::EditingSkinDialog(QSettings *pSettings,SkinFcitx *skinFcitx,
-                                     QListWidgetItem *item,
+EditingSkinDialog::EditingSkinDialog(QListWidgetItem *item,
                                      QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EditingSkinDialog)
 {
     ui->setupUi(this);
-    this->setWindowTitle("skin/"+item->text()+"/fcitx_skin.conf");
-    mSettings = pSettings;
-    mSkinFcitx = skinFcitx;
     mItem = item;
+    this->setWindowTitle("skin/"+mItem->text()+"/fcitx_skin.conf");
+    copySkinConf();
+    mSettings = new QSettings("/tmp/"+mItem->text() + "/fcitx_skin.conf",QSettings::IniFormat);
+    mSettings->setIniCodec("UTF-8");
     loadMainConf();
-
-//    QVBoxLayout *layout = new QVBoxLayout;
-//    QWidget *containWidget = new QWidget;
-//    layout->addWidget(ui->labelSkinAuthor);
-//    layout->addWidget(ui->labelSkinVersion);
-//    layout->addWidget(ui->lineEditSkinAuthor);
-//    layout->addWidget(ui->lineEditSkinVersion);
-//    containWidget->setLayout(layout);
-//    ui->scrollArea->setWidgetResizable(true);
-//    ui->scrollArea->setWidget(containWidget);
 }
 
 EditingSkinDialog::~EditingSkinDialog()
@@ -41,24 +35,178 @@ EditingSkinDialog::~EditingSkinDialog()
 
 void EditingSkinDialog::loadMainConf()
 {
-//    QSettings *settings = new QSettings("fcitx-qimpanel-skin-"+mItem->text(),"fcitx_skin");
-//    settings->setIniCodec("UTF-8");
-//    QString skinName;
-//    settings->beginGroup("SkinInfo");
-    ui->lineEditSkinAuthor->setText(mSkinFcitx->skinAuthor());
-    ui->lineEditSkinVersion->setText(mSkinFcitx->skinVersion());
-    ui->spinBoxInputFontSize->setValue(mSkinFcitx->fontSize());
-    ui->spinBoxCandFontSize->setValue(mSkinFcitx->candFontSize());
-    ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->inputColor()) +";border: none;" +"}");
-    ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->indexColor()) +";border: none;" +"}");
-    ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->firstCandColor()) +";border: none;" +"}");
-    ui->pushButtonOtherCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(mSkinFcitx->otherColor()) +";border: none;" +"}");
-//    ui->lineEdit_iBackImg->setText();
+    mSettings->beginGroup("SkinInfo");
+    QString skinAuthor = mSettings->value("Author").toString();
+    QString skinVersion = mSettings->value("Version").toString();
+    ui->lineEditSkinAuthor->setText(skinAuthor);
+    ui->lineEditSkinAuthor->setEnabled(false);
+    ui->lineEditSkinVersion->setText(skinVersion);
+    ui->lineEditSkinVersion->setEnabled(false);
+    mSettings->endGroup();
+
+    mSettings->beginGroup("SkinFont");
+    int fontSize = mSettings->value("FontSize").toInt();
+    int candFontSize = mSettings->value("CandFontSize").toInt();
+    QString inputColor = mSettings->value("InputColor").toString();
+    QString indexColor = mSettings->value("IndexColor").toString();
+    QString firstCandColor = mSettings->value("FirstCandColor").toString();
+    QString otherColor = mSettings->value("OtherColor").toString();
+    ui->spinBoxInputFontSize->setValue(fontSize);
+    ui->spinBoxCandFontSize->setValue(candFontSize);
+    ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(inputColor)) +";border: none;" +"}");
+    ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(indexColor)) +";border: none;" +"}");
+    ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(firstCandColor)) +";border: none;" +"}");
+    ui->pushButtonOtherCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(otherColor)) +";border: none;" +"}");
+    mSettings->endGroup();
+
+    mSettings->beginGroup("SkinInputBar");
+    QString backImg = mSettings->value("BackImg").toString();
+    QString tipsImg = mSettings->value("TipsImg").toString();
+    int marginLeft = mSettings->value("MarginLeft").toInt();
+    int marginRight = mSettings->value("MarginRight").toInt();
+    int marginTop = mSettings->value("MarginTop").toInt();
+    int marginBottom = mSettings->value("MarginBottom").toInt();
+    QString horizontalTileMode = mSettings->value("horizontalTileMode").toString();
+    QString verticalTileMode = mSettings->value("vertacalTileMode").toString();
+    int inputStringPosX = mSettings->value("InputStringPosX").toInt();
+    int inputStringPosY = mSettings->value("InputStringPosY").toInt();
+    int outputCandPosX = mSettings->value("OutputCandPosX").toInt();
+    int outputCandPosY = mSettings->value("OutputCandPosY").toInt();
+    QString backArrow = mSettings->value("BackArrow").toString();
+    int backArrowX = mSettings->value("BackArrowX").toInt();
+    int backArrowY = mSettings->value("BackArrowY").toInt();
+    QString forwardArrow = mSettings->value("ForwardArrow").toString();
+    int forwardArrowX = mSettings->value("ForwardArrowX").toInt();
+    int forwardArrowY = mSettings->value("ForwardArrowY").toInt();
+    int adjustWidth = mSettings->value("AdjustWidth").toInt();
+    int adjustHeight = mSettings->value("AdjustHeight").toInt();
+    mSettings->endGroup();
+
+    ui->lineEdit_iBackImg->setText(backImg);
+    ui->lineEdit_iTipsImg->setText(tipsImg);
+    ui->spinBox_iLeftMargin->setValue(marginLeft);
+    ui->spinBox_iRightMargin->setValue(marginRight);
+    ui->spinBox_iTopMargin->setValue(marginTop);
+    ui->spinBox_iBottomMargin->setValue(marginBottom);
+    if(horizontalTileMode == "Stretch")
+    {
+        horizontalTileModeIndex = 0;
+    }
+    else if(horizontalTileMode == "Repeat")
+    {
+        horizontalTileModeIndex = 1;
+    }
+    else if(horizontalTileMode == "Round")
+    {
+        horizontalTileModeIndex = 2;
+    }
+    ui->comboBox_iHorizontalTileMode->setCurrentIndex(horizontalTileModeIndex);
+
+    if(verticalTileMode == "Stretch")
+    {
+        verticalTileModeIndex = 0;
+    }
+    else if(verticalTileMode == "Repeat")
+    {
+        verticalTileModeIndex = 1;
+    }
+    else if(verticalTileMode == "Round")
+    {
+        verticalTileModeIndex = 2;
+    }
+    ui->comboBox_iVerticalTileMode->setCurrentIndex(verticalTileModeIndex);
+    ui->spinBox_iInputStringPosX->setValue(inputStringPosX);
+    ui->spinBox_iInputStringPosY->setValue(inputStringPosY);
+    ui->spinBox_iOutputCandPosX->setValue(outputCandPosX);
+    ui->spinBox_iOutputCandPosY->setValue(outputCandPosY);
+    ui->lineEdit_iBackArrow->setText(backArrow);
+    ui->spinBox_iBackArrowX->setValue(backArrowX);
+    ui->spinBox_iBackArrowY->setValue(backArrowY);
+    ui->lineEdit_iForwardArrow->setText(forwardArrow);
+    ui->spinBox_iForwardArrowX->setValue(forwardArrowX);
+    ui->spinBox_iForwardArrowY->setValue(forwardArrowY);
+    ui->spinBox_iAdjustHeight->setValue(adjustHeight);
+    ui->spinBox_iAdjustWidth->setValue(adjustWidth);
+
+
 }
 
 void EditingSkinDialog::saveMainConf()
 {
+    mSettings->beginGroup("SkinFont");
+    int fontSize = ui->spinBoxInputFontSize->value();
+    int candFontSize = ui->spinBoxCandFontSize->value();
 
+    mSettings->setValue("FontSize",fontSize);
+    mSettings->setValue("CandFontSize",candFontSize);
+    mSettings->setValue("InputColor",inputColorConf);
+    mSettings->setValue("IndexColor",indexColorConf);
+    mSettings->setValue("FirstCandColor",firstCandColorConf);
+    mSettings->setValue("OtherColor",otherColorConf);
+    mSettings->endGroup();
+
+    mSettings->beginGroup("SkinInputBar");
+    QString backImg = ui->lineEdit_iBackImg->text();
+    QString tipsImg = ui->lineEdit_iTipsImg->text();
+    int marginLeft = ui->spinBox_iLeftMargin->value();
+    int marginRight = ui->spinBox_iRightMargin->value();
+    int marginTop = ui->spinBox_iTopMargin->value();
+    int marginBottom = ui->spinBox_iBottomMargin->value();
+    QString horizontalTileMode = ui->comboBox_iHorizontalTileMode->currentText();
+    QString verticalTileMode = ui->comboBox_iVerticalTileMode->currentText();
+    int inputStringPosX = ui->spinBox_iInputStringPosX->value();
+    int inputStringPosY = ui->spinBox_iInputStringPosY->value();
+    int outputCandPosX = ui->spinBox_iOutputCandPosX->value();
+    int outputCandPosY = ui->spinBox_iOutputCandPosY->value();
+    QString backArrow = ui->lineEdit_iBackArrow->text();
+    int backArrowX = ui->spinBox_iBackArrowX->value();
+    int backArrowY = ui->spinBox_iBackArrowY->value();
+    QString forwardArrow = ui->lineEdit_iForwardArrow->text();
+    int forwardArrowX = ui->spinBox_iForwardArrowX->value();
+    int forwardArrowY = ui->spinBox_iForwardArrowY->value();
+    int adjustWidth = ui->spinBox_iAdjustWidth->value();
+    int adjustHeight = ui->spinBox_iAdjustHeight->value();
+
+    mSettings->setValue("BackImg",backImg);
+    mSettings->setValue("TipsImg",tipsImg);
+    mSettings->setValue("MarginLeft",marginLeft);
+    mSettings->setValue("MarginRight",marginRight);
+    mSettings->setValue("MarginTop",marginTop);
+    mSettings->setValue("MarginBottom",marginBottom);
+    mSettings->setValue("horizontalTileMode",horizontalTileMode);
+    mSettings->setValue("vertacalTileMode",verticalTileMode);
+    mSettings->setValue("InputStringPosX",inputStringPosX);
+    mSettings->setValue("InputStringPosY",inputStringPosY);
+    mSettings->setValue("OutputCandPosX",outputCandPosX);
+    mSettings->setValue("OutputCandPosY",outputCandPosY);
+    mSettings->setValue("BackArrow",backArrow);
+    mSettings->setValue("BackArrowX",backArrowX);
+    mSettings->setValue("BackArrowY",backArrowY);
+    mSettings->setValue("ForwardArrow",forwardArrow);
+    mSettings->setValue("ForwardArrowX",forwardArrowX);
+    mSettings->setValue("ForwardArrowY",forwardArrowY);
+    mSettings->setValue("AdjustWidth",adjustWidth);
+    mSettings->setValue("AdjustHeight",adjustHeight);
+
+    mSettings->endGroup();
+
+    mSettings->sync();
+}
+
+
+
+void EditingSkinDialog::on_pushButton_ok_released()
+{
+    saveMainConf();
+    QString  message = "sudo mv /tmp/"+ mItem->text() + "/fcitx_skin.conf  /usr/share/fcitx/skin/"+ mItem->text();
+    QMessageBox::warning(this,"提醒：如果要更改皮肤编辑信息还需在终端输入以下命令",message,QMessageBox::Yes);
+    this->close();
+}
+
+void EditingSkinDialog::on_pushButton_cannel_released()
+{
+
+    this->close();
 }
 
 void EditingSkinDialog::on_pushButtonInputColor_released()
@@ -68,24 +216,10 @@ void EditingSkinDialog::on_pushButtonInputColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        qDebug()<<color;
-        qDebug()<<str;
+        inputColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
-
-void EditingSkinDialog::on_pushButton_ok_released()
-{
-    saveMainConf();
-    this->close();
-}
-
-void EditingSkinDialog::on_pushButton_cannel_released()
-{
-    this->close();
-}
-
-
 void EditingSkinDialog::on_pushButtonIndexColor_released()
 {
     QColorDialog::setCustomColor(0,QRgb(0x0000FF));
@@ -93,6 +227,7 @@ void EditingSkinDialog::on_pushButtonIndexColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        indexColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -104,6 +239,7 @@ void EditingSkinDialog::on_pushButtonFirstCandColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        firstCandColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -115,6 +251,7 @@ void EditingSkinDialog::on_pushButtonOtherCandColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        otherColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButtonOtherCandColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -126,6 +263,7 @@ void EditingSkinDialog::on_pushButton_menuActiveColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        menuActiveColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButton_menuActiveColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -137,8 +275,40 @@ void EditingSkinDialog::on_pushButton_menuLineColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
+        menuLineColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
         ui->pushButton_menuLineColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
+}
+
+
+void EditingSkinDialog::copySkinConf()//复制皮肤配置到本地/tmp
+{
+    QDir *temp = new QDir;
+    bool exist = temp->exists("/tmp/"+mItem->text());
+    if(!exist)
+        temp->mkdir("/tmp/"+mItem->text());
+    QString str;
+    QFile readSkinConf("/usr/share/fcitx/skin/"+mItem->text() + "/fcitx_skin.conf");
+    QFile writeSkinconf("/tmp/"+mItem->text() +"/fcitx_skin.conf");
+    if(!readSkinConf.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+           QMessageBox::warning(this,"read","can't open",QMessageBox::Yes);
+        }
+
+    if(!writeSkinconf.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+       QMessageBox::warning(this,"write","can't open",QMessageBox::Yes);
+    }
+    QTextStream readFcitxSkinConf(&readSkinConf);
+    QTextStream writeFcitxSkinConf(&writeSkinconf);
+
+    do{
+        str=readFcitxSkinConf.readLine();//读取一行
+        //qDebug()<<str;
+        writeFcitxSkinConf<<str<<"\n";
+    } while (!str.isNull());
+    readSkinConf.close();
+    writeSkinconf.close();
 }
 
 QString EditingSkinDialog::colorToRGB(QColor color)
@@ -148,3 +318,15 @@ QString EditingSkinDialog::colorToRGB(QColor color)
     return str;
 }
 
+QColor EditingSkinDialog::value2color(const QString& value)
+{
+    QStringList list = value.split(' ');
+    if(list.size() < 3) {
+        return Qt::color0;
+    }
+
+    int r = list.at(0).toInt();
+    int g = list.at(1).toInt();
+    int b = list.at(2).toInt();
+    return QColor(r, g, b);
+}
