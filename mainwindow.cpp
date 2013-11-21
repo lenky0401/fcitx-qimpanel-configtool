@@ -99,7 +99,7 @@ void MainWindow::sltOnCurrentChanged(QWidget *tab)
 void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 {
 //    qDebug()<<"MainWindow::"<<mSettings->value("CurtSkinType", "default").toString();
-    EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(item);
+    EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
     editingSkinDialog->exec();
 //    qDebug() << item->text();
 }

@@ -15,7 +15,7 @@ class EditingSkinDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit EditingSkinDialog(QListWidgetItem *item
+    explicit EditingSkinDialog(bool pHorizontal,QListWidgetItem *item
                                ,QWidget *parent = 0);
     ~EditingSkinDialog();
     
@@ -31,11 +31,6 @@ private slots:
     void on_pushButtonFirstCandColor_released();
 
     void on_pushButtonOtherCandColor_released();
-
-    void on_pushButton_menuActiveColor_released();
-
-    void on_pushButton_menuLineColor_released();
-
 private:
     Ui::EditingSkinDialog *ui;
     QSettings *mSettings;
@@ -47,8 +42,7 @@ private:
     QString indexColorConf;
     QString firstCandColorConf;
     QString otherColorConf;
-    QString menuActiveColorConf;
-    QString menuLineColorConf;
+    bool mHorizontal;
 
 private:
     void loadMainConf();

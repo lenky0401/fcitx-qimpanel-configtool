@@ -10,15 +10,22 @@
 #include <QtNetwork/QHostInfo>
 
 #include "editingskindialog.h"
+#include "passwarddialog.h"
 #include "ui_editingskindialog.h"
 
-EditingSkinDialog::EditingSkinDialog(QListWidgetItem *item,
-                                     QWidget *parent) :
+#define FCITXSKIN_PATH "/usr/share/fcitx/skin/"
+
+EditingSkinDialog::EditingSkinDialog(bool pHorizontal,QListWidgetItem *item,
+                    QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EditingSkinDialog)
 {
     ui->setupUi(this);
     mItem = item;
+    mHorizontal = pHorizontal;
+    ui->lineEditSkinAuthor->setEnabled(false);
+    ui->lineEditSkinVersion->setEnabled(false);
+
     this->setWindowTitle("skin/"+mItem->text()+"/fcitx_skin.conf");
     copySkinConf();
     mSettings = new QSettings("/tmp/"+mItem->text() + "/fcitx_skin.conf",QSettings::IniFormat);
@@ -28,6 +35,7 @@ EditingSkinDialog::EditingSkinDialog(QListWidgetItem *item,
 
 EditingSkinDialog::~EditingSkinDialog()
 {
+    mSettings->sync();
     delete mSettings;
     delete mSkinFcitx;
     delete ui;
@@ -38,10 +46,10 @@ void EditingSkinDialog::loadMainConf()
     mSettings->beginGroup("SkinInfo");
     QString skinAuthor = mSettings->value("Author").toString();
     QString skinVersion = mSettings->value("Version").toString();
+
     ui->lineEditSkinAuthor->setText(skinAuthor);
-    ui->lineEditSkinAuthor->setEnabled(false);
     ui->lineEditSkinVersion->setText(skinVersion);
-    ui->lineEditSkinVersion->setEnabled(false);
+
     mSettings->endGroup();
 
     mSettings->beginGroup("SkinFont");
@@ -51,6 +59,10 @@ void EditingSkinDialog::loadMainConf()
     QString indexColor = mSettings->value("IndexColor").toString();
     QString firstCandColor = mSettings->value("FirstCandColor").toString();
     QString otherColor = mSettings->value("OtherColor").toString();
+    inputColorConf = inputColor;
+    indexColorConf = indexColor;
+    firstCandColorConf = firstCandColor;
+    otherColorConf = otherColor;
     ui->spinBoxInputFontSize->setValue(fontSize);
     ui->spinBoxCandFontSize->setValue(candFontSize);
     ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(inputColor)) +";border: none;" +"}");
@@ -82,12 +94,18 @@ void EditingSkinDialog::loadMainConf()
     int adjustHeight = mSettings->value("AdjustHeight").toInt();
     mSettings->endGroup();
 
-    ui->lineEdit_iBackImg->setText(backImg);
+    mSettings->beginGroup("SkinInputBarVertical");
+    int adjustWidth_v = mSettings->value("AdjustWidth").toInt();
+    int adjustHeight_v = mSettings->value("AdjustHeight").toInt();
+    QString backImg_v = mSettings->value("BackImg").toString();
+    int marginTop_v = mSettings->value("MarginTop").toInt();
+    int marginBottom_v = mSettings->value("MarginBottom").toInt();
+    mSettings->endGroup();
+
     ui->lineEdit_iTipsImg->setText(tipsImg);
     ui->spinBox_iLeftMargin->setValue(marginLeft);
     ui->spinBox_iRightMargin->setValue(marginRight);
-    ui->spinBox_iTopMargin->setValue(marginTop);
-    ui->spinBox_iBottomMargin->setValue(marginBottom);
+
     if(horizontalTileMode == "Stretch")
     {
         horizontalTileModeIndex = 0;
@@ -125,10 +143,22 @@ void EditingSkinDialog::loadMainConf()
     ui->lineEdit_iForwardArrow->setText(forwardArrow);
     ui->spinBox_iForwardArrowX->setValue(forwardArrowX);
     ui->spinBox_iForwardArrowY->setValue(forwardArrowY);
-    ui->spinBox_iAdjustHeight->setValue(adjustHeight);
-    ui->spinBox_iAdjustWidth->setValue(adjustWidth);
-
-
+    if(mHorizontal == true)
+    {
+        ui->spinBox_iAdjustHeight->setValue(adjustHeight);
+        ui->spinBox_iAdjustWidth->setValue(adjustWidth);
+        ui->lineEdit_iBackImg->setText(backImg);
+        ui->spinBox_iTopMargin->setValue(marginTop);
+        ui->spinBox_iBottomMargin->setValue(marginBottom);
+    }
+    else
+    {
+        ui->spinBox_iAdjustHeight->setValue(adjustHeight_v);
+        ui->spinBox_iAdjustWidth->setValue(adjustWidth_v);
+        ui->lineEdit_iBackImg->setText(backImg_v);
+        ui->spinBox_iTopMargin->setValue(marginTop_v);
+        ui->spinBox_iBottomMargin->setValue(marginBottom_v);
+    }
 }
 
 void EditingSkinDialog::saveMainConf()
@@ -146,12 +176,10 @@ void EditingSkinDialog::saveMainConf()
     mSettings->endGroup();
 
     mSettings->beginGroup("SkinInputBar");
-    QString backImg = ui->lineEdit_iBackImg->text();
     QString tipsImg = ui->lineEdit_iTipsImg->text();
     int marginLeft = ui->spinBox_iLeftMargin->value();
     int marginRight = ui->spinBox_iRightMargin->value();
-    int marginTop = ui->spinBox_iTopMargin->value();
-    int marginBottom = ui->spinBox_iBottomMargin->value();
+
     QString horizontalTileMode = ui->comboBox_iHorizontalTileMode->currentText();
     QString verticalTileMode = ui->comboBox_iVerticalTileMode->currentText();
     int inputStringPosX = ui->spinBox_iInputStringPosX->value();
@@ -164,15 +192,19 @@ void EditingSkinDialog::saveMainConf()
     QString forwardArrow = ui->lineEdit_iForwardArrow->text();
     int forwardArrowX = ui->spinBox_iForwardArrowX->value();
     int forwardArrowY = ui->spinBox_iForwardArrowY->value();
+
+    int marginTop = ui->spinBox_iTopMargin->value();
+    int marginBottom = ui->spinBox_iBottomMargin->value();
+    QString backImg = ui->lineEdit_iBackImg->text();
     int adjustWidth = ui->spinBox_iAdjustWidth->value();
     int adjustHeight = ui->spinBox_iAdjustHeight->value();
 
-    mSettings->setValue("BackImg",backImg);
+
+
     mSettings->setValue("TipsImg",tipsImg);
     mSettings->setValue("MarginLeft",marginLeft);
     mSettings->setValue("MarginRight",marginRight);
-    mSettings->setValue("MarginTop",marginTop);
-    mSettings->setValue("MarginBottom",marginBottom);
+
     mSettings->setValue("horizontalTileMode",horizontalTileMode);
     mSettings->setValue("vertacalTileMode",verticalTileMode);
     mSettings->setValue("InputStringPosX",inputStringPosX);
@@ -185,9 +217,30 @@ void EditingSkinDialog::saveMainConf()
     mSettings->setValue("ForwardArrow",forwardArrow);
     mSettings->setValue("ForwardArrowX",forwardArrowX);
     mSettings->setValue("ForwardArrowY",forwardArrowY);
-    mSettings->setValue("AdjustWidth",adjustWidth);
-    mSettings->setValue("AdjustHeight",adjustHeight);
+    if(mHorizontal == true)
+    {
+        mSettings->setValue("MarginTop",marginTop);
+        mSettings->setValue("MarginBottom",marginBottom);
+        mSettings->setValue("BackImg",backImg);
+        mSettings->setValue("AdjustWidth",adjustWidth);
+        mSettings->setValue("AdjustHeight",adjustHeight);
+    }
+    mSettings->endGroup();
 
+    mSettings->beginGroup("SkinInputBarVertical");
+    int marginTop_v = ui->spinBox_iTopMargin->value();
+    int marginBottom_v = ui->spinBox_iBottomMargin->value();
+    QString backImg_v = ui->lineEdit_iBackImg->text();
+    int adjustWidth_v = ui->spinBox_iAdjustWidth->value();
+    int adjustHeight_v = ui->spinBox_iAdjustHeight->value();
+    if(mHorizontal == false)
+    {
+        mSettings->setValue("MarginTop",marginTop_v);
+        mSettings->setValue("MarginBottom",marginBottom_v);
+        mSettings->setValue("BackImg",backImg_v);
+        mSettings->setValue("AdjustWidth",adjustWidth_v);
+        mSettings->setValue("AdjustHeight",adjustHeight_v);
+    }
     mSettings->endGroup();
 
     mSettings->sync();
@@ -198,9 +251,10 @@ void EditingSkinDialog::saveMainConf()
 void EditingSkinDialog::on_pushButton_ok_released()
 {
     saveMainConf();
-    QString  message = "sudo mv /tmp/"+ mItem->text() + "/fcitx_skin.conf  /usr/share/fcitx/skin/"+ mItem->text();
-    QMessageBox::warning(this,"提醒：如果要更改皮肤编辑信息还需在终端输入以下命令",message,QMessageBox::Yes);
-    this->close();
+
+    PasswardDialog * passward = new PasswardDialog(mItem->text());
+    passward->exec();
+    this->accept();
 }
 
 void EditingSkinDialog::on_pushButton_cannel_released()
@@ -216,7 +270,8 @@ void EditingSkinDialog::on_pushButtonInputColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        inputColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
+        inputColorConf.sprintf("%d %d %d",color.red(),color.green(),color.blue());
+        qDebug()<<inputColorConf;
         ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -227,7 +282,7 @@ void EditingSkinDialog::on_pushButtonIndexColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        indexColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
+        indexColorConf.sprintf("%d %d %d",color.red(),color.green(),color.blue());
         ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -239,7 +294,7 @@ void EditingSkinDialog::on_pushButtonFirstCandColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        firstCandColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
+        firstCandColorConf.sprintf("%d %d %d",color.red(),color.green(),color.blue());
         ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
@@ -251,32 +306,8 @@ void EditingSkinDialog::on_pushButtonOtherCandColor_released()
     QString str;
     if(color.isValid()){
         str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        otherColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
+        otherColorConf.sprintf("%d %d %d",color.red(),color.green(),color.blue());
         ui->pushButtonOtherCandColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
-    }
-}
-
-void EditingSkinDialog::on_pushButton_menuActiveColor_released()
-{
-    QColorDialog::setCustomColor(0,QRgb(0x0000FF));
-    QColor color =  QColorDialog::getColor(QColor(0,0,255));
-    QString str;
-    if(color.isValid()){
-        str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        menuActiveColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
-        ui->pushButton_menuActiveColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
-    }
-}
-
-void EditingSkinDialog::on_pushButton_menuLineColor_released()
-{
-    QColorDialog::setCustomColor(0,QRgb(0x0000FF));
-    QColor color =  QColorDialog::getColor(QColor(0,0,255));
-    QString str;
-    if(color.isValid()){
-        str.sprintf("rgb(%d,%d,%d)",color.red(), color.green(), color.blue());
-        menuLineColorConf.sprintf("%d %d %d ",color.red(),color.green(),color.blue());
-        ui->pushButton_menuLineColor->setStyleSheet("QPushButton { background-color: " + str +";border: none;" +"}");
     }
 }
 
@@ -288,7 +319,7 @@ void EditingSkinDialog::copySkinConf()//复制皮肤配置到本地/tmp
     if(!exist)
         temp->mkdir("/tmp/"+mItem->text());
     QString str;
-    QFile readSkinConf("/usr/share/fcitx/skin/"+mItem->text() + "/fcitx_skin.conf");
+    QFile readSkinConf(FCITXSKIN_PATH + mItem->text() + "/fcitx_skin.conf");
     QFile writeSkinconf("/tmp/"+mItem->text() +"/fcitx_skin.conf");
     if(!readSkinConf.open(QIODevice::ReadOnly | QIODevice::Text))
         {
@@ -330,3 +361,6 @@ QColor EditingSkinDialog::value2color(const QString& value)
     int b = list.at(2).toInt();
     return QColor(r, g, b);
 }
+
+
+
