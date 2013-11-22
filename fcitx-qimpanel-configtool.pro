@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     skin/skinbase.cpp \
     skin/skinfcitx.cpp \
     candidate_word.cpp \
-    editingskindialog.cpp
+    editingskindialog.cpp \
+    passwarddialog.cpp
 
 
 HEADERS += mainwindow.h \
@@ -25,12 +26,14 @@ HEADERS += mainwindow.h \
     kimpanelagenttype.h \
     candidate_word.h \
     editingskindialog.h \
-    skin/skinfcitx.h
+    skin/skinfcitx.h \
+    passwarddialog.h
 
 
 
 FORMS += mainwindow.ui \
-    editingskindialog.ui
+    editingskindialog.ui \
+    passwarddialog.ui
 
 RESOURCES += \
     main.qrc
