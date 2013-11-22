@@ -25,7 +25,7 @@ Rectangle {
     Text {
         id: inputString
             visible : true//mainModel.showPreedit
-        text: "cao zuo xi tong"
+        text: "ni hao"
         font.pointSize :mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
         color: mainSkin.inputColor
     }

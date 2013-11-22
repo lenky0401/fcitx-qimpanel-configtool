@@ -54,8 +54,6 @@ class MainModel : public QObject
     Q_PROPERTY(bool showLookupTable READ showLookupTable WRITE setShowLookupTable
         NOTIFY showLookupTableChanged)
 
-//    Q_PROPERTY(int candidateWordsNum READ candidateWordsNum WRITE setCandidateWordsNum
-//               NOTIFY CandidateWordsNumChanged)
 public:
     static MainModel* self();
     virtual ~MainModel();

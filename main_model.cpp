@@ -33,7 +33,7 @@ MainModel* MainModel::self()
 
 MainModel::MainModel()
 {
-
+    setIsHorizontal(true);
 }
 
 MainModel::~MainModel()
@@ -49,10 +49,10 @@ void MainModel::resetData() {
     setInputStringCursorPos(-1);
     setHighLight(-1);
     //这个不属于焦点切换时需要重置的值
-    //setIsHorizontal(true);
-    setShowTips(false);
-    setShowPreedit(false);
-    setShowLookupTable(false);
+//    setIsHorizontal(true);
+//    setShowTips(false);
+//    setShowPreedit(false);
+//    setShowLookupTable(false);
 }
 
 void MainModel::setInputString(const QString inputString) {
@@ -103,133 +103,133 @@ void MainModel::setCandidateWords() {
     switch (mCurrentCandidateWordNum) {
     case 1:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         break;
     case 2:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         break;
     case 3:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         break;
     case 4:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         break;
     case 5:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         label.append("5.");
-        text.append("操");
+        text.append("呢");
         break;
     case 6:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         label.append("5.");
-        text.append("操");
+        text.append("呢");
         label.append("6.");
-        text.append("糙");
+        text.append("泥");
         break;
     case 7:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         label.append("5.");
-        text.append("操");
+        text.append("呢");
         label.append("6.");
-        text.append("糙");
+        text.append("泥");
         label.append("7.");
-        text.append("艹");
+        text.append("妳");
         break;
     case 8:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         label.append("5.");
-        text.append("操");
+        text.append("呢");
         label.append("6.");
-        text.append("糙");
+        text.append("泥");
         label.append("7.");
-        text.append("艹");
+        text.append("妳");
         label.append("8.");
-        text.append("肏");
+        text.append("妮");
         break;
     case 9:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         label.append("5.");
-        text.append("操");
+        text.append("呢");
         label.append("6.");
-        text.append("糙");
+        text.append("泥");
         label.append("7.");
-        text.append("艹");
+        text.append("妳");
         label.append("8.");
-        text.append("肏");
+        text.append("妮");
         label.append("9.");
-        text.append("曹");
+        text.append("腻");
         break;
     case 10:
         label.append("1.");
-        text.append("操作系统");
+        text.append("你好");
         label.append("2.");
-        text.append("操作");
+        text.append("你");
         label.append("3.");
-        text.append("操做");
+        text.append("拟");
         label.append("4.");
-        text.append("槽");
+        text.append("尼");
         label.append("5.");
-        text.append("操");
+        text.append("呢");
         label.append("6.");
-        text.append("糙");
+        text.append("泥");
         label.append("7.");
-        text.append("艹");
+        text.append("妳");
         label.append("8.");
-        text.append("肏");
+        text.append("妮");
         label.append("9.");
-        text.append("曹");
+        text.append("腻");
         label.append("0.");
-        text.append("草");
+        text.append("逆");
         break;
     default:
         break;
@@ -237,19 +237,7 @@ void MainModel::setCandidateWords() {
 
     qDeleteAll(mCandidateWords);
     mCandidateWords.clear();
-//    QList<KimpanelLookupTable::Entry>::iterator iter;
-//    QList<KimpanelLookupTable::Entry> entries = lookup_table.entries;
 
-//    qDeleteAll(mCandidateWords);
-//    mCandidateWords.clear();
-//    for (iter = entries.begin(); iter != entries.end(); ++ iter) {
-//        if ((candidate = new (std::nothrow)CandidateWord) == NULL)
-//            break;
-
-//        candidate->setCddLabel(iter->label);
-//        candidate->setCddText(iter->text);
-//        mCandidateWords.append(candidate);
-//    }
     for(i=0;i<label.length();i++)
     {
         if ((candidate = new (std::nothrow)CandidateWord) == NULL)
@@ -259,11 +247,7 @@ void MainModel::setCandidateWords() {
         candidate->setCddLabel(label.at(i));
         candidate->setCddText(text.at(i));
         mCandidateWords.append(candidate);
-
     }
-//    setHasPrev(lookup_table.has_prev);
-//    setHasNext(lookup_table.has_next);
-
     emit candidateWordsChanged();
     emit qmlMainWindowSizeChanged();
 }

@@ -31,11 +31,9 @@ void CandidateWord::setCddText(const QString text) {
 }
 
 QString CandidateWord::cddLabel() const {
-//    qDebug()<<mCddLabel;
     return mCddLabel;
 }
 
 QString CandidateWord::cddText() const {
-//    qDebug()<<mCddText;
     return mCddText;
 }

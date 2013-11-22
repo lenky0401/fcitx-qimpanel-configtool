@@ -28,7 +28,7 @@
   <widget class="QLabel" name="labelpassward">
    <property name="geometry">
     <rect>
-     <x>23</x>
+     <x>16</x>
      <y>32</y>
      <width>111</width>
      <height>20</height>
@@ -53,7 +53,7 @@
   <widget class="QLineEdit" name="lineEditpassward">
    <property name="geometry">
     <rect>
-     <x>144</x>
+     <x>138</x>
      <y>30</y>
      <width>146</width>
      <height>27</height>
@@ -63,21 +63,21 @@
   <widget class="QLabel" name="labelMsg">
    <property name="geometry">
     <rect>
-     <x>67</x>
-     <y>78</y>
-     <width>291</width>
-     <height>20</height>
+     <x>53</x>
+     <y>60</y>
+     <width>261</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
-    <string>Please enter your user password</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>163</x>
-     <y>119</y>
+     <y>130</y>
      <width>178</width>
      <height>29</height>
     </rect>

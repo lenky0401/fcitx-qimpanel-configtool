@@ -22,7 +22,6 @@ struct SkinTypeEntry {
     QString absolutePath;
 };
 
-
 class MainWindow : public QDialog
 {
     Q_OBJECT
@@ -45,10 +44,6 @@ private:
     QString curtSkinType;
     int mFontSize;
 
-signals:
-    void sigRefreshMainQml();
-
-
 private:
     void searchAndSetSkin(QString skinType);
     void loadMainConf();
@@ -56,7 +51,6 @@ private:
     void loadSkinPreview(QString skin);
     void changeMainWindowSize();
     void setSkinBase();
-public:
 
 private slots:
     void sltOnPushButtonApply();
@@ -64,11 +58,8 @@ private slots:
     void sltOnAllSkinItemDoubleClicked(QListWidgetItem *item);
     void sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void sltOnCurrentChanged(QWidget *tab);  
-
-
     void on_radioButtonHorizontal_toggled(bool checked);
     void on_candidateWordSpinBox_valueChanged(int arg1);
-
     void on_fontSizeSpinBox_valueChanged(int arg1);
 };
 
