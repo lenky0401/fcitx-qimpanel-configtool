@@ -1,7 +1,7 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: kuaipan4uk
-Upstream-Contact: robert165 <robert165@163.com>
-Source: https://launchpad.net/kuaipan4uk
+Upstream-Name: fcitx-qimpanel-configtool
+Upstream-Contact: xiaoyiwu@ubuntukylin.com
+Source: https://github.com/lenky0401/fcitx-qimpanel-configtool
 
 Files: *
 Copyright: Copyright (C) 2013 National University of Defense Technology(NUDT) & Kylin Lt
