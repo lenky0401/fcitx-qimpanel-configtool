@@ -1,0 +1,20 @@
+#!/bin/sh
+#create symlink
+libfile1="/usr/lib/libfcitx-config.so"
+libfile2="/usr/lib/libfcitx-qt.so"
+libfile3="/usr/lib/libfcitx-utils.so"
+
+if [ -e /usr/lib/libfcitx-config.so ]; then
+	sudo sh -c "rm /usr/lib/libfcitx-config.so"
+fi
+if [ -e /usr/lib/libfcitx-qt.so ]; then
+	sudo sh -c "rm /usr/lib/libfcitx-qt.so"
+fi
+if [ -e /usr/lib/libfcitx-utils.so ]; then
+	sudo sh -c "rm /usr/lib/libfcitx-utils.so"
+fi
+
+sudo sh -c "ls /usr/lib/i386-linux-gnu/libfcitx-config.so.4.1 | xargs -i ln /usr/lib/i386-linux-gnu/libfcitx-config.so.4.1 $libfile1"  
+sudo sh -c "ls /usr/lib/i386-linux-gnu/libfcitx-qt.so.0.1 | xargs -i ln /usr/lib/i386-linux-gnu/libfcitx-qt.so.0.1 $libfile2"
+sudo sh -c "ls /usr/lib/i386-linux-gnu/libfcitx-utils.so.0.1 | xargs -i ln /usr/lib/i386-linux-gnu/libfcitx-utils.so.0.1 $libfile3"
+

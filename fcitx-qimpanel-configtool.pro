@@ -4,6 +4,22 @@
 #
 #-------------------------------------------------
 
+ARCH      = x86
+
+inst1.files += fcitx_ubuntukylin.png
+inst1.path = /usr/share/pixmaps
+inst2.files += fcitx-qimpanel-configtool.desktop
+inst2.path = /usr/share/applications
+inst3.files += po/fcitx_skin_zh_CN.qm
+inst3.path = /usr/share/fcitx-qimpanel
+
+target.source += $$TARGET
+target.path = /usr/bin
+INSTALLS += inst1 \
+    inst2 \
+    inst3 \
+    target
+
 QT       += core gui declarative
 
 TARGET = fcitx-qimpanel-configtool

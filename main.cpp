@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     QTranslator translator;
-   if (translator.load("./po/fcitx_skin_zh_CN.qm") == false)
+   if (translator.load("/usr/share/fcitx-qimpanel/fcitx_skin_zh_CN.qm") == false)
 //    if (translator.load(QString(getQimpanelSharePath("fcitx_skin_zh_CN.qm"))) == false)
         qDebug() << "load qm error.";
     QApplication app(argc, argv);
