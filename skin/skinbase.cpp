@@ -291,8 +291,6 @@ QString SkinBase::forwardArrowImg() const
 void SkinBase::setFontSize(const int fontSize)
 {
     mFontSize = fontSize;
-//    qDebug()<<fontSize;
-//    qDebug()<<mFontSize;
 }
 
 int SkinBase::fontSize() const

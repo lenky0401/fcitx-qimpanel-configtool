@@ -26,7 +26,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="movable">
       <bool>false</bool>
@@ -309,7 +309,7 @@
             <x>0</x>
             <y>0</y>
             <width>557</width>
-            <height>730</height>
+            <height>660</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
@@ -473,95 +473,6 @@
                </layout>
               </item>
               <item row="6" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <item>
-                 <widget class="QLabel" name="label_iHorizontalTileMode">
-                  <property name="minimumSize">
-                   <size>
-                    <width>170</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>170</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>HorizontalTileMode</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboBox_iHorizontalTileMode">
-                  <item>
-                   <property name="text">
-                    <string>Stretch</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Repeat</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Round</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="7" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_8">
-                <item>
-                 <widget class="QLabel" name="label_iVerticalTileMode">
-                  <property name="minimumSize">
-                   <size>
-                    <width>170</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>170</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>VerticalTileMode</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboBox_iVerticalTileMode">
-                  <item>
-                   <property name="text">
-                    <string>Stretch</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Repeat</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Round</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="8" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_9">
                 <item>
                  <widget class="QLabel" name="label_iInputStringPosX">
@@ -587,7 +498,7 @@
                 </item>
                </layout>
               </item>
-              <item row="9" column="0">
+              <item row="7" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_10">
                 <item>
                  <widget class="QLabel" name="label_iInputStringPosY">
@@ -613,7 +524,7 @@
                 </item>
                </layout>
               </item>
-              <item row="10" column="0">
+              <item row="8" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_11">
                 <item>
                  <widget class="QLabel" name="label_iOutputCandPosX">
@@ -639,7 +550,7 @@
                 </item>
                </layout>
               </item>
-              <item row="11" column="0">
+              <item row="9" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_12">
                 <item>
                  <widget class="QLabel" name="label_iOutputCandPosY">
@@ -665,7 +576,7 @@
                 </item>
                </layout>
               </item>
-              <item row="12" column="0">
+              <item row="10" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_16">
                 <item>
                  <widget class="QLabel" name="label_iBackArrow">
@@ -691,7 +602,7 @@
                 </item>
                </layout>
               </item>
-              <item row="13" column="0">
+              <item row="11" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_17">
                 <item>
                  <widget class="QLabel" name="label_iBackArrowX">
@@ -717,7 +628,7 @@
                 </item>
                </layout>
               </item>
-              <item row="14" column="0">
+              <item row="12" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_18">
                 <item>
                  <widget class="QLabel" name="label_iBackArrowY">
@@ -743,7 +654,7 @@
                 </item>
                </layout>
               </item>
-              <item row="15" column="0">
+              <item row="13" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_21">
                 <item>
                  <widget class="QLabel" name="label_iForwardArrow">
@@ -769,7 +680,7 @@
                 </item>
                </layout>
               </item>
-              <item row="16" column="0">
+              <item row="14" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_19">
                 <item>
                  <widget class="QLabel" name="label_iForwardArrowX">
@@ -795,7 +706,7 @@
                 </item>
                </layout>
               </item>
-              <item row="17" column="0">
+              <item row="15" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_20">
                 <item>
                  <widget class="QLabel" name="label_iForwardArrowY">
@@ -821,7 +732,7 @@
                 </item>
                </layout>
               </item>
-              <item row="18" column="0">
+              <item row="16" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_30">
                 <item>
                  <widget class="QLabel" name="label_iAdjustWidth">
@@ -851,7 +762,7 @@
                 </item>
                </layout>
               </item>
-              <item row="19" column="0">
+              <item row="17" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_31">
                 <item>
                  <widget class="QLabel" name="label_iAdjustHeight">
@@ -882,8 +793,6 @@
                </layout>
               </item>
              </layout>
-             <zorder></zorder>
-             <zorder></zorder>
              <zorder></zorder>
              <zorder></zorder>
              <zorder></zorder>

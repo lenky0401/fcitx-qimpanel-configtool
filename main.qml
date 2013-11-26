@@ -24,7 +24,7 @@ Rectangle {
     
     Text {
         id: inputString
-            visible : true//mainModel.showPreedit
+        visible : true
         text: "ni hao"
         font.pointSize :mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
         color: mainSkin.inputColor
