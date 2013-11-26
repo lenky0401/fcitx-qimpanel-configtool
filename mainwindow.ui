@@ -58,9 +58,9 @@
     <widget class="QLabel" name="labelVerticalList">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>19</x>
        <y>20</y>
-       <width>120</width>
+       <width>161</width>
        <height>31</height>
       </rect>
      </property>
@@ -74,7 +74,7 @@
     <widget class="QRadioButton" name="radioButtonHorizontal">
      <property name="geometry">
       <rect>
-       <x>140</x>
+       <x>205</x>
        <y>20</y>
        <width>241</width>
        <height>31</height>
@@ -90,7 +90,7 @@
     <widget class="QRadioButton" name="radioButtonVertical">
      <property name="geometry">
       <rect>
-       <x>140</x>
+       <x>205</x>
        <y>50</y>
        <width>241</width>
        <height>31</height>
@@ -103,8 +103,8 @@
     <widget class="QLabel" name="labelSkinType">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>90</y>
+       <x>59</x>
+       <y>175</y>
        <width>120</width>
        <height>31</height>
       </rect>
@@ -122,8 +122,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>144</x>
-       <y>90</y>
+       <x>211</x>
+       <y>176</y>
        <width>200</width>
        <height>31</height>
       </rect>
@@ -132,21 +132,24 @@
     <widget class="QLabel" name="candidateWord">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>140</y>
-       <width>211</width>
+       <x>-1</x>
+       <y>90</y>
+       <width>181</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Candidate Word Numer:</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
     <widget class="QSpinBox" name="candidateWordSpinBox">
      <property name="geometry">
       <rect>
-       <x>261</x>
-       <y>142</y>
+       <x>209</x>
+       <y>92</y>
        <width>80</width>
        <height>28</height>
       </rect>
@@ -158,8 +161,8 @@
     <widget class="QSpinBox" name="fontSizeSpinBox">
      <property name="geometry">
       <rect>
-       <x>261</x>
-       <y>189</y>
+       <x>210</x>
+       <y>132</y>
        <width>80</width>
        <height>28</height>
       </rect>
@@ -168,14 +171,17 @@
     <widget class="QLabel" name="labelFontSize">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>192</y>
+       <x>-21</x>
+       <y>136</y>
        <width>201</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>FontSize:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
