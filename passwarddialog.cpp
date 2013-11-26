@@ -11,7 +11,9 @@ PasswardDialog::PasswardDialog(QString fileName, QWidget *parent) :
 {
     ui->setupUi(this);
     mFileName = fileName;
-
+    this->setWindowTitle(tr("Password authentication"));
+    ui->labelMsg->setWordWrap(true);//label自动换行
+    ui->labelMsg->setText(tr("Please enter your password, and give permissions to ensure successful configuration changes!"));
     ui->lineEditpassward->setEchoMode(QLineEdit::Password);
     ui->lineEditpassward->setFocus();
 }
@@ -62,7 +64,7 @@ void PasswardDialog::sleep_to_call_server() {
 void PasswardDialog::on_pushButton_Ok_released()
 {
         if(trans_password(mFileName,ui->lineEditpassward->text())) {
-            ui->labelMsg->setText(tr("successfully, please wait!"));
+            ui->labelMsg->setText(tr("succeed, please wait!"));
             QTimer *timer = new QTimer(this);
             timer->setInterval(1000);
             connect(timer,SIGNAL(timeout()),this,SLOT(sleep_to_call_server()));
@@ -78,9 +80,8 @@ void PasswardDialog::on_pushButton_Ok_released()
 void PasswardDialog::on_pushButton_Cannel_released()
 {
     this->close();
-    //警告      服务没有启动，相关功能将无法正常使用！
     QMessageBox::warning(NULL,
                          tr("Warning"),
-                         tr("server doesn't run, some function cannot work normally!"),
+                         tr("server doesn't run, Modifications will not be saved!"),
                          QMessageBox::Ok);
 }

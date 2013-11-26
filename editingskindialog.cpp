@@ -21,6 +21,7 @@ EditingSkinDialog::EditingSkinDialog(bool pHorizontal,QListWidgetItem *item,
     ui(new Ui::EditingSkinDialog)
 {
     ui->setupUi(this);
+    ui->EditingSkinTabWidget->setCurrentIndex(0);
     mItem = item;
     mHorizontal = pHorizontal;
     ui->lineEditSkinAuthor->setEnabled(false);
@@ -118,6 +119,9 @@ void EditingSkinDialog::loadMainConf()
     {
         horizontalTileModeIndex = 2;
     }
+    else {
+        horizontalTileModeIndex = 3;
+    }
     ui->comboBox_iHorizontalTileMode->setCurrentIndex(horizontalTileModeIndex);
 
     if(verticalTileMode == "Stretch")
@@ -131,6 +135,9 @@ void EditingSkinDialog::loadMainConf()
     else if(verticalTileMode == "Round")
     {
         verticalTileModeIndex = 2;
+    }
+    else{
+        verticalTileModeIndex =3;
     }
     ui->comboBox_iVerticalTileMode->setCurrentIndex(verticalTileModeIndex);
     ui->spinBox_iInputStringPosX->setValue(inputStringPosX);

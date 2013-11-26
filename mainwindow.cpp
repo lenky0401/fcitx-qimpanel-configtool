@@ -143,7 +143,7 @@ void MainWindow::searchAndSetSkin(QString curtSkinType)
 
             if (curtSkinType == entry.name)
             {
-                idx = count;   //?
+                idx = count;
             }
 
             ui->comboBoxSkinType->addItem(entry.name);
@@ -152,7 +152,7 @@ void MainWindow::searchAndSetSkin(QString curtSkinType)
             count ++;
         }
     }
-    ui->listWidgetAllSkin->setCurrentRow(0);
+    ui->listWidgetAllSkin->setCurrentRow(idx);
     ui->comboBoxSkinType->setCurrentIndex(idx);
 }
 
