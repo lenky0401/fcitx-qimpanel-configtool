@@ -46,7 +46,6 @@ void EditingSkinDialog::loadMainConf()
 {
     mSettings->beginGroup("FontSizeEnable");
     qDebug()<<mItem->text();
-    bool fontSizeEnable;
     if((mItem->text() == "dark")||(mItem->text() == "classic")||(mItem->text() == "default") )
     {
         mSettings->setValue("FontSizeEnable",true);
@@ -103,8 +102,8 @@ void EditingSkinDialog::loadMainConf()
     int marginRight = mSettings->value("MarginRight").toInt();
     int marginTop = mSettings->value("MarginTop").toInt();
     int marginBottom = mSettings->value("MarginBottom").toInt();
-    QString horizontalTileMode = mSettings->value("horizontalTileMode").toString();
-    QString verticalTileMode = mSettings->value("vertacalTileMode").toString();
+//    QString horizontalTileMode = mSettings->value("horizontalTileMode").toString();
+//    QString verticalTileMode = mSettings->value("vertacalTileMode").toString();
     int inputStringPosX = mSettings->value("InputStringPosX").toInt();
     int inputStringPosY = mSettings->value("InputStringPosY").toInt();
     int outputCandPosX = mSettings->value("OutputCandPosX").toInt();
@@ -198,6 +197,11 @@ void EditingSkinDialog::saveMainConf()
     int fontSize = ui->spinBoxInputFontSize->value();
     int candFontSize = ui->spinBoxCandFontSize->value();
 
+    if(!fontSizeEnable)
+    {
+        fontSize = 13;
+        candFontSize = 13;
+    }
     mSettings->setValue("FontSize",fontSize);
     mSettings->setValue("CandFontSize",candFontSize);
     mSettings->setValue("InputColor",inputColorConf);

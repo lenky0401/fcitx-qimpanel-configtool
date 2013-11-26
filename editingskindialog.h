@@ -39,6 +39,7 @@ private:
     QString firstCandColorConf;
     QString otherColorConf;
     bool mHorizontal;
+    bool fontSizeEnable;
 
 private:
     void loadMainConf();
