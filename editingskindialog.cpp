@@ -13,7 +13,7 @@
 #include "passwarddialog.h"
 #include "ui_editingskindialog.h"
 
-#define FCITXSKIN_PATH "/usr/share/fcitx/skin/"
+#define FCITXSKIN_PATH "/usr/share/fcitx-qimpanel/skin/"
 
 EditingSkinDialog::EditingSkinDialog(bool pHorizontal,QListWidgetItem *item,
                     QWidget *parent) :
