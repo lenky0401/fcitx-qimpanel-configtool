@@ -94,100 +94,80 @@
         <translation type="unfinished">下边距</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="492"/>
         <source>HorizontalTileMode</source>
-        <translation type="unfinished">水平拉伸时填充方式</translation>
+        <translation type="obsolete">水平拉伸时填充方式</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="500"/>
-        <location filename="../editingskindialog.ui" line="542"/>
-        <source>Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editingskindialog.ui" line="505"/>
-        <location filename="../editingskindialog.ui" line="547"/>
-        <source>Repeat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editingskindialog.ui" line="510"/>
-        <location filename="../editingskindialog.ui" line="552"/>
-        <source>Round</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editingskindialog.ui" line="534"/>
         <source>VerticalTileMode</source>
-        <translation type="unfinished">垂直拉伸时填充颜色</translation>
+        <translation type="obsolete">垂直拉伸时填充颜色</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="581"/>
+        <location filename="../editingskindialog.ui" line="492"/>
         <source>InputStringPosX</source>
         <translation type="unfinished">输入字符串位置X坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="607"/>
+        <location filename="../editingskindialog.ui" line="518"/>
         <source>InputStringPosY</source>
         <translation type="unfinished">输入字符串位置Y坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="633"/>
+        <location filename="../editingskindialog.ui" line="544"/>
         <source>OutputCandPosX</source>
         <translation type="unfinished">输出候选词位置X坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="659"/>
+        <location filename="../editingskindialog.ui" line="570"/>
         <source>OutputCandPosY</source>
         <translation type="unfinished">输出候选词位置Y坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="685"/>
+        <location filename="../editingskindialog.ui" line="596"/>
         <source>BackArrow</source>
         <translation type="unfinished">左翻页图片</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="711"/>
+        <location filename="../editingskindialog.ui" line="622"/>
         <source>BackArrowX</source>
         <translation type="unfinished">左翻页图片位置X坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="737"/>
+        <location filename="../editingskindialog.ui" line="648"/>
         <source>BackArrowY</source>
         <translation type="unfinished">左翻页图片位置Y坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="763"/>
+        <location filename="../editingskindialog.ui" line="674"/>
         <source>ForwardArrow</source>
         <translation type="unfinished">右翻页图片</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="789"/>
+        <location filename="../editingskindialog.ui" line="700"/>
         <source>ForwardArrowX</source>
         <translation type="unfinished">右翻页图片位置X坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="815"/>
+        <location filename="../editingskindialog.ui" line="726"/>
         <source>ForwardArrowY</source>
         <translation type="unfinished">右翻页图片位置Y坐标</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="841"/>
+        <location filename="../editingskindialog.ui" line="752"/>
         <source>AdjustWidth</source>
         <translation type="unfinished">面板宽度调节</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="871"/>
+        <location filename="../editingskindialog.ui" line="782"/>
         <source>AdjustHeight</source>
         <translation type="unfinished">面板高度调节</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="929"/>
+        <location filename="../editingskindialog.ui" line="838"/>
         <source>&amp;Ok</source>
         <translation type="unfinished">确定(O)</translation>
     </message>
     <message>
-        <location filename="../editingskindialog.ui" line="948"/>
+        <location filename="../editingskindialog.ui" line="857"/>
         <source>&amp;Cannel</source>
         <translation type="unfinished">取消(C)</translation>
     </message>
@@ -240,29 +220,29 @@
         <translation type="unfinished">候选词个数：</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="178"/>
+        <location filename="../mainwindow.ui" line="181"/>
         <source>FontSize:</source>
         <translation type="unfinished">字体大小：</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="184"/>
+        <location filename="../mainwindow.ui" line="190"/>
         <source>Skin Design</source>
         <translation type="unfinished">皮肤设计</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="206"/>
+        <location filename="../mainwindow.ui" line="212"/>
         <source>All Skin:</source>
         <translation type="unfinished">所有皮肤</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="222"/>
+        <location filename="../mainwindow.ui" line="228"/>
         <source>Preview:</source>
         <translation type="unfinished">效果预览：</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="22"/>
+        <location filename="../mainwindow.cpp" line="24"/>
         <source>Qimpanel Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">输入法面板设置</translation>
     </message>
 </context>
 <context>
@@ -288,32 +268,32 @@
         <translation type="unfinished">取消(C)</translation>
     </message>
     <message>
-        <location filename="../passwarddialog.cpp" line="14"/>
+        <location filename="../passwarddialog.cpp" line="16"/>
         <source>Password authentication</source>
         <translation type="unfinished">密码验证</translation>
     </message>
     <message>
-        <location filename="../passwarddialog.cpp" line="16"/>
+        <location filename="../passwarddialog.cpp" line="18"/>
         <source>Please enter your password, and give permissions to ensure successful configuration changes!</source>
         <translation type="unfinished">请输入您的密码，给予修改配置文件的权限。</translation>
     </message>
     <message>
-        <location filename="../passwarddialog.cpp" line="67"/>
+        <location filename="../passwarddialog.cpp" line="69"/>
         <source>succeed, please wait!</source>
         <translation>密码正确，请稍等！</translation>
     </message>
     <message>
-        <location filename="../passwarddialog.cpp" line="76"/>
+        <location filename="../passwarddialog.cpp" line="78"/>
         <source>passward error,try again!</source>
         <translation type="unfinished">密码错误，请重新输入。</translation>
     </message>
     <message>
-        <location filename="../passwarddialog.cpp" line="84"/>
+        <location filename="../passwarddialog.cpp" line="86"/>
         <source>Warning</source>
         <translation type="unfinished">警告！</translation>
     </message>
     <message>
-        <location filename="../passwarddialog.cpp" line="85"/>
+        <location filename="../passwarddialog.cpp" line="87"/>
         <source>server doesn&apos;t run, Modifications will not be saved!</source>
         <translation type="unfinished">配置文件没有修改成功！</translation>
     </message>
