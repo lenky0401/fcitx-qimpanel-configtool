@@ -44,24 +44,6 @@ EditingSkinDialog::~EditingSkinDialog()
 
 void EditingSkinDialog::loadMainConf()
 {
-    mSettings->beginGroup("FontSizeEnable");
-    qDebug()<<mItem->text();
-    if((mItem->text() == "dark")||(mItem->text() == "classic")||(mItem->text() == "default") )
-    {
-        mSettings->setValue("FontSizeEnable",true);
-        fontSizeEnable = mSettings->value("FontSizeEnable").toBool();
-    }
-    else if((mItem->text() == "ubuntukylin-dark1")||(mItem->text() == "ubuntukylin-dark2")||
-            (mItem->text() == "ubuntukylin-light1")||(mItem->text() == "ubuntukylin-light2") )
-    {
-        mSettings->setValue("FontSizeEnable",false);
-        fontSizeEnable = mSettings->value("FontSizeEnable").toBool();
-    }
-    else {
-        fontSizeEnable = mSettings->value("FontSizeEnable").toBool();
-    }
-    mSettings->endGroup();
-
     mSettings->beginGroup("SkinInfo");
     QString skinAuthor = mSettings->value("Author").toString();
     QString skinVersion = mSettings->value("Version").toString();
@@ -84,11 +66,7 @@ void EditingSkinDialog::loadMainConf()
     otherColorConf = otherColor;
     ui->spinBoxInputFontSize->setValue(fontSize);
     ui->spinBoxCandFontSize->setValue(candFontSize);
-    if(!fontSizeEnable)
-    {
-        ui->spinBoxInputFontSize->setEnabled(false);
-        ui->spinBoxCandFontSize->setEnabled(false);
-    }
+
     ui->pushButtonInputColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(inputColor)) +";border: none;" +"}");
     ui->pushButtonIndexColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(indexColor)) +";border: none;" +"}");
     ui->pushButtonFirstCandColor->setStyleSheet("QPushButton { background-color:  " + colorToRGB(value2color(firstCandColor)) +";border: none;" +"}");
@@ -102,8 +80,8 @@ void EditingSkinDialog::loadMainConf()
     int marginRight = mSettings->value("MarginRight").toInt();
     int marginTop = mSettings->value("MarginTop").toInt();
     int marginBottom = mSettings->value("MarginBottom").toInt();
-//    QString horizontalTileMode = mSettings->value("horizontalTileMode").toString();
-//    QString verticalTileMode = mSettings->value("vertacalTileMode").toString();
+
+
     int inputStringPosX = mSettings->value("InputStringPosX").toInt();
     int inputStringPosY = mSettings->value("InputStringPosY").toInt();
     int outputCandPosX = mSettings->value("OutputCandPosX").toInt();
@@ -130,39 +108,6 @@ void EditingSkinDialog::loadMainConf()
     ui->spinBox_iLeftMargin->setValue(marginLeft);
     ui->spinBox_iRightMargin->setValue(marginRight);
 
-//    if(horizontalTileMode == "Stretch")
-//    {
-//        horizontalTileModeIndex = 0;
-//    }
-//    else if(horizontalTileMode == "Repeat")
-//    {
-//        horizontalTileModeIndex = 1;
-//    }
-//    else if(horizontalTileMode == "Round")
-//    {
-//        horizontalTileModeIndex = 2;
-//    }
-//    else {
-//        horizontalTileModeIndex = 3;
-//    }
-//    ui->comboBox_iHorizontalTileMode->setCurrentIndex(horizontalTileModeIndex);
-
-//    if(verticalTileMode == "Stretch")
-//    {
-//        verticalTileModeIndex = 0;
-//    }
-//    else if(verticalTileMode == "Repeat")
-//    {
-//        verticalTileModeIndex = 1;
-//    }
-//    else if(verticalTileMode == "Round")
-//    {
-//        verticalTileModeIndex = 2;
-//    }
-//    else{
-//        verticalTileModeIndex =3;
-//    }
-//    ui->comboBox_iVerticalTileMode->setCurrentIndex(verticalTileModeIndex);
     ui->spinBox_iInputStringPosX->setValue(inputStringPosX);
     ui->spinBox_iInputStringPosY->setValue(inputStringPosY);
     ui->spinBox_iOutputCandPosX->setValue(outputCandPosX);
@@ -215,8 +160,6 @@ void EditingSkinDialog::saveMainConf()
     int marginLeft = ui->spinBox_iLeftMargin->value();
     int marginRight = ui->spinBox_iRightMargin->value();
 
-//    QString horizontalTileMode = ui->comboBox_iHorizontalTileMode->currentText();
-//    QString verticalTileMode = ui->comboBox_iVerticalTileMode->currentText();
     int inputStringPosX = ui->spinBox_iInputStringPosX->value();
     int inputStringPosY = ui->spinBox_iInputStringPosY->value();
     int outputCandPosX = ui->spinBox_iOutputCandPosX->value();
@@ -240,8 +183,6 @@ void EditingSkinDialog::saveMainConf()
     mSettings->setValue("MarginLeft",marginLeft);
     mSettings->setValue("MarginRight",marginRight);
 
-//    mSettings->setValue("horizontalTileMode",horizontalTileMode);
-//    mSettings->setValue("vertacalTileMode",verticalTileMode);
     mSettings->setValue("InputStringPosX",inputStringPosX);
     mSettings->setValue("InputStringPosY",inputStringPosY);
     mSettings->setValue("OutputCandPosX",outputCandPosX);
@@ -280,8 +221,6 @@ void EditingSkinDialog::saveMainConf()
 
     mSettings->sync();
 }
-
-
 
 void EditingSkinDialog::on_pushButton_ok_released()
 {

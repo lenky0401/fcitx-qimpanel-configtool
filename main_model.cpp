@@ -33,6 +33,7 @@ MainModel* MainModel::self()
 
 MainModel::MainModel()
 {
+    mCurrentCandidateWordNum = 5; //默认为5
     setIsHorizontal(true);
 }
 
@@ -242,8 +243,6 @@ void MainModel::setCandidateWords() {
     {
         if ((candidate = new (std::nothrow)CandidateWord) == NULL)
             break;
-//        qDebug()<<label.at(i).toInt();
-//        qDebug()<<text.at(i);
         candidate->setCddLabel(label.at(i));
         candidate->setCddText(text.at(i));
         mCandidateWords.append(candidate);
@@ -294,42 +293,6 @@ void MainModel::setIsHorizontal(const bool isHorizontal) {
 
 bool MainModel::isHorizontal() const {
     return mIsHorizontal;
-}
-
-void MainModel::setShowTips(const bool showTips) {
-    mShowTips = showTips;
-    emit showTipsChanged();
-    emit qmlMainWindowSizeChanged();
-}
-
-bool MainModel::showTips() const {
-    return mShowTips;
-}
-
-void MainModel::setShowPreedit(const bool showPreedit) {
-    mShowPreedit = showPreedit;
-    emit showPreeditChanged();
-    emit qmlMainWindowSizeChanged();
-}
-
-bool MainModel::showPreedit() const {
-    return mShowPreedit;
-}
-
-void MainModel::setShowLookupTable(const bool showLookupTable) {
-    mShowLookupTable = showLookupTable;
-    emit showLookupTableChanged();
-    emit qmlMainWindowSizeChanged();
-}
-
-bool MainModel::showLookupTable() const {
-    return mShowLookupTable;
-}
-
-int MainModel::currentCandidateWordNum(int Num){
-    mCurrentCandidateWordNum = Num;
-    resetData();
-    emit qmlMainWindowSizeChanged();
 }
 
 void MainModel::emitSigMainWindowSizeChanged()

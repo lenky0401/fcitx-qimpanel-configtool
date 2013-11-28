@@ -24,8 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle(tr("Qimpanel Settings"));
     loadMainConf();
     ui->tabWidget->setCurrentIndex(0);
-    ui->candidateWordSpinBox->setMaximum(10);
-    ui->candidateWordSpinBox->setMinimum(1);
     mMainModer->resetData();
     changeMainWindowSize();
 
@@ -55,37 +53,25 @@ void MainWindow::changeMainWindowSize()
     int x = 0;
 
     if (ui->radioButtonVertical->isChecked()) {
-        y = 100;
-        if(ui->candidateWordSpinBox->value()>6)
-        {
-            y =200;
-        }
+        y = 120;
+
         this->setFixedSize(560+x, 360 + y);
         ui->tabWidget->setFixedHeight(311 + y);
         ui->tabWidget->setFixedWidth(561 + x);
         ui->widgetSkinPreview->setFixedWidth(381 + x);
-        ui->widgetSkinPreview->setFixedHeight(121 + y);
-
-        getWidgetSkinPreviewWidth = ui->widgetSkinPreview->width();
-        getWidgetSkinPreviewHeight = ui->widgetSkinPreview->height();
+        ui->widgetSkinPreview->setFixedHeight(121 + y + 40);
 
         ui->pushButtonCancel->setGeometry(360+x, 320 + y, 81, 31);
         ui->pushButtonApply->setGeometry(450+x, 320 + y, 81, 31);
 
 
     } else {
-        if(ui->candidateWordSpinBox->value()>6)
-        {
-            x =160;
-        }
+
         this->setFixedSize(560+x, 360 + y);
         ui->tabWidget->setFixedHeight(311 + y);
         ui->tabWidget->setFixedWidth(561 + x);
         ui->widgetSkinPreview->setFixedWidth(381 + x);
-        ui->widgetSkinPreview->setFixedHeight(121 + y);
-
-        getWidgetSkinPreviewWidth = ui->widgetSkinPreview->width();
-        getWidgetSkinPreviewHeight = ui->widgetSkinPreview->height();
+        ui->widgetSkinPreview->setFixedHeight(121 + y + 40);
 
         ui->pushButtonCancel->setGeometry(360+x, 320 + y, 81, 31);
         ui->pushButtonApply->setGeometry(450+x, 320 + y, 81, 31);
@@ -103,17 +89,10 @@ void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 //    qDebug()<<"MainWindow::"<<mSettings->value("CurtSkinType", "default").toString();
     EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
     editingSkinDialog->exec();
-//    qDebug() << item->text();
 }
 
 void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
-//    if (previous)
-//        qDebug() << previous->text() << current->text();
-//    else
-//    {
-//        qDebug() << current->text();
-//    }
     curtSkinType = current->text();
     ui->comboBoxSkinType->setCurrentIndex(ui->listWidgetAllSkin->currentRow());
     setSkinBase();
@@ -173,27 +152,23 @@ void MainWindow::loadSkinPreview(QString skinType)
     qmlView->rootContext()->setContextProperty("mainSkin", mSkinFcitx);//把qt程序暴露到qml
 
     qmlView->setSource(QUrl("qrc:/new/prefix1/main.qml"));
+    setSkinBase();
     mLayout->addWidget(qmlView);
 }
 
 void MainWindow::loadMainConf()
 {
     bool verticalList;
-    int currentCandidateWord;
-    int currentFontSize;
 
     mSettings->beginGroup("base");
     verticalList = mSettings->value("VerticalList", false).toBool();
-    curtSkinType = mSettings->value("CurtSkinType", "default").toString();
-    currentCandidateWord = mSettings->value("CurrentCandidateWord",5).toInt();
-    currentFontSize = mSettings->value("CurrentFontSize",13).toInt();
+    curtSkinType = mSettings->value("CurtSkinType", "ubuntukylin-dark1").toString();
+
     mSettings->endGroup();
 
 
     ui->radioButtonVertical->setChecked(verticalList);
     ui->radioButtonHorizontal->setChecked(!verticalList);
-    ui->candidateWordSpinBox->setValue(currentCandidateWord);
-    ui->fontSizeSpinBox->setValue(currentFontSize);
 
     searchAndSetSkin(curtSkinType);
     mSkinFcitx->loadSkin(skinPath + curtSkinType + "/");
@@ -205,19 +180,14 @@ void MainWindow::saveMainConf()
     qDebug()<<"MainWindow::saveMainConf";
     bool verticalList;
     QString curtSkinType;
-    int currentCandidateWord;
-    int currentFontSize;
 
     mSettings->beginGroup("base");
     verticalList = ui->radioButtonVertical->isChecked();
     curtSkinType = ui->comboBoxSkinType->currentText();
-    currentCandidateWord = ui->candidateWordSpinBox->value();
-    currentFontSize = ui->fontSizeSpinBox->value();
 
     mSettings->setValue("VerticalList", verticalList);
     mSettings->setValue("CurtSkinType", curtSkinType);
-    mSettings->setValue("CurrentCandidateWord",currentCandidateWord);
-    mSettings->setValue("CurrentFontSize",currentFontSize);
+
 }
 
 void MainWindow::setSkinBase()
@@ -225,7 +195,6 @@ void MainWindow::setSkinBase()
     SkinFcitx* skin = new SkinFcitx;
     mLayout->removeWidget(qmlView);
     skin->loadSkin(skinPath + curtSkinType + "/");
-    skin->setFontSize(mFontSize);
     if (mSkinFcitx != skin)
        delete mSkinFcitx;
     mSkinFcitx = skin;
@@ -240,7 +209,10 @@ void MainWindow::setSkinBase()
 void MainWindow::sltOnPushButtonApply()
 {
     saveMainConf();
-    this->close();
+    QString cmd4 = "killall -HUP fcitx-qimpanel";
+    QByteArray ba4 = cmd4.toLatin1();
+    const char * transpd4 = ba4.data();
+    system(transpd4);
 }
 
 void MainWindow::sltOnPushButtonCancel()
@@ -254,13 +226,4 @@ void MainWindow::on_radioButtonHorizontal_toggled(bool checked)
     changeMainWindowSize();
 }
 
-void MainWindow::on_candidateWordSpinBox_valueChanged(int arg1)
-{ 
-    mMainModer->currentCandidateWordNum(arg1);
-    changeMainWindowSize();
-}
 
-void MainWindow::on_fontSizeSpinBox_valueChanged(int arg1)
-{
-    mFontSize = arg1;
-}
