@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QDebug>
 
+#define FCITXSKIN_PATH "/usr/share/fcitx-qimpanel/skin/"
+
 PasswardDialog::PasswardDialog(QString fileName, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PasswardDialog)
@@ -36,9 +38,9 @@ bool PasswardDialog::trans_password(QString fileName,QString pwd) {
 
 //        QProcess *process = new QProcess;
 //        process->start("echo " + pwd + " | sudo -S mv /tmp/"+ fileName +
-//                       "/fcitx_skin.conf /usr/share/fcitx/skin/" + fileName + "/");
+//                       "/fcitx_skin.conf /usr/share/fcitx-qimpanel/skin/" + fileName + "/");
         QString cmd3 = "echo " + pwd + " | sudo -S mv /tmp/"+ fileName +
-                       "/fcitx_skin.conf /usr/share/fcitx/skin/" + fileName + "/";
+                       "/fcitx_skin.conf /usr/share/fcitx-qimpanel/skin/" + fileName + "/";
         QByteArray ba3 = cmd3.toLatin1();
         const char * transpd3 = ba3.data();
         system(transpd3);

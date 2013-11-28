@@ -8,6 +8,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#define FCITXSKIN_PATH "/usr/share/fcitx-qimpanel/skin/"
+
 MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainWindow)
@@ -113,12 +115,13 @@ void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListW
 //        qDebug() << current->text();
 //    }
     curtSkinType = current->text();
+    ui->comboBoxSkinType->setCurrentIndex(ui->listWidgetAllSkin->currentRow());
     setSkinBase();
 }
 
 void MainWindow::searchAndSetSkin(QString curtSkinType)
 {
-    skinPath = "/usr/share/fcitx/skin/";
+    skinPath = FCITXSKIN_PATH;
     int idx = 0;
     int count = 0;
     QDir skinDir;
