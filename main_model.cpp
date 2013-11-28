@@ -281,13 +281,11 @@ void MainModel::setHighLight(const int highLight) {
 }
 
 int MainModel::highLight() const {
-//    qDebug()<<"mHighLight"<<mHighLight;
     return mHighLight;
 }
 
 void MainModel::setIsHorizontal(const bool isHorizontal) {
     mIsHorizontal = isHorizontal;
-    emit isHorizontalChanged();
     emit qmlMainWindowSizeChanged();
 }
 

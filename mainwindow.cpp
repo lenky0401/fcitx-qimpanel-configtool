@@ -223,6 +223,7 @@ void MainWindow::sltOnPushButtonCancel()
 void MainWindow::on_radioButtonHorizontal_toggled(bool checked)
 {
     mMainModer->setIsHorizontal(checked);
+    setSkinBase();
     changeMainWindowSize();
 }
 
