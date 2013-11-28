@@ -8,6 +8,9 @@ build*/
 *.kate-swp
 *.orig
 tags
+Makefile
+fcitx-qimpanel-configtool
+*.o
 astyle.sh
 cscope.*
 *.part

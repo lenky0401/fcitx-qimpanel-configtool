@@ -1,0 +1,14 @@
+Source: fcitx-qimpanel-configtool
+Section: utils
+Priority: extra
+Maintainer: xiaoyiwu <xiaoyiwu@ubuntukylin.com >
+Build-Depends: debhelper (>= 8.0.0), libqt4-dev (>=4.8.1) 
+Standards-Version: 0.1
+Homepage:https://github.com/lenky0401/fcitx-qimpanel-configtool
+
+Package: fcitx-qimpanel-configtool
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: fcitx-qimpanel-configtool for ubuntukylin
+
+
