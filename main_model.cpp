@@ -33,6 +33,7 @@ MainModel* MainModel::self()
 
 MainModel::MainModel()
 {
+    mCurrentCandidateWordNum = 5; //默认为5
     setIsHorizontal(true);
 }
 
@@ -49,10 +50,6 @@ void MainModel::resetData() {
     setInputStringCursorPos(-1);
     setHighLight(-1);
     //这个不属于焦点切换时需要重置的值
-//    setIsHorizontal(true);
-//    setShowTips(false);
-//    setShowPreedit(false);
-//    setShowLookupTable(false);
 }
 
 void MainModel::setInputString(const QString inputString) {
@@ -242,8 +239,6 @@ void MainModel::setCandidateWords() {
     {
         if ((candidate = new (std::nothrow)CandidateWord) == NULL)
             break;
-//        qDebug()<<label.at(i).toInt();
-//        qDebug()<<text.at(i);
         candidate->setCddLabel(label.at(i));
         candidate->setCddText(text.at(i));
         mCandidateWords.append(candidate);
@@ -282,54 +277,15 @@ void MainModel::setHighLight(const int highLight) {
 }
 
 int MainModel::highLight() const {
-//    qDebug()<<"mHighLight"<<mHighLight;
     return mHighLight;
 }
 
 void MainModel::setIsHorizontal(const bool isHorizontal) {
     mIsHorizontal = isHorizontal;
-    emit isHorizontalChanged();
     emit qmlMainWindowSizeChanged();
 }
-
 bool MainModel::isHorizontal() const {
     return mIsHorizontal;
-}
-
-void MainModel::setShowTips(const bool showTips) {
-    mShowTips = showTips;
-    emit showTipsChanged();
-    emit qmlMainWindowSizeChanged();
-}
-
-bool MainModel::showTips() const {
-    return mShowTips;
-}
-
-void MainModel::setShowPreedit(const bool showPreedit) {
-    mShowPreedit = showPreedit;
-    emit showPreeditChanged();
-    emit qmlMainWindowSizeChanged();
-}
-
-bool MainModel::showPreedit() const {
-    return mShowPreedit;
-}
-
-void MainModel::setShowLookupTable(const bool showLookupTable) {
-    mShowLookupTable = showLookupTable;
-    emit showLookupTableChanged();
-    emit qmlMainWindowSizeChanged();
-}
-
-bool MainModel::showLookupTable() const {
-    return mShowLookupTable;
-}
-
-int MainModel::currentCandidateWordNum(int Num){
-    mCurrentCandidateWordNum = Num;
-    resetData();
-    emit qmlMainWindowSizeChanged();
 }
 
 void MainModel::emitSigMainWindowSizeChanged()

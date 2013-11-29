@@ -104,7 +104,7 @@
      <property name="geometry">
       <rect>
        <x>59</x>
-       <y>175</y>
+       <y>99</y>
        <width>120</width>
        <height>31</height>
       </rect>
@@ -123,65 +123,10 @@
      <property name="geometry">
       <rect>
        <x>211</x>
-       <y>176</y>
+       <y>98</y>
        <width>200</width>
        <height>31</height>
       </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="candidateWord">
-     <property name="geometry">
-      <rect>
-       <x>-1</x>
-       <y>90</y>
-       <width>181</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Candidate Word Numer:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="candidateWordSpinBox">
-     <property name="geometry">
-      <rect>
-       <x>209</x>
-       <y>92</y>
-       <width>80</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>-99</number>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="fontSizeSpinBox">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>132</y>
-       <width>80</width>
-       <height>28</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelFontSize">
-     <property name="geometry">
-      <rect>
-       <x>-21</x>
-       <y>136</y>
-       <width>201</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>FontSize:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -195,7 +140,7 @@
        <x>90</x>
        <y>10</y>
        <width>381</width>
-       <height>121</height>
+       <height>101</height>
       </rect>
      </property>
     </widget>
@@ -219,7 +164,7 @@
      <property name="geometry">
       <rect>
        <x>-40</x>
-       <y>140</y>
+       <y>120</y>
        <width>121</width>
        <height>31</height>
       </rect>
@@ -235,9 +180,9 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>150</y>
+       <y>130</y>
        <width>381</width>
-       <height>121</height>
+       <height>141</height>
       </rect>
      </property>
     </widget>

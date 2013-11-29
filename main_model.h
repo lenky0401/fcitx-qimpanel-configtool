@@ -47,12 +47,6 @@ class MainModel : public QObject
         NOTIFY highLightChanged)
     Q_PROPERTY(bool isHorizontal READ isHorizontal WRITE setIsHorizontal
         NOTIFY isHorizontalChanged)
-    Q_PROPERTY(bool showTips READ showTips WRITE setShowTips
-        NOTIFY showTipsChanged)
-    Q_PROPERTY(bool showPreedit READ showPreedit WRITE setShowPreedit
-        NOTIFY showPreeditChanged)
-    Q_PROPERTY(bool showLookupTable READ showLookupTable WRITE setShowLookupTable
-        NOTIFY showLookupTableChanged)
 
 public:
     static MainModel* self();
@@ -82,12 +76,7 @@ public:
     int highLight() const;
     void setIsHorizontal(const bool isHorizontal);
     bool isHorizontal() const;
-    void setShowTips(const bool showTips);
-    bool showTips() const;
-    void setShowPreedit(const bool showPreedit);
-    bool showPreedit() const;
-    void setShowLookupTable(const bool showLookupTable);
-    bool showLookupTable() const;
+
     int currentCandidateWordNum(int Num);
     void emitSigMainWindowSizeChanged();
 
@@ -99,9 +88,6 @@ signals:
     void hasNextChanged();
     void highLightChanged();
     void isHorizontalChanged();
-    void showTipsChanged();
-    void showPreeditChanged();
-    void showLookupTableChanged();
 
     void currentCandidateWordNumChanged();
     void qmlMainWindowSizeChanged();
