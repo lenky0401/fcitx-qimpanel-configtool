@@ -97,11 +97,6 @@ void SkinBase::init()
     mVerticalTileModeVertical = "";
 }
 
-bool SkinBase::loadSkin(const QString skinPath)
-{
-
-}
-
 QColor SkinBase::value2color(const QString& value)
 {
     QStringList list = value.split(' ');

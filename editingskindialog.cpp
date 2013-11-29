@@ -309,7 +309,6 @@ void EditingSkinDialog::copySkinConf()//复制皮肤配置到本地/tmp
 
     do{
         str=readFcitxSkinConf.readLine();//读取一行
-        //qDebug()<<str;
         writeFcitxSkinConf<<str<<"\n";
     } while (!str.isNull());
     readSkinConf.close();

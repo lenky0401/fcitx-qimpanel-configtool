@@ -347,7 +347,6 @@ public:
 public:
     SkinBase();
     virtual ~SkinBase();
-    virtual bool loadSkin(const QString skinPath);
     void reloadSkin();
     void init();
 

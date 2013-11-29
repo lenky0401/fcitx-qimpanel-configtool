@@ -45,7 +45,7 @@ private:
     void searchAndSetSkin(QString skinType);
     void loadMainConf();
     void saveMainConf();
-    void loadSkinPreview(QString skin);
+    void loadSkinPreview();
     void changeMainWindowSize();
     void setSkinBase();
 

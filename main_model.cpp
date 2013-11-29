@@ -50,10 +50,6 @@ void MainModel::resetData() {
     setInputStringCursorPos(-1);
     setHighLight(-1);
     //这个不属于焦点切换时需要重置的值
-//    setIsHorizontal(true);
-//    setShowTips(false);
-//    setShowPreedit(false);
-//    setShowLookupTable(false);
 }
 
 void MainModel::setInputString(const QString inputString) {
@@ -288,7 +284,6 @@ void MainModel::setIsHorizontal(const bool isHorizontal) {
     mIsHorizontal = isHorizontal;
     emit qmlMainWindowSizeChanged();
 }
-
 bool MainModel::isHorizontal() const {
     return mIsHorizontal;
 }

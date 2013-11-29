@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    qmlRegisterType<CandidateWord>();//注册CandidateWord列表到qml
     qmlView = new QDeclarativeView;
     mSkinFcitx = new SkinFcitx;
     mMainModer = MainModel::self();
@@ -138,22 +139,10 @@ void MainWindow::searchAndSetSkin(QString curtSkinType)
     ui->comboBoxSkinType->setCurrentIndex(idx);
 }
 
-void MainWindow::loadSkinPreview(QString skinType)
+void MainWindow::loadSkinPreview()
 {
     qDebug()<<"MainWindow::loadSkinPreview";
-    qmlRegisterType<CandidateWord>();//注册CandidateWord列表到qml
-
-    qmlView->setContentsMargins(0, 0, 0, 0);
-    qmlView->setResizeMode(QDeclarativeView::SizeViewToRootObject);
-    qmlView->setResizeAnchor(QGraphicsView::AnchorViewCenter);
-    qmlView->viewport()->setAutoFillBackground(false);
-    qmlView->rootContext()->setContextProperty("mainCtrl", this);
-    qmlView->rootContext()->setContextProperty("mainModel", mMainModer);
-    qmlView->rootContext()->setContextProperty("mainSkin", mSkinFcitx);//把qt程序暴露到qml
-
-    qmlView->setSource(QUrl("qrc:/new/prefix1/main.qml"));
     setSkinBase();
-    mLayout->addWidget(qmlView);
 }
 
 void MainWindow::loadMainConf()
@@ -163,7 +152,6 @@ void MainWindow::loadMainConf()
     mSettings->beginGroup("base");
     verticalList = mSettings->value("VerticalList", false).toBool();
     curtSkinType = mSettings->value("CurtSkinType", "ubuntukylin-dark1").toString();
-
     mSettings->endGroup();
 
 
@@ -172,9 +160,8 @@ void MainWindow::loadMainConf()
 
     searchAndSetSkin(curtSkinType);
     mSkinFcitx->loadSkin(skinPath + curtSkinType + "/");
-    loadSkinPreview(curtSkinType);
+    loadSkinPreview();
 }
-
 void MainWindow::saveMainConf()
 {
     qDebug()<<"MainWindow::saveMainConf";
@@ -188,6 +175,7 @@ void MainWindow::saveMainConf()
     mSettings->setValue("VerticalList", verticalList);
     mSettings->setValue("CurtSkinType", curtSkinType);
 
+    mSettings->endGroup();
 }
 
 void MainWindow::setSkinBase()
@@ -200,6 +188,7 @@ void MainWindow::setSkinBase()
     mSkinFcitx = skin;
 
     qmlView->rootContext()->setContextProperty("mainSkin", mSkinFcitx);//把qt程序暴露到qml
+    qmlView->rootContext()->setContextProperty("mainModel", mMainModer);
     qmlView->setSource(QUrl("qrc:/new/prefix1/main.qml"));
     mLayout->addWidget(qmlView);
     mMainModer->emitSigMainWindowSizeChanged();

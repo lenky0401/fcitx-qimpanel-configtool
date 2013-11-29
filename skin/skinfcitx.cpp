@@ -51,12 +51,6 @@ bool SkinFcitx::loadSkin(const QString skinPath)
     QString line;
     QString key, value;
 
-    bool skinInfo = false;
-    bool skinMainBar = false;
-    bool skinTrayIcon = false;
-    bool skinMenu = false;
-    bool skinKeyboard = false;
-
     bool skinFont = false;
     bool skinInputBar = false;
     bool skinFontVertical = false;
@@ -71,12 +65,7 @@ bool SkinFcitx::loadSkin(const QString skinPath)
             continue;
 
         if (line.at(0) == '[') {
-            skinInfo = (line == "[SkinInfo]");
             skinFont = (line == "[SkinFont]");
-            skinMainBar = (line == "[SkinMainBar]");
-            skinTrayIcon = (line == "[SkinTrayIcon]");
-            skinMenu = (line == "[SkinMenu]");
-            skinKeyboard = (line == "[SkinKeyboard]");
             skinInputBar = (line == "[SkinInputBar]");
             skinFontVertical = (line == "[SkinFontVertical]");
             skinInputBarVertical = (line == "[SkinInputBarVertical]");
