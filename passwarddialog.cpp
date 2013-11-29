@@ -50,10 +50,10 @@ bool PasswardDialog::trans_password(QString fileName,QString pwd) {
         const char * transpd4 = ba4.data();
         system(transpd4);
 
-        QString cmd5 = "fcitx-qimpanel";
-        QByteArray ba5 = cmd5.toLatin1();
-        const char * transpd5 = ba5.data();
-        system(transpd5);
+//        QString cmd5 = "fcitx-qimpanel";
+//        QByteArray ba5 = cmd5.toLatin1();
+//        const char * transpd5 = ba5.data();
+//        system(transpd5);
         return true;
     }
     return false;

@@ -27,8 +27,6 @@ class MainWindow : public QDialog
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = 0);
-    int getWidgetSkinPreviewWidth;
-    int getWidgetSkinPreviewHeight;
     QSettings *mSettings;
     ~MainWindow();
     
@@ -42,13 +40,12 @@ private:
     QDeclarativeView *qmlView;
     QHBoxLayout *mLayout;
     QString curtSkinType;
-    int mFontSize;
 
 private:
     void searchAndSetSkin(QString skinType);
     void loadMainConf();
     void saveMainConf();
-    void loadSkinPreview(QString skin);
+    void loadSkinPreview();
     void changeMainWindowSize();
     void setSkinBase();
 
@@ -59,8 +56,6 @@ private slots:
     void sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void sltOnCurrentChanged(QWidget *tab);  
     void on_radioButtonHorizontal_toggled(bool checked);
-    void on_candidateWordSpinBox_valueChanged(int arg1);
-    void on_fontSizeSpinBox_valueChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H

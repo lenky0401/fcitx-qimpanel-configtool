@@ -43,7 +43,6 @@ Rectangle {
 //                MouseArea {
 //                    anchors.fill: parent
 //                    onClicked: {
-//                            mainCtrl.selectCandidate(index)
 //                    }
 //                }
             }
@@ -64,7 +63,6 @@ Rectangle {
 //                MouseArea {
 //                    anchors.fill: parent
 //                    onClicked: {
-//                            mainCtrl.selectCandidate(index)
 //                    }
 //                }
             }
@@ -78,8 +76,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-//                if (mainModel.hasPrev)
-//                    mainCtrl.getPrevPage()
             }
         }
     }
@@ -91,8 +87,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-//                if (mainModel.hasNext)
-//                    mainCtrl.getNextPage()
             }
         }
     }
@@ -218,7 +212,6 @@ Rectangle {
                     height1 = max(height1, -mainSkin.outputCandPosY);
                 }
             
-            //if (mainModel.hasPrev || mainModel.hasNext) {
                 if (mainSkin.backArrowPosX > 0) {
                     tmp = prev_page.x + prev_page.width;
                     width = max(width, tmp);
@@ -246,14 +239,10 @@ Rectangle {
                 } else {
                     height1 = max(height1, -mainSkin.forwardArrowPosY);
                 }
-          //  }
             
             mainWindow.width = width + width1 + mainSkin.marginRight + mainSkin.adjustWidth;
             mainWindow.height = height + height1 + mainSkin.marginBottom + mainSkin.adjustHeight;
-//            console.log(width);
-//            console.log(height);
-//            console.log(width1);
-//            console.log(height1);
+
         }
     }
 }
