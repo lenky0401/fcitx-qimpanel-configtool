@@ -21,6 +21,7 @@ EditingSkinDialog::EditingSkinDialog(bool pHorizontal,QListWidgetItem *item,
     ui(new Ui::EditingSkinDialog)
 {
     ui->setupUi(this);
+    localPath = qgetenv("HOME") + "/.config/fcitx-qimpanel/";
     ui->EditingSkinTabWidget->setCurrentIndex(0);
     mItem = item;
     mHorizontal = pHorizontal;
@@ -29,7 +30,7 @@ EditingSkinDialog::EditingSkinDialog(bool pHorizontal,QListWidgetItem *item,
 
     this->setWindowTitle("skin/"+mItem->text()+"/fcitx_skin.conf");
     copySkinConf();
-    mSettings = new QSettings("/tmp/"+mItem->text() + "/fcitx_skin.conf",QSettings::IniFormat);
+    mSettings = new QSettings(localPath + "skin/" + mItem->text() + "/fcitx_skin.conf",QSettings::IniFormat);
     mSettings->setIniCodec("UTF-8");
     loadMainConf();
 }
@@ -226,8 +227,8 @@ void EditingSkinDialog::on_pushButton_ok_released()
 {
     saveMainConf();
 
-    PasswardDialog * passward = new PasswardDialog(mItem->text());
-    passward->exec();
+//    PasswardDialog * passward = new PasswardDialog(mItem->text());
+//    passward->exec();
     this->accept();
 }
 
@@ -285,34 +286,45 @@ void EditingSkinDialog::on_pushButtonOtherCandColor_released()
     }
 }
 
-
-void EditingSkinDialog::copySkinConf()//复制皮肤配置到本地/tmp
+void EditingSkinDialog::copySkinConf()//复制皮肤配置到本地.config/fcitx-qimpanel/skin
 {
     QDir *temp = new QDir;
-    bool exist = temp->exists("/tmp/"+mItem->text());
-    if(!exist)
-        temp->mkdir("/tmp/"+mItem->text());
-    QString str;
-    QFile readSkinConf(FCITXSKIN_PATH + mItem->text() + "/fcitx_skin.conf");
-    QFile writeSkinconf("/tmp/"+mItem->text() +"/fcitx_skin.conf");
-    if(!readSkinConf.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-           QMessageBox::warning(this,"read","can't open",QMessageBox::Yes);
-        }
-
-    if(!writeSkinconf.open(QIODevice::ReadWrite | QIODevice::Text))
+    if((false == temp->exists(localPath+"skin/ubuntukylin-dark1")&&(mItem->text()=="ubuntukylin-dark1"))
+            ||(false == temp->exists(localPath+"skin/ubuntukylin-dark2")&&(mItem->text()=="ubuntukylin-dark2"))
+            ||(false == temp->exists(localPath+"skin/ubuntukylin-light1")&&(mItem->text()=="ubuntukylin-light1"))
+            ||(false == temp->exists(localPath+"skin/ubuntukylin-light2")&&(mItem->text()=="ubuntukylin-light2")))
     {
-       QMessageBox::warning(this,"write","can't open",QMessageBox::Yes);
-    }
-    QTextStream readFcitxSkinConf(&readSkinConf);
-    QTextStream writeFcitxSkinConf(&writeSkinconf);
+        qDebug()<<"5555";
+        QDir *temp1 = new QDir;
+        QDir *temp2 = new QDir;
+        bool exist1 = temp1->exists(localPath+"skin/");
+        if(!exist1)
+            temp1->mkdir(localPath+"skin/");
+        bool exist2 = temp2->exists(localPath+"skin/" + mItem->text());
+        if(!exist2)
+            temp2->mkdir(localPath+"skin/" + mItem->text());
+        QString str;
+        QFile readSkinConf(FCITXSKIN_PATH + mItem->text() + "/fcitx_skin.conf");
+        QFile writeSkinconf(localPath+"skin/" + mItem->text() +"/fcitx_skin.conf");
+        if(!readSkinConf.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+               QMessageBox::warning(this,"read","can't open",QMessageBox::Yes);
+            }
 
-    do{
-        str=readFcitxSkinConf.readLine();//读取一行
-        writeFcitxSkinConf<<str<<"\n";
-    } while (!str.isNull());
-    readSkinConf.close();
-    writeSkinconf.close();
+        if(!writeSkinconf.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+           QMessageBox::warning(this,"write","can't open",QMessageBox::Yes);
+        }
+        QTextStream readFcitxSkinConf(&readSkinConf);
+        QTextStream writeFcitxSkinConf(&writeSkinconf);
+
+        do{
+            str=readFcitxSkinConf.readLine();//读取一行
+            writeFcitxSkinConf<<str<<"\n";
+        } while (!str.isNull());
+        readSkinConf.close();
+        writeSkinconf.close();
+    }
 }
 
 QString EditingSkinDialog::colorToRGB(QColor color)
