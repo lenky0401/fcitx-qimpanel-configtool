@@ -258,10 +258,15 @@ void MainWindow::setSkinBase()
 void MainWindow::sltOnPushButtonApply()
 {
     saveMainConf();
-    QString cmd4 = "killall -HUP fcitx-qimpanel";
-    QByteArray ba4 = cmd4.toLatin1();
-    const char * transpd4 = ba4.data();
-    system(transpd4);
+
+    QString cmd2 = "killall -HUP fcitx-qimpanel";
+    QByteArray ba2 = cmd2.toLatin1();
+    const char * transpd2 = ba2.data();
+    if(0!= system(transpd2))
+    {
+        return ;
+    }
+
 }
 
 void MainWindow::sltOnPushButtonCancel()
