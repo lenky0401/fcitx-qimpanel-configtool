@@ -38,6 +38,7 @@ private:
     QString indexColorConf;
     QString firstCandColorConf;
     QString otherColorConf;
+    QString localPath;
     bool mHorizontal;
     bool fontSizeEnable;
 

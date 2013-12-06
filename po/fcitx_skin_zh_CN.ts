@@ -139,6 +139,14 @@
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tips </source>
+        <translation type="unfinished">友情提示：</translation>
+    </message>
+    <message>
+        <source>Whether to use the default configuration of the skin?</source>
+        <translation type="unfinished">是否创建本地配置或恢复该皮肤的默认配置？</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -197,6 +205,10 @@
     <message>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description: Click to select and preview, double-click local to edit, save locally.</source>
+        <translation type="unfinished">单击选择并预览，双击创造本地配置或者进行编辑。</translation>
     </message>
 </context>
 <context>

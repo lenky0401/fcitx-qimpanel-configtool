@@ -40,9 +40,11 @@ private:
     QDeclarativeView *qmlView;
     QHBoxLayout *mLayout;
     QString curtSkinType;
+    QString localPath;
 
 private:
-    void searchAndSetSkin(QString skinType);
+    void searchAndSetSystemSkin( );
+    void searchAndSetLocalSkin( );
     void loadMainConf();
     void saveMainConf();
     void loadSkinPreview();
