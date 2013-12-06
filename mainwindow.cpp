@@ -8,13 +8,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#define FCITXSKIN_PATH "/usr/share/fcitx-qimpanel/skin/"
+#define FCITXSKINSYSTEM_PATH "/usr/share/fcitx-qimpanel/skin/"
 
 MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
     qmlRegisterType<CandidateWord>();//注册CandidateWord列表到qml
     qmlView = new QDeclarativeView;
@@ -22,11 +21,13 @@ MainWindow::MainWindow(QWidget *parent) :
     mMainModer = MainModel::self();
     mSettings = new QSettings("fcitx-qimpanel", "main");
     mLayout = new QHBoxLayout(ui->widgetSkinPreview);
+    localPath = qgetenv("HOME") + "/.config/fcitx-qimpanel/skin/";
     this->setWindowTitle(tr("Qimpanel Settings"));
+    curtSkinType = "ubuntukylin-dark1";
     loadMainConf();
     ui->tabWidget->setCurrentIndex(0);
     mMainModer->resetData();
-    changeMainWindowSize();
+    changeMainWindowSize();   
 
     connect(ui->pushButtonCancel, SIGNAL(clicked()), this, SLOT(sltOnPushButtonCancel()));
     connect(ui->pushButtonApply, SIGNAL(clicked()), this, SLOT(sltOnPushButtonApply()));
@@ -90,18 +91,29 @@ void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 //    qDebug()<<"MainWindow::"<<mSettings->value("CurtSkinType", "default").toString();
     EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
     editingSkinDialog->exec();
+    disconnect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),0, 0);
+    disconnect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),0,0);
+    ui->listWidgetAllSkin->clear();
+    searchAndSetSystemSkin();
+    searchAndSetLocalSkin();
+
+    connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
+            this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
+    connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
+            this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
+
 }
 
 void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     curtSkinType = current->text();
-    ui->comboBoxSkinType->setCurrentIndex(ui->listWidgetAllSkin->currentRow());
+    qDebug()<<curtSkinType;
     setSkinBase();
 }
 
-void MainWindow::searchAndSetSkin(QString curtSkinType)
+void MainWindow::searchAndSetSystemSkin()
 {
-    skinPath = FCITXSKIN_PATH;
+    skinPath = FCITXSKINSYSTEM_PATH;
     int idx = 0;
     int count = 0;
     QDir skinDir;
@@ -122,7 +134,7 @@ void MainWindow::searchAndSetSkin(QString curtSkinType)
             SkinTypeEntry entry;
             entry.name = iter->fileName();
             entry.absolutePath = iter->absoluteFilePath();
-            allSkinType.append(entry);
+            //allSkinType.append(entry);
 
             if (curtSkinType == entry.name)
             {
@@ -139,6 +151,42 @@ void MainWindow::searchAndSetSkin(QString curtSkinType)
     ui->comboBoxSkinType->setCurrentIndex(idx);
 }
 
+void MainWindow::searchAndSetLocalSkin()
+{
+    int idx = 0;
+    int count = 0;
+    QDir skinDir;
+    QFileInfoList list;
+    QFileInfoList::Iterator iter;
+    skinDir = QDir(localPath);
+    if (!skinDir.exists())
+    {
+        qDebug()<<localPath;
+        return;
+    }
+    skinDir.setFilter(QDir::Dirs);
+    list = skinDir.entryInfoList();
+    for (iter = list.begin(); iter != list.end(); ++ iter) {
+        if (iter->isDir() && "." != iter->fileName() && ".." != iter->fileName()) {
+            QFile fcitxSkinConfFile(iter->absoluteFilePath() + "/fcitx_skin.conf");
+            if (!fcitxSkinConfFile.exists())
+                continue;
+
+            SkinTypeEntry entry;
+            entry.name = iter->fileName();
+            entry.absolutePath = iter->absoluteFilePath();
+
+            if (curtSkinType == entry.name)
+            {
+                idx = count;
+            }
+            ui->listWidgetAllSkin->addItem(entry.name+"(local)");
+            count ++;
+        }
+    }
+    ui->listWidgetAllSkin->setCurrentRow(idx);
+}
+
 void MainWindow::loadSkinPreview()
 {
     qDebug()<<"MainWindow::loadSkinPreview";
@@ -148,6 +196,7 @@ void MainWindow::loadSkinPreview()
 void MainWindow::loadMainConf()
 {
     bool verticalList;
+    QString curtSkinType;
 
     mSettings->beginGroup("base");
     verticalList = mSettings->value("VerticalList", false).toBool();
@@ -158,19 +207,22 @@ void MainWindow::loadMainConf()
     ui->radioButtonVertical->setChecked(verticalList);
     ui->radioButtonHorizontal->setChecked(!verticalList);
 
-    searchAndSetSkin(curtSkinType);
-    mSkinFcitx->loadSkin(skinPath + curtSkinType + "/");
+    searchAndSetSystemSkin();
+    searchAndSetLocalSkin();
     loadSkinPreview();
 }
 void MainWindow::saveMainConf()
 {
     qDebug()<<"MainWindow::saveMainConf";
     bool verticalList;
-    QString curtSkinType;
+
+    if(curtSkinType.indexOf("(local)")!=-1)
+    {
+      curtSkinType = curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
+    }
 
     mSettings->beginGroup("base");
     verticalList = ui->radioButtonVertical->isChecked();
-    curtSkinType = ui->comboBoxSkinType->currentText();
 
     mSettings->setValue("VerticalList", verticalList);
     mSettings->setValue("CurtSkinType", curtSkinType);
@@ -182,7 +234,15 @@ void MainWindow::setSkinBase()
 {
     SkinFcitx* skin = new SkinFcitx;
     mLayout->removeWidget(qmlView);
-    skin->loadSkin(skinPath + curtSkinType + "/");
+    if(curtSkinType.indexOf("(local)")==-1)
+    {
+        skin->loadSkin(skinPath + curtSkinType + "/");
+    }
+    else
+    {
+        skin->loadSkin(localPath + curtSkinType.mid(0,curtSkinType.indexOf("(local)")) + "/");
+    }
+
     if (mSkinFcitx != skin)
        delete mSkinFcitx;
     mSkinFcitx = skin;

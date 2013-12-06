@@ -164,7 +164,7 @@
      <property name="geometry">
       <rect>
        <x>-40</x>
-       <y>120</y>
+       <y>136</y>
        <width>121</width>
        <height>31</height>
       </rect>
@@ -180,10 +180,23 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>130</y>
+       <y>150</y>
        <width>381</width>
-       <height>141</height>
+       <height>121</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>88</x>
+       <y>115</y>
+       <width>461</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Description: Click to select and preview, double-click local to edit, save locally.</string>
      </property>
     </widget>
    </widget>
