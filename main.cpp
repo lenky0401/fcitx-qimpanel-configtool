@@ -32,7 +32,6 @@ int main(int argc, char *argv[])
     if(false == temp->exists(localPath + "fcitx-qimpanel"))
     {
         QString cmd = "mkdir " + localPath +"fcitx-qimpanel";
-        qDebug()<<cmd;
         QByteArray ba = cmd.toLatin1();
         const char *transpd = ba.data();
         if(0!= system(transpd))
@@ -40,12 +39,12 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
+
     QString localPath2 = qgetenv("HOME") + "/.config/fcitx-qimpanel/";
     QDir *temp2 = new QDir;
     if(false == temp2->exists(localPath2 + "skin"))
     {
         QString cmd2 = "mkdir " + localPath2 +"skin";
-        qDebug()<<cmd2;
         QByteArray ba2 = cmd2.toLatin1();
         const char *transpd2 = ba2.data();
         if(0!= system(transpd2))
@@ -53,6 +52,7 @@ int main(int argc, char *argv[])
             return 0 ;
         }
     }
+
     MainWindow mainWindow;
     mainWindow.show();
     return app.exec();
