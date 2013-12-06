@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Skin Type:</source>
-        <translation type="unfinished">皮肤类型:</translation>
+        <translation type="unfinished">当前使用皮肤:</translation>
     </message>
     <message>
         <source>Candidate Word Numer:</source>
