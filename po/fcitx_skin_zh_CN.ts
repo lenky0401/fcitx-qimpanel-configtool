@@ -141,11 +141,19 @@
     </message>
     <message>
         <source>Tips </source>
+        <translation type="obsolete">友情提示：</translation>
+    </message>
+    <message>
+        <source>&amp;Refresh</source>
+        <translation type="unfinished">恢复默认(R)</translation>
+    </message>
+    <message>
+        <source>tips</source>
         <translation type="unfinished">友情提示：</translation>
     </message>
     <message>
-        <source>Whether to use the default configuration of the skin?</source>
-        <translation type="unfinished">是否创建本地配置或恢复该皮肤的默认配置？</translation>
+        <source>The default configuration has been restored</source>
+        <translation type="unfinished">该皮肤已经恢复默认配置。</translation>
     </message>
 </context>
 <context>
@@ -227,27 +235,27 @@
     </message>
     <message>
         <source>Password authentication</source>
-        <translation type="unfinished">密码验证</translation>
+        <translation type="obsolete">密码验证</translation>
     </message>
     <message>
         <source>Please enter your password, and give permissions to ensure successful configuration changes!</source>
-        <translation type="unfinished">请输入您的密码，给予修改配置文件的权限。</translation>
+        <translation type="obsolete">请输入您的密码，给予修改配置文件的权限。</translation>
     </message>
     <message>
         <source>succeed, please wait!</source>
-        <translation type="unfinished">密码正确，请稍等！</translation>
+        <translation type="obsolete">密码正确，请稍等！</translation>
     </message>
     <message>
         <source>passward error,try again!</source>
-        <translation type="unfinished">密码错误，请重新输入。</translation>
+        <translation type="obsolete">密码错误，请重新输入。</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">警告！</translation>
+        <translation type="obsolete">警告！</translation>
     </message>
     <message>
         <source>server doesn&apos;t run, Modifications will not be saved!</source>
-        <translation type="unfinished">配置文件没有修改成功！</translation>
+        <translation type="obsolete">配置文件没有修改成功！</translation>
     </message>
     <message>
         <source>Dialog</source>

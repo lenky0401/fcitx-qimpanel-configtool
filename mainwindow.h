@@ -41,7 +41,8 @@ private:
     QHBoxLayout *mLayout;
     QString curtSkinType;
     QString localPath;
-
+    QStringList systemSkin_list;
+    QStringList localSkin_list;
 private:
     void searchAndSetSystemSkin( );
     void searchAndSetLocalSkin( );
@@ -50,6 +51,9 @@ private:
     void loadSkinPreview();
     void changeMainWindowSize();
     void setSkinBase();
+    void showListWidgetAllSkin();
+    void setListWidgetAllSkin();
+    void refreshListWidgetAllSkin();
 
 private slots:
     void sltOnPushButtonApply();

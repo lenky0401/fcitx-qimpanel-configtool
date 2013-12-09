@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     curtSkinType = "ubuntukylin-dark1";
     loadMainConf();
     ui->tabWidget->setCurrentIndex(0);
+    ui->listWidgetAllSkin->setCurrentRow(0);
     mMainModer->resetData();
     changeMainWindowSize();   
 
@@ -38,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
     connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
             this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
-
 }
 
 MainWindow::~MainWindow()
@@ -88,26 +88,14 @@ void MainWindow::sltOnCurrentChanged(QWidget *tab)
 
 void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 {
-//    qDebug()<<"MainWindow::"<<mSettings->value("CurtSkinType", "default").toString();
     EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
     editingSkinDialog->exec();
-    disconnect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),0, 0);
-    disconnect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),0,0);
-    ui->listWidgetAllSkin->clear();
-    searchAndSetSystemSkin();
-    searchAndSetLocalSkin();
-
-    connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
-            this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
-    connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
-            this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
-
+    refreshListWidgetAllSkin();
 }
 
 void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     curtSkinType = current->text();
-    qDebug()<<curtSkinType;
     setSkinBase();
 }
 
@@ -120,6 +108,7 @@ void MainWindow::searchAndSetSystemSkin()
     QFileInfoList list;
     QFileInfoList::Iterator iter;
     skinDir = QDir(skinPath);
+    systemSkin_list.clear();
     if (!skinDir.exists())
         return;
 
@@ -142,13 +131,13 @@ void MainWindow::searchAndSetSystemSkin()
             }
 
             ui->comboBoxSkinType->addItem(entry.name);
-            ui->listWidgetAllSkin->addItem(entry.name);
-
+            systemSkin_list.append(entry.name);
+//            ui->listWidgetAllSkin->addItem(entry.name);
             count ++;
         }
     }
     ui->listWidgetAllSkin->setCurrentRow(idx);
-    ui->comboBoxSkinType->setCurrentIndex(idx);
+    //ui->comboBoxSkinType->setCurrentIndex(idx);
 }
 
 void MainWindow::searchAndSetLocalSkin()
@@ -159,6 +148,7 @@ void MainWindow::searchAndSetLocalSkin()
     QFileInfoList list;
     QFileInfoList::Iterator iter;
     skinDir = QDir(localPath);
+    localSkin_list.clear();
     if (!skinDir.exists())
     {
         qDebug()<<localPath;
@@ -180,7 +170,10 @@ void MainWindow::searchAndSetLocalSkin()
             {
                 idx = count;
             }
-            ui->listWidgetAllSkin->addItem(entry.name+"(local)");
+
+            if(ui->listWidgetAllSkin)
+            localSkin_list.append(entry.name+"(local)");
+//            ui->listWidgetAllSkin->addItem(entry.name+"(local)");
             count ++;
         }
     }
@@ -196,19 +189,19 @@ void MainWindow::loadSkinPreview()
 void MainWindow::loadMainConf()
 {
     bool verticalList;
-    QString curtSkinType;
+    //QString curtSkinType;
 
     mSettings->beginGroup("base");
     verticalList = mSettings->value("VerticalList", false).toBool();
     curtSkinType = mSettings->value("CurtSkinType", "ubuntukylin-dark1").toString();
     mSettings->endGroup();
 
-
     ui->radioButtonVertical->setChecked(verticalList);
     ui->radioButtonHorizontal->setChecked(!verticalList);
 
-    searchAndSetSystemSkin();
     searchAndSetLocalSkin();
+    searchAndSetSystemSkin();
+    showListWidgetAllSkin();
     loadSkinPreview();
 }
 void MainWindow::saveMainConf()
@@ -246,7 +239,6 @@ void MainWindow::setSkinBase()
     if (mSkinFcitx != skin)
        delete mSkinFcitx;
     mSkinFcitx = skin;
-
     qmlView->rootContext()->setContextProperty("mainSkin", mSkinFcitx);//把qt程序暴露到qml
     qmlView->rootContext()->setContextProperty("mainModel", mMainModer);
     qmlView->setSource(QUrl("qrc:/new/prefix1/main.qml"));
@@ -257,6 +249,7 @@ void MainWindow::setSkinBase()
 
 void MainWindow::sltOnPushButtonApply()
 {
+    refreshListWidgetAllSkin();
     saveMainConf();
     QString cmd2 = "killall -HUP fcitx-qimpanel";
     QByteArray ba2 = cmd2.toLatin1();
@@ -265,7 +258,6 @@ void MainWindow::sltOnPushButtonApply()
     {
         return ;
     }
-
 }
 
 void MainWindow::sltOnPushButtonCancel()
@@ -280,4 +272,44 @@ void MainWindow::on_radioButtonHorizontal_toggled(bool checked)
     changeMainWindowSize();
 }
 
+void MainWindow::showListWidgetAllSkin()
+{
+    QList<QString>::Iterator iter_system;
+    QList<QString>::Iterator iter_local;
+    QString tmp_systemList;
+    QString tmp_localList;
+    bool flag = true;//想了好久..逻辑没理清
+    for (iter_system = systemSkin_list.begin(); iter_system != systemSkin_list.end(); ++ iter_system) {
+        tmp_systemList = *iter_system;
+        for(iter_local = localSkin_list.begin(); iter_local != localSkin_list.end(); ++ iter_local){
+            tmp_localList = *iter_local;
+            if(tmp_localList.mid(0,tmp_localList.indexOf("(local)")) == tmp_systemList){
+                ui->listWidgetAllSkin->addItem(tmp_localList);
+                qDebug()<<tmp_localList;
+                 flag = false;
+                 continue;
+            }
+        }
+        if(flag)
+        {
+            qDebug()<<tmp_systemList;
+            ui->listWidgetAllSkin->addItem(tmp_systemList);
+        }
+        flag = true;
+    }
+}
 
+void MainWindow::refreshListWidgetAllSkin()
+{
+    disconnect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),0, 0);
+    disconnect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),0,0);
+    ui->listWidgetAllSkin->clear();
+    connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
+            this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
+    connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
+            this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
+    searchAndSetLocalSkin();
+    searchAndSetSystemSkin();
+    showListWidgetAllSkin();
+    qDebug()<<"MainWindow::refreshListWidgetAllSkin()";
+}
