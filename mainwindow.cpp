@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
     connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
             this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
+    connect(ui->comboBoxSkinType,SIGNAL(currentIndexChanged(int)),this,SLOT(setListWidgetAllSkinIndex(int)));
 }
 
 MainWindow::~MainWindow()
@@ -96,6 +97,7 @@ void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     curtSkinType = current->text();
+    ui->comboBoxSkinType->setCurrentIndex(ui->listWidgetAllSkin->currentRow());//感觉如果加入其它皮肤会出bug
     setSkinBase();
 }
 
@@ -130,13 +132,13 @@ void MainWindow::searchAndSetSystemSkin()
                 idx = count;
             }
 
-            ui->comboBoxSkinType->addItem(entry.name);
+//            ui->comboBoxSkinType->addItem(entry.name);
             systemSkin_list.append(entry.name);
 //            ui->listWidgetAllSkin->addItem(entry.name);
             count ++;
         }
     }
-    ui->listWidgetAllSkin->setCurrentRow(idx);
+//    ui->listWidgetAllSkin->setCurrentRow(idx);
     //ui->comboBoxSkinType->setCurrentIndex(idx);
 }
 
@@ -177,7 +179,7 @@ void MainWindow::searchAndSetLocalSkin()
             count ++;
         }
     }
-    ui->listWidgetAllSkin->setCurrentRow(idx);
+//    ui->listWidgetAllSkin->setCurrentRow(idx);
 }
 
 void MainWindow::loadSkinPreview()
@@ -249,7 +251,7 @@ void MainWindow::setSkinBase()
 
 void MainWindow::sltOnPushButtonApply()
 {
-    refreshListWidgetAllSkin();
+//    refreshListWidgetAllSkin();
     saveMainConf();
     QString cmd2 = "killall -HUP fcitx-qimpanel";
     QByteArray ba2 = cmd2.toLatin1();
@@ -285,6 +287,7 @@ void MainWindow::showListWidgetAllSkin()
             tmp_localList = *iter_local;
             if(tmp_localList.mid(0,tmp_localList.indexOf("(local)")) == tmp_systemList){
                 ui->listWidgetAllSkin->addItem(tmp_localList);
+                ui->comboBoxSkinType->addItem(tmp_localList.mid(0,tmp_localList.indexOf("(local)")));
                 qDebug()<<tmp_localList;
                  flag = false;
                  continue;
@@ -294,6 +297,7 @@ void MainWindow::showListWidgetAllSkin()
         {
             qDebug()<<tmp_systemList;
             ui->listWidgetAllSkin->addItem(tmp_systemList);
+            ui->comboBoxSkinType->addItem(tmp_systemList);
         }
         flag = true;
     }
@@ -310,6 +314,12 @@ void MainWindow::refreshListWidgetAllSkin()
             this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
     searchAndSetLocalSkin();
     searchAndSetSystemSkin();
+    ui->comboBoxSkinType->clear();
     showListWidgetAllSkin();
     qDebug()<<"MainWindow::refreshListWidgetAllSkin()";
+}
+
+void MainWindow::setListWidgetAllSkinIndex(int index)
+{
+    ui->listWidgetAllSkin->setCurrentRow(index);
 }

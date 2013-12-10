@@ -62,6 +62,7 @@ private slots:
     void sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void sltOnCurrentChanged(QWidget *tab);  
     void on_radioButtonHorizontal_toggled(bool checked);
+    void setListWidgetAllSkinIndex(int index);
 };
 
 #endif // MAINWINDOW_H
