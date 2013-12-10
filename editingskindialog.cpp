@@ -10,7 +10,6 @@
 #include <QtNetwork/QHostInfo>
 
 #include "editingskindialog.h"
-#include "passwarddialog.h"
 #include "ui_editingskindialog.h"
 
 #define FCITXSKINSYSTEM_PATH "/usr/share/fcitx-qimpanel/skin/"
@@ -32,10 +31,8 @@ EditingSkinDialog::EditingSkinDialog(bool pHorizontal,QListWidgetItem *item,
 
     if(mItem->text().indexOf("(local)")==-1)
     {
-        ui->EditingSkinTabWidget->setEnabled(false);
         mSettings = new QSettings(FCITXSKINSYSTEM_PATH + mItem->text() + "/fcitx_skin.conf",QSettings::IniFormat);
         mSettings->setIniCodec("UTF-8");
-//        QMessageBox::information(this,tr("tips"),tr("If you want to create a local configuration of the skin and use, please click ok."));
     }
     else
     {
@@ -90,7 +87,6 @@ void EditingSkinDialog::loadMainConf()
     int marginRight = mSettings->value("MarginRight").toInt();
     int marginTop = mSettings->value("MarginTop").toInt();
     int marginBottom = mSettings->value("MarginBottom").toInt();
-
 
     int inputStringPosX = mSettings->value("InputStringPosX").toInt();
     int inputStringPosY = mSettings->value("InputStringPosY").toInt();
@@ -201,8 +197,6 @@ void EditingSkinDialog::saveMainConf()
     int adjustWidth = ui->spinBox_iAdjustWidth->value();
     int adjustHeight = ui->spinBox_iAdjustHeight->value();
 
-
-
     mSettings->setValue("TipsImg",tipsImg);
     mSettings->setValue("MarginLeft",marginLeft);
     mSettings->setValue("MarginRight",marginRight);
@@ -242,7 +236,6 @@ void EditingSkinDialog::saveMainConf()
         mSettings->setValue("AdjustHeight",adjustHeight_v);
     }
     mSettings->endGroup();
-
     mSettings->sync();
 }
 
@@ -250,35 +243,39 @@ void EditingSkinDialog::on_pushButton_ok_released()
 {
     if(mItem->text().indexOf("(local)")==-1)
     {
-        if (QMessageBox::Yes == QMessageBox::question (this,
-                                  tr("Tips "),
-                                  tr("Whether to use the default configuration of the skin?"),
-                                  QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes))
+        QString cmd = "cp -R /usr/share/fcitx-qimpanel/skin/" + mItem->text() +" "+ localPath ;
+        qDebug()<<cmd;
+        QByteArray ba = cmd.toLatin1();
+        const char *transpd = ba.data();
+        if(0!= system(transpd))
         {
-            QString cmd = "cp -R /usr/share/fcitx-qimpanel/skin/" + mItem->text() +" "+ localPath ;
-            qDebug()<<cmd;
-            QByteArray ba = cmd.toLatin1();
-            const char *transpd = ba.data();
-            if(0!= system(transpd))
-            {
-                return ;
-            }
+            return ;
         }
     }
-    else
-    {
-        saveMainConf();
-    }
-
-//    PasswardDialog * passward = new PasswardDialog(mItem->text());
-//    passward->exec();
+    saveMainConf();
     this->accept();
 }
 
 void EditingSkinDialog::on_pushButton_cannel_released()
 {
-
     this->close();
+}
+
+
+void EditingSkinDialog::on_pushButton_refresh_released()
+{
+    if(mItem->text().indexOf("(local)")!=-1)
+    {
+        QString cmd = "rm -rf " + localPath + mItem->text().mid(0,mItem->text().indexOf("(local)"));
+        qDebug()<<cmd;
+        QByteArray ba = cmd.toLatin1();
+        const char *transpd = ba.data();
+        if(0!= system(transpd))
+        {
+            return ;
+        }
+    }
+    QMessageBox::information(this,tr("tips"),tr("The default configuration has been restored"));
 }
 
 void EditingSkinDialog::on_pushButtonInputColor_released()
@@ -329,47 +326,6 @@ void EditingSkinDialog::on_pushButtonOtherCandColor_released()
     }
 }
 
-//void EditingSkinDialog::copySkinConf()//复制皮肤配置到本地.config/fcitx-qimpanel/skin
-//{
-//    QDir *temp = new QDir;
-//    if((false == temp->exists(localPath+"skin/ubuntukylin-dark1")&&(mItem->text()=="ubuntukylin-dark1"))
-//            ||(false == temp->exists(localPath+"skin/ubuntukylin-dark2")&&(mItem->text()=="ubuntukylin-dark2"))
-//            ||(false == temp->exists(localPath+"skin/ubuntukylin-light1")&&(mItem->text()=="ubuntukylin-light1"))
-//            ||(false == temp->exists(localPath+"skin/ubuntukylin-light2")&&(mItem->text()=="ubuntukylin-light2")))
-//    {
-//        qDebug()<<"5555";
-//        QDir *temp1 = new QDir;
-//        QDir *temp2 = new QDir;
-//        bool exist1 = temp1->exists(localPath+"skin/");
-//        if(!exist1)
-//            temp1->mkdir(localPath+"skin/");
-//        bool exist2 = temp2->exists(localPath+"skin/" + mItem->text());
-//        if(!exist2)
-//            temp2->mkdir(localPath+"skin/" + mItem->text());
-//        QString str;
-//        QFile readSkinConf(FCITXSKIN_PATH + mItem->text() + "/fcitx_skin.conf");
-//        QFile writeSkinconf(localPath+"skin/" + mItem->text() +"/fcitx_skin.conf");
-//        if(!readSkinConf.open(QIODevice::ReadOnly | QIODevice::Text))
-//            {
-//               QMessageBox::warning(this,"read","can't open",QMessageBox::Yes);
-//            }
-
-//        if(!writeSkinconf.open(QIODevice::ReadWrite | QIODevice::Text))
-//        {
-//           QMessageBox::warning(this,"write","can't open",QMessageBox::Yes);
-//        }
-//        QTextStream readFcitxSkinConf(&readSkinConf);
-//        QTextStream writeFcitxSkinConf(&writeSkinconf);
-
-//        do{
-//            str=readFcitxSkinConf.readLine();//读取一行
-//            writeFcitxSkinConf<<str<<"\n";
-//        } while (!str.isNull());
-//        readSkinConf.close();
-//        writeSkinconf.close();
-//    }
-//}
-
 QString EditingSkinDialog::colorToRGB(QColor color)
 {
     QString str;
@@ -383,12 +339,8 @@ QColor EditingSkinDialog::value2color(const QString& value)
     if(list.size() < 3) {
         return Qt::color0;
     }
-
     int r = list.at(0).toInt();
     int g = list.at(1).toInt();
     int b = list.at(2).toInt();
     return QColor(r, g, b);
 }
-
-
-

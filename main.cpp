@@ -26,17 +26,30 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.installTranslator(&translator);
     app.setApplicationName("fcitx-qimpanel-configtool");
-    QString localPath = qgetenv("HOME") + "/.config/fcitx-qimpanel/";
+
+    QString localPath = qgetenv("HOME") + "/.config/";
     QDir *temp = new QDir;
-    if(false == temp->exists(localPath + "skin"))
+    if(false == temp->exists(localPath + "fcitx-qimpanel"))
     {
-        QString cmd = "mkdir " + localPath +"skin";
-        qDebug()<<cmd;
+        QString cmd = "mkdir " + localPath +"fcitx-qimpanel";
         QByteArray ba = cmd.toLatin1();
         const char *transpd = ba.data();
         if(0!= system(transpd))
         {
             return 0;
+        }
+    }
+
+    QString localPath2 = qgetenv("HOME") + "/.config/fcitx-qimpanel/";
+    QDir *temp2 = new QDir;
+    if(false == temp2->exists(localPath2 + "skin"))
+    {
+        QString cmd2 = "mkdir " + localPath2 +"skin";
+        QByteArray ba2 = cmd2.toLatin1();
+        const char *transpd2 = ba2.data();
+        if(0!= system(transpd2))
+        {
+            return 0 ;
         }
     }
 
