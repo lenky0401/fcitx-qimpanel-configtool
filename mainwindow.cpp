@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mLayout = new QHBoxLayout(ui->widgetSkinPreview);
     localPath = qgetenv("HOME") + "/.config/fcitx-qimpanel/skin/";
     this->setWindowTitle(tr("Qimpanel Settings"));
-    curtSkinType = "ubuntukylin-dark1";
     loadMainConf();
     ui->tabWidget->setCurrentIndex(0);
     ui->listWidgetAllSkin->setCurrentRow(0);
@@ -84,7 +83,9 @@ void MainWindow::changeMainWindowSize()
 void MainWindow::sltOnCurrentChanged(QWidget *tab)
 {
     if (tab == ui->tabSkinDesign)
+    {
         changeMainWindowSize();
+    }
 }
 
 void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
@@ -104,7 +105,6 @@ void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListW
 void MainWindow::searchAndSetSystemSkin()
 {
     skinPath = FCITXSKINSYSTEM_PATH;
-    int idx = 0;
     int count = 0;
     QDir skinDir;
     QFileInfoList list;
@@ -139,7 +139,7 @@ void MainWindow::searchAndSetSystemSkin()
         }
     }
 //    ui->listWidgetAllSkin->setCurrentRow(idx);
-    //ui->comboBoxSkinType->setCurrentIndex(idx);
+//    ui->comboBoxSkinType->setCurrentIndex(idx);
 }
 
 void MainWindow::searchAndSetLocalSkin()
@@ -200,7 +200,6 @@ void MainWindow::loadMainConf()
 
     ui->radioButtonVertical->setChecked(verticalList);
     ui->radioButtonHorizontal->setChecked(!verticalList);
-
     searchAndSetLocalSkin();
     searchAndSetSystemSkin();
     showListWidgetAllSkin();
@@ -280,7 +279,7 @@ void MainWindow::showListWidgetAllSkin()
     QList<QString>::Iterator iter_local;
     QString tmp_systemList;
     QString tmp_localList;
-    bool flag = true;//想了好久..逻辑没理清
+    bool flag = true;//
     for (iter_system = systemSkin_list.begin(); iter_system != systemSkin_list.end(); ++ iter_system) {
         tmp_systemList = *iter_system;
         for(iter_local = localSkin_list.begin(); iter_local != localSkin_list.end(); ++ iter_local){
@@ -301,6 +300,8 @@ void MainWindow::showListWidgetAllSkin()
         }
         flag = true;
     }
+        ui->comboBoxSkinType->setCurrentIndex(idx);
+        ui->listWidgetAllSkin->setCurrentRow(idx);
 }
 
 void MainWindow::refreshListWidgetAllSkin()

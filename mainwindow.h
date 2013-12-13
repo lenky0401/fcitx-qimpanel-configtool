@@ -34,7 +34,6 @@ private:
     Ui::MainWindow *ui;
     QString skinPath;
     QList<SkinTypeEntry> allSkinType;
-
     SkinFcitx *mSkinFcitx;
     MainModel *mMainModer;
     QDeclarativeView *qmlView;
@@ -43,6 +42,7 @@ private:
     QString localPath;
     QStringList systemSkin_list;
     QStringList localSkin_list;
+    int idx;
 private:
     void searchAndSetSystemSkin( );
     void searchAndSetLocalSkin( );
