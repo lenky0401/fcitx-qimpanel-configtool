@@ -4,6 +4,7 @@
 #include <QListWidgetItem>
 #include <QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
+#include <QMessageBox>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mSkinFcitx = new SkinFcitx;
     mMainModer = MainModel::self();
     mSettings = new QSettings("fcitx-qimpanel", "main");
+    mSettings->setIniCodec("UTF-8");
     mLayout = new QHBoxLayout(ui->widgetSkinPreview);
     localPath = qgetenv("HOME") + "/.config/fcitx-qimpanel/skin/";
     this->setWindowTitle(tr("Qimpanel Settings"));
@@ -36,8 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
-    connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
-            this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
+    connect(ui->listWidgetAllSkin, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(sltOnAllSkinItemClicked(QListWidgetItem *)));
     connect(ui->comboBoxSkinType,SIGNAL(currentIndexChanged(int)),this,SLOT(setListWidgetAllSkinIndex(int)));
 }
 
@@ -90,16 +92,68 @@ void MainWindow::sltOnCurrentChanged(QWidget *tab)
 
 void MainWindow::sltOnAllSkinItemDoubleClicked(QListWidgetItem *item)
 {
-    EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
-    editingSkinDialog->exec();
-    refreshListWidgetAllSkin();
+    if(curtSkinType.indexOf("local")==-1)
+    {
+        QString localPath= "/usr/share/fcitx-qimpanel/skin/"+ curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
+        qDebug()<<localPath;
+        QDir *temp = new QDir;
+        if(true == temp->exists(localPath + "/skin.ini"))
+        {
+            QMessageBox::information(this,tr("tips"),tr("Sougo Skin does not support preview and edit!"));
+        }
+        else{
+            EditingSkinDialog * editingSkinDialog = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
+            editingSkinDialog->exec();
+            refreshListWidgetAllSkin();
+        }
+    }
+    else{
+        QString localPath= qgetenv("HOME") + "/.config/fcitx-qimpanel/skin/"+ curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
+        qDebug()<<localPath;
+        QDir *temp1 = new QDir;
+        if(true == temp1->exists(localPath + "/skin.ini"))
+        {
+            QMessageBox::information(this,tr("tips"),tr("Sougo Skin does not support preview and edit!"));
+        }
+        else{
+            EditingSkinDialog * editingSkinDialog1 = new EditingSkinDialog(ui->radioButtonHorizontal->isChecked(),item);
+            editingSkinDialog1->exec();
+            refreshListWidgetAllSkin();
+        }
+    }
 }
 
-void MainWindow::sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+void MainWindow::sltOnAllSkinItemClicked(QListWidgetItem *current)
 {
     curtSkinType = current->text();
+    if(curtSkinType.indexOf("local")==-1)
+    {
+        QString localPath= "/usr/share/fcitx-qimpanel/skin/"+ curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
+        qDebug()<<localPath;
+        QDir *temp = new QDir;
+        if(true == temp->exists(localPath + "/skin.ini"))
+        {
+            QMessageBox::information(this,tr("tips"),tr("Sougo Skin does not support preview and edit!"));
+        }
+        else{
+            setSkinBase();
+        }
+    }
+    else{
+        QString localPath= qgetenv("HOME") + "/.config/fcitx-qimpanel/skin/"+ curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
+        qDebug()<<localPath;
+        QDir *temp1 = new QDir;
+        if(true == temp1->exists(localPath + "/skin.ini"))
+        {
+            QMessageBox::information(this,tr("tips"),tr("Sougo Skin does not support preview and edit!"));
+        }
+        else{
+            setSkinBase();
+        }
+    }
+
     ui->comboBoxSkinType->setCurrentIndex(ui->listWidgetAllSkin->currentRow());//感觉如果加入其它皮肤会出bug
-    setSkinBase();
+
 }
 
 void MainWindow::searchAndSetSystemSkin()
@@ -118,8 +172,9 @@ void MainWindow::searchAndSetSystemSkin()
     list = skinDir.entryInfoList();
     for (iter = list.begin(); iter != list.end(); ++ iter) {
         if (iter->isDir() && "." != iter->fileName() && ".." != iter->fileName()) {
-            QFile fcitxSkinConfFile(iter->absoluteFilePath() + "/fcitx_skin.conf");
-            if (!fcitxSkinConfFile.exists())
+            QFile fcitxSkinConfFile_conf(iter->absoluteFilePath() + "/fcitx_skin.conf");
+            QFile fcitxSkinConfFile_ini(iter->absoluteFilePath() + "/skin.ini");
+            if (!fcitxSkinConfFile_conf.exists()&&!fcitxSkinConfFile_ini.exists())
                 continue;
 
             SkinTypeEntry entry;
@@ -160,8 +215,9 @@ void MainWindow::searchAndSetLocalSkin()
     list = skinDir.entryInfoList();
     for (iter = list.begin(); iter != list.end(); ++ iter) {
         if (iter->isDir() && "." != iter->fileName() && ".." != iter->fileName()) {
-            QFile fcitxSkinConfFile(iter->absoluteFilePath() + "/fcitx_skin.conf");
-            if (!fcitxSkinConfFile.exists())
+            QFile fcitxSkinConfFile_conf(iter->absoluteFilePath() + "/fcitx_skin.conf");
+            QFile fcitxSkinConfFile_ini(iter->absoluteFilePath() + "/skin.ini");
+            if (!fcitxSkinConfFile_conf.exists()&&!fcitxSkinConfFile_ini.exists())
                 continue;
 
             SkinTypeEntry entry;
@@ -210,14 +266,13 @@ void MainWindow::saveMainConf()
     qDebug()<<"MainWindow::saveMainConf";
     bool verticalList;
 
+    mSettings->beginGroup("base");
+    verticalList = ui->radioButtonVertical->isChecked();
+    curtSkinType = ui->comboBoxSkinType->currentText();
     if(curtSkinType.indexOf("(local)")!=-1)
     {
       curtSkinType = curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
     }
-
-    mSettings->beginGroup("base");
-    verticalList = ui->radioButtonVertical->isChecked();
-
     mSettings->setValue("VerticalList", verticalList);
     mSettings->setValue("CurtSkinType", curtSkinType);
 
@@ -307,12 +362,12 @@ void MainWindow::showListWidgetAllSkin()
 void MainWindow::refreshListWidgetAllSkin()
 {
     disconnect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),0, 0);
-    disconnect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),0,0);
+    disconnect(ui->listWidgetAllSkin, SIGNAL(itemClicked(QListWidgetItem*)),0,0);
     ui->listWidgetAllSkin->clear();
     connect(ui->listWidgetAllSkin, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             this, SLOT(sltOnAllSkinItemDoubleClicked(QListWidgetItem*)));
-    connect(ui->listWidgetAllSkin, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
-            this, SLOT(sltOnAllSkinCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
+    connect(ui->listWidgetAllSkin, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(sltOnAllSkinItemClicked(QListWidgetItem *)));
     searchAndSetLocalSkin();
     searchAndSetSystemSkin();
     ui->comboBoxSkinType->clear();

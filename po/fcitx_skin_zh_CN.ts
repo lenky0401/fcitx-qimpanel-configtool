@@ -218,20 +218,28 @@
         <source>Description: Click to select and preview, double-click local to edit, save locally.</source>
         <translation type="unfinished">单击选择并预览，双击创造本地配置或者进行编辑。</translation>
     </message>
+    <message>
+        <source>tips</source>
+        <translation type="unfinished">友情提示：</translation>
+    </message>
+    <message>
+        <source>Sougo Skin does not support preview and edit!</source>
+        <translation type="unfinished">不支持sougo皮肤预览和编辑！</translation>
+    </message>
 </context>
 <context>
     <name>PasswardDialog</name>
     <message>
         <source>passward:</source>
-        <translation type="unfinished">密码：</translation>
+        <translation type="obsolete">密码：</translation>
     </message>
     <message>
         <source>&amp;Ok</source>
-        <translation type="unfinished">确定(O)</translation>
+        <translation type="obsolete">确定(O)</translation>
     </message>
     <message>
         <source>&amp;Cannel</source>
-        <translation type="unfinished">取消(C)</translation>
+        <translation type="obsolete">取消(C)</translation>
     </message>
     <message>
         <source>Password authentication</source>
@@ -256,10 +264,6 @@
     <message>
         <source>server doesn&apos;t run, Modifications will not be saved!</source>
         <translation type="obsolete">配置文件没有修改成功！</translation>
-    </message>
-    <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
