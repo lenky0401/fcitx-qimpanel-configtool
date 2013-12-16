@@ -42,7 +42,6 @@ private:
     QString otherColorConf;
     QString localPath;
     bool mHorizontal;
-    bool fontSizeEnable;
 
 private:
     void loadMainConf();

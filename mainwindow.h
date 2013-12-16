@@ -59,7 +59,7 @@ private slots:
     void sltOnPushButtonApply();
     void sltOnPushButtonCancel();
     void sltOnAllSkinItemDoubleClicked(QListWidgetItem *item);
-    void sltOnAllSkinCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void sltOnAllSkinItemClicked(QListWidgetItem *current);
     void sltOnCurrentChanged(QWidget *tab);  
     void on_radioButtonHorizontal_toggled(bool checked);
     void setListWidgetAllSkinIndex(int index);

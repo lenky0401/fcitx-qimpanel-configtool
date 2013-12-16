@@ -26,7 +26,7 @@ Rectangle {
         id: inputString
         visible : true
         text: "ni hao"
-        font.pointSize :mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
+        font.pointSize :mainSkin.fontSize//mainSkin.candFontSize != 0 ? mainSkin.candFontSize : mainSkin.fontSize
         color: mainSkin.inputColor
     }
     Row {

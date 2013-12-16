@@ -162,11 +162,6 @@ void EditingSkinDialog::saveMainConf()
     int fontSize = ui->spinBoxInputFontSize->value();
     int candFontSize = ui->spinBoxCandFontSize->value();
 
-    if(!fontSizeEnable)
-    {
-        fontSize = 13;
-        candFontSize = 13;
-    }
     mSettings->setValue("FontSize",fontSize);
     mSettings->setValue("CandFontSize",candFontSize);
     mSettings->setValue("InputColor",inputColorConf);
