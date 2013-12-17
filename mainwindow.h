@@ -43,8 +43,6 @@ private:
     QStringList systemSkin_list;
     QStringList localSkin_list;
     int idx;
-    QTimer *timer ;
-    int timeFlag;
 private:
     void searchAndSetSystemSkin( );
     void searchAndSetLocalSkin( );
@@ -65,7 +63,6 @@ private slots:
     void sltOnCurrentChanged(QWidget *tab);  
     void on_radioButtonHorizontal_toggled(bool checked);
     void setListWidgetAllSkinIndex(int index);
-    void timerDone();
 };
 
 #endif // MAINWINDOW_H

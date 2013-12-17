@@ -6,7 +6,7 @@
 #include <QtDeclarative/QDeclarativeContext>
 #include <QMessageBox>
 #include <QThread>
-#include <QTimer>
+#include <QTime>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
     qmlView = new QDeclarativeView;
     mSkinFcitx = new SkinFcitx;
     mMainModer = MainModel::self();
-    timeFlag = 2;
     mSettings = new QSettings("fcitx-qimpanel", "main");
     mSettings->setIniCodec("UTF-8");
     mLayout = new QHBoxLayout(ui->widgetSkinPreview);
@@ -44,9 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->listWidgetAllSkin, SIGNAL(itemClicked(QListWidgetItem*)),
             this, SLOT(sltOnAllSkinItemClicked(QListWidgetItem *)));
     connect(ui->comboBoxSkinType,SIGNAL(currentIndexChanged(int)),this,SLOT(setListWidgetAllSkinIndex(int)));
-
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerDone()));
 }
 
 MainWindow::~MainWindow()
@@ -54,7 +50,6 @@ MainWindow::~MainWindow()
     mSettings->sync();
     if(mSettings!=NULL)
         delete mSettings;
-    delete timer;
     delete ui;
 }
 
@@ -314,9 +309,16 @@ void MainWindow::setSkinBase()
 void MainWindow::sltOnPushButtonApply()
 {
     saveMainConf();
-    if(timeFlag == 2)
+    static int flag = 0;
+    static int timeFlag = QTime::currentTime().secsTo(QTime(1970,1,1));
+    int currentTime = QTime::currentTime().secsTo(QTime(1970,1,1));
+    qDebug()<< timeFlag;
+    qDebug()<< currentTime;
+    if(((timeFlag - currentTime) > 1)||(flag == 0))
     {
-        timeFlag --;
+        flag ++;
+        qDebug()<<"MainWindow::sltOnPushButtonApply()->killall -HUP";
+        timeFlag = QTime::currentTime().secsTo(QTime(1970,1,1));
         QString cmd2 = "killall -HUP fcitx-qimpanel";
         QByteArray ba2 = cmd2.toLatin1();
         const char * transpd2 = ba2.data();
@@ -324,7 +326,6 @@ void MainWindow::sltOnPushButtonApply()
         {
             return ;
         }
-        timer->start(1000); // 1秒单触发定时器
     }
 }
 
@@ -390,14 +391,4 @@ void MainWindow::refreshListWidgetAllSkin()
 void MainWindow::setListWidgetAllSkinIndex(int index)
 {
     ui->listWidgetAllSkin->setCurrentRow(index);
-}
-
-void MainWindow::timerDone()
-{
-    if(0 ==(timeFlag--))
-    {
-        timeFlag = 2;
-        timer->stop();
-    }
-    qDebug()<<timeFlag;
 }
