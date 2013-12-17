@@ -5,6 +5,8 @@
 #include <QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QMessageBox>
+#include <QThread>
+#include <QTime>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -269,13 +271,14 @@ void MainWindow::saveMainConf()
     mSettings->beginGroup("base");
     verticalList = ui->radioButtonVertical->isChecked();
     curtSkinType = ui->comboBoxSkinType->currentText();
+    qDebug()<<"MainWindow::saveMainConf()"<<curtSkinType;
     if(curtSkinType.indexOf("(local)")!=-1)
     {
       curtSkinType = curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
     }
     mSettings->setValue("VerticalList", verticalList);
     mSettings->setValue("CurtSkinType", curtSkinType);
-
+    qDebug()<<"MainWindow::saveMainConf()"<<curtSkinType;
     mSettings->endGroup();
 }
 
@@ -305,14 +308,24 @@ void MainWindow::setSkinBase()
 
 void MainWindow::sltOnPushButtonApply()
 {
-//    refreshListWidgetAllSkin();
     saveMainConf();
-    QString cmd2 = "killall -HUP fcitx-qimpanel";
-    QByteArray ba2 = cmd2.toLatin1();
-    const char * transpd2 = ba2.data();
-    if(0!= system(transpd2))
+    static int flag = 0;
+    static int timeFlag = QTime::currentTime().secsTo(QTime(1970,1,1));
+    int currentTime = QTime::currentTime().secsTo(QTime(1970,1,1));
+    qDebug()<< timeFlag;
+    qDebug()<< currentTime;
+    if(((timeFlag - currentTime) > 1)||(flag == 0))
     {
-        return ;
+        flag ++;
+        qDebug()<<"MainWindow::sltOnPushButtonApply()->killall -HUP";
+        timeFlag = QTime::currentTime().secsTo(QTime(1970,1,1));
+        QString cmd2 = "killall -HUP fcitx-qimpanel";
+        QByteArray ba2 = cmd2.toLatin1();
+        const char * transpd2 = ba2.data();
+        if(0!= system(transpd2))
+        {
+            return ;
+        }
     }
 }
 
