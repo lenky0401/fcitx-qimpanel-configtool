@@ -5,6 +5,8 @@
 #include <QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QMessageBox>
+#include <QThread>
+#include <QTimer>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -20,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qmlView = new QDeclarativeView;
     mSkinFcitx = new SkinFcitx;
     mMainModer = MainModel::self();
+    timeFlag = 2;
     mSettings = new QSettings("fcitx-qimpanel", "main");
     mSettings->setIniCodec("UTF-8");
     mLayout = new QHBoxLayout(ui->widgetSkinPreview);
@@ -41,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->listWidgetAllSkin, SIGNAL(itemClicked(QListWidgetItem*)),
             this, SLOT(sltOnAllSkinItemClicked(QListWidgetItem *)));
     connect(ui->comboBoxSkinType,SIGNAL(currentIndexChanged(int)),this,SLOT(setListWidgetAllSkinIndex(int)));
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerDone()));
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +54,7 @@ MainWindow::~MainWindow()
     mSettings->sync();
     if(mSettings!=NULL)
         delete mSettings;
+    delete timer;
     delete ui;
 }
 
@@ -269,13 +276,14 @@ void MainWindow::saveMainConf()
     mSettings->beginGroup("base");
     verticalList = ui->radioButtonVertical->isChecked();
     curtSkinType = ui->comboBoxSkinType->currentText();
+    qDebug()<<"MainWindow::saveMainConf()"<<curtSkinType;
     if(curtSkinType.indexOf("(local)")!=-1)
     {
       curtSkinType = curtSkinType.mid(0,curtSkinType.indexOf("(local)"));
     }
     mSettings->setValue("VerticalList", verticalList);
     mSettings->setValue("CurtSkinType", curtSkinType);
-
+    qDebug()<<"MainWindow::saveMainConf()"<<curtSkinType;
     mSettings->endGroup();
 }
 
@@ -305,14 +313,18 @@ void MainWindow::setSkinBase()
 
 void MainWindow::sltOnPushButtonApply()
 {
-//    refreshListWidgetAllSkin();
     saveMainConf();
-    QString cmd2 = "killall -HUP fcitx-qimpanel";
-    QByteArray ba2 = cmd2.toLatin1();
-    const char * transpd2 = ba2.data();
-    if(0!= system(transpd2))
+    if(timeFlag == 2)
     {
-        return ;
+        timeFlag --;
+        QString cmd2 = "killall -HUP fcitx-qimpanel";
+        QByteArray ba2 = cmd2.toLatin1();
+        const char * transpd2 = ba2.data();
+        if(0!= system(transpd2))
+        {
+            return ;
+        }
+        timer->start(1000); // 1秒单触发定时器
     }
 }
 
@@ -378,4 +390,14 @@ void MainWindow::refreshListWidgetAllSkin()
 void MainWindow::setListWidgetAllSkinIndex(int index)
 {
     ui->listWidgetAllSkin->setCurrentRow(index);
+}
+
+void MainWindow::timerDone()
+{
+    if(0 ==(timeFlag--))
+    {
+        timeFlag = 2;
+        timer->stop();
+    }
+    qDebug()<<timeFlag;
 }
