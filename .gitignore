@@ -3,7 +3,6 @@ build*/
 .*
 !.git*
 .git/
-*.pro
 *.tar.*
 *.kdev4
 *.kate-swp
