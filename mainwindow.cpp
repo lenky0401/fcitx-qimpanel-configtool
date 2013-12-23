@@ -8,6 +8,14 @@
 #include <QThread>
 #include <QTime>
 
+#include <QtDBus/QtDBus>
+#include <QtDBus/QDBusAbstractAdaptor>
+#include <QtDBus/QDBusConnection>
+#include <QtDBus/QDBusAbstractInterface>
+#include <QtDBus/QDBusMessage>
+#include <QtDBus/QDBusContext>
+
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -43,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->listWidgetAllSkin, SIGNAL(itemClicked(QListWidgetItem*)),
             this, SLOT(sltOnAllSkinItemClicked(QListWidgetItem *)));
     connect(ui->comboBoxSkinType,SIGNAL(currentIndexChanged(int)),this,SLOT(setListWidgetAllSkinIndex(int)));
+    linkQtDbusServer();
 }
 
 MainWindow::~MainWindow()
@@ -305,7 +314,6 @@ void MainWindow::setSkinBase()
     mMainModer->emitSigMainWindowSizeChanged();
 }
 
-
 void MainWindow::sltOnPushButtonApply()
 {
     saveMainConf();
@@ -317,15 +325,16 @@ void MainWindow::sltOnPushButtonApply()
     if(((timeFlag - currentTime) > 1)||(flag == 0))
     {
         flag ++;
-        qDebug()<<"MainWindow::sltOnPushButtonApply()->killall -HUP";
+//        qDebug()<<"MainWindow::sltOnPushButtonApply()->killall -HUP";
         timeFlag = QTime::currentTime().secsTo(QTime(1970,1,1));
-        QString cmd2 = "killall -HUP fcitx-qimpanel";
-        QByteArray ba2 = cmd2.toLatin1();
-        const char * transpd2 = ba2.data();
-        if(0!= system(transpd2))
-        {
-            return ;
-        }
+//        QString cmd2 = "killall -HUP fcitx-qimpanel";
+//        QByteArray ba2 = cmd2.toLatin1();
+//        const char * transpd2 = ba2.data();
+//        if(0!= system(transpd2))
+//        {
+//            return ;
+//        }
+        emit sigRestartQimpanel();
     }
 }
 
@@ -392,3 +401,56 @@ void MainWindow::setListWidgetAllSkinIndex(int index)
 {
     ui->listWidgetAllSkin->setCurrentRow(index);
 }
+
+void MainWindow::linkQtDbusServer()
+{
+    myInterface = new QDBusInterface("com.fcitx_qimpanel.hotel",
+                               "/",
+                               "com.fcitx_qimpanel.hotel",
+                               QDBusConnection::sessionBus());
+    if(!myInterface->isValid())
+    {
+        qDebug()<< qPrintable(QDBusConnection::sessionBus().lastError().message());
+    }
+    else{
+        QObject::connect(this,SIGNAL(sigRestartQimpanel()),myInterface,SLOT(qtDbusSot_restartQimpanel()));
+    }
+
+    //    QDBusMessage m = QDBusMessage::createMethodCall("com.fcitx_qimpanel.hotel",
+    //                                                  "/",
+    //                                                  "com.fcitx_qimpanel.hotel",
+    //                                                  "selectCandidate");
+    //    m << 8;
+    //    QDBusMessage response = QDBusConnection::sessionBus().call(m);
+    //    // 判断Method是否被正确返回
+    //    if (response.type() == QDBusMessage::ReplyMessage) {
+    //            // QDBusMessage的arguments不仅可以用来存储发送的参数，也用来存储返回值;
+    //            // 这里取得checkIn的返回值
+    //            int num_room = response.arguments().takeFirst().toInt();
+    //            printf("Got %d %s\n", num_room, (num_room > 1) ? "rooms" : "room");
+    //    } else {
+    //            fprintf(stderr, "Check In fail!\n");
+    //    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

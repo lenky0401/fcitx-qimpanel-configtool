@@ -27,6 +27,8 @@
 class CandidateWord : public QObject
 {
     Q_OBJECT
+    // 定义Interface名称为"com.test.hotel.registry"
+    Q_CLASSINFO("D-Bus Interface", "com.test.hotel.registry")
     Q_PROPERTY(QString cddLabel READ cddLabel WRITE setCddLabel
         NOTIFY cddLabelChanged)
     Q_PROPERTY(QString cddText READ cddText WRITE setCddText
