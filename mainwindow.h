@@ -12,6 +12,7 @@
 #include "main_model.h"
 #include "candidate_word.h"
 #include "editingskindialog.h"
+#include <QtDBus/QDBusInterface>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,7 @@ private:
     QStringList systemSkin_list;
     QStringList localSkin_list;
     int idx;
+    QDBusInterface * myInterface;
 private:
     void searchAndSetSystemSkin( );
     void searchAndSetLocalSkin( );
@@ -54,6 +56,7 @@ private:
     void showListWidgetAllSkin();
     void setListWidgetAllSkin();
     void refreshListWidgetAllSkin();
+    void linkQtDbusServer();
 
 private slots:
     void sltOnPushButtonApply();
@@ -63,6 +66,9 @@ private slots:
     void sltOnCurrentChanged(QWidget *tab);  
     void on_radioButtonHorizontal_toggled(bool checked);
     void setListWidgetAllSkinIndex(int index);
+
+signals:
+    void sigRestartQimpanel();
 };
 
 #endif // MAINWINDOW_H

@@ -20,11 +20,13 @@ INSTALLS += inst1 \
     inst3 \
     target
 
-QT       += core gui declarative
+QT += core gui declarative dbus
 
 TARGET = fcitx-qimpanel-configtool
 
-LIBS += -lfcitx-qt -lfcitx-config -lfcitx-utils
+LIBS += -lfcitx-qt -lfcitx-config -lfcitx-utils -lQtDBus
+
+CONFIG +=
 
 SOURCES += main.cpp \
     mainwindow.cpp \
