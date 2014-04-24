@@ -20,9 +20,12 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     QTranslator translator;
-   if (translator.load("/usr/share/fcitx-qimpanel/fcitx_skin_zh_CN.qm") == false)
-//    if (translator.load(QString(getQimpanelSharePath("fcitx_skin_zh_CN.qm"))) == false)
-        qDebug() << "load qm error.";
+    QString locale = QLocale::system().name();
+    if(locale == "zh_CN") {
+       if (translator.load("/usr/share/fcitx-qimpanel/fcitx_skin_zh_CN.qm") == false)
+    //    if (translator.load(QString(getQimpanelSharePath("fcitx_skin_zh_CN.qm"))) == false)
+            qDebug() << "load qm error.";
+    }
     QApplication app(argc, argv);
     app.installTranslator(&translator);
     app.setApplicationName("fcitx-qimpanel-configtool");
